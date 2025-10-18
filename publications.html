@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Med-RAMP</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .page-hero {
+            padding: 120px 0 80px;
+            background: var(--gradient-2);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .search-filter-section {
+            padding: 3rem 0;
+            background: var(--light-bg);
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid #e0e0e0;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .publications-section {
+            padding: 4rem 0;
+        }
+
+        .stats-banner {
+            background: var(--gradient-1);
+            padding: 3rem;
+            border-radius: 20px;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .stats-banner h3 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .publications-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .publication-item {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .publication-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pub-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge-journal {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-abstract {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .badge-poster {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .publication-item h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            line-height: 1.4;
+        }
+
+        .authors {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .pub-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .pub-details span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pub-abstract {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .pub-link:hover {
+            gap: 0.8rem;
+        }
+
+        .featured-section {
+            margin-bottom: 4rem;
+        }
+
+        .featured-pub {
+            background: var(--gradient-2);
+            color: var(--white);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .featured-pub h3 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .featured-pub .authors {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .featured-pub .pub-abstract {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+        }
+
+        .featured-pub .pub-link {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-pub .pub-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .filter-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">Med-RAMP</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="publications.html" class="active">Publications</a></li>
+                    <li><a href="success-stories.html">Success Stories</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 data-scroll-animate>Our Publications</h1>
+            <p data-scroll-animate>Showcasing impactful research from Med-RAMP participants</p>
+        </div>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="search-filter-section">
+        <div class="container">
+            <div class="search-box" data-scroll-animate>
+                <input type="text" id="publicationSearch" placeholder="Search by title, authors, or keywords..." onkeyup="searchPublications()">
+            </div>
+            <div class="filter-buttons" data-scroll-animate>
+                <button class="filter-btn active" onclick="filterPublications('all')">All Publications</button>
+                <button class="filter-btn" onclick="filterPublications('journal')">Journal Articles</button>
+                <button class="filter-btn" onclick="filterPublications('abstract')">Conference Abstracts</button>
+                <button class="filter-btn" onclick="filterPublications('poster')">Posters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section class="publications-section">
+        <div class="container">
+            <!-- Stats Banner -->
+            <div class="stats-banner" data-scroll-animate>
+                <h3>120+ Authorships Earned by Our Participants</h3>
+                <p>Med-RAMP students have contributed to groundbreaking research in rare cancer studies</p>
+            </div>
+
+            <!-- Featured Publication -->
+            <div class="featured-section" data-scroll-animate>
+                <h2 class="section-title">Featured Research</h2>
+                <div class="featured-pub">
+                    <span class="pub-badge badge-journal">Journal Article</span>
+                    <h3>Demographic and Prognostic Factors of the Columnar Cell Variant of Papillary Thyroid Carcinoma: A National Cancer Database Study</h3>
+                    <p class="authors">Med-RAMP Research Team et al.</p>
+                    <p class="pub-abstract">This comprehensive study analyzes demographic patterns and prognostic factors in columnar cell variant papillary thyroid carcinoma using the National Cancer Database, providing crucial insights for clinical management of this rare cancer subtype.</p>
+                    <a href="https://www.cureus.com/articles/248826-demographic-and-prognostic-factors-of-the-columnar-cell-variant-of-papillary-thyroid-carcinoma-a-national-cancer-database-study" target="_blank" class="pub-link">
+                        Read Full Article →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Publications Grid -->
+            <h2 class="section-title" data-scroll-animate>All Publications</h2>
+            <div class="publications-grid">
+                <!-- Journal Article 1 -->
+                <div class="publication-item" data-category="journal" data-scroll-animate>
+                    <span class="pub-badge badge-journal">Journal Article</span>
+                    <h3>Genomic Insights into Rare Cancer Variants</h3>
+                    <p class="authors">Med-RAMP Research Consortium</p>
+                    <div class="pub-details">
+                        <span>📅 2025</span>
+                        <span>📚 Cancers Journal</span>
+                    </div>
+                    <p class="pub-abstract">An exploration of genomic characteristics across multiple rare cancer types, utilizing advanced analytical methods to identify potential therapeutic targets.</p>
+                    <a href="https://www.mdpi.com/2072-6694/17/3/536" target="_blank" class="pub-link">
+                        View Publication →
+                    </a>
+                </div>
+
+                <!-- Conference Abstracts -->
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
+                    <span class="pub-badge badge-abstract">Conference Abstract</span>
+                    <h3>ASCO Annual Meeting Presentations</h3>
+                    <p class="authors">Multiple Med-RAMP Authors</p>
+                    <div class="pub-details">
+                        <span>📅 2023</span>
+                        <span>🏛️ ASCO Annual Meeting</span>
+                    </div>
+                    <p class="pub-abstract">Over 50 abstracts presented at the ASCO Annual Meeting covering diverse aspects of rare cancer research, from epidemiology to treatment outcomes.</p>
+                    <a href="https://meetings.asco.org/abstracts-presentations/search?query=*&q=creighton&sortBy=Relevancy&filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&size=50" target="_blank" class="pub-link">
+                        View All Abstracts →
+                    </a>
+                </div>
+
+                <!-- Additional Publications -->
+                <div class="publication-item" data-category="journal" data-scroll-animate>
+                    <span class="pub-badge badge-journal">Journal Article</span>
+                    <h3>Epidemiological Trends in Rare Thyroid Cancer Variants</h3>
+                    <p class="authors">Med-RAMP Thyroid Research Group</p>
+                    <div class="pub-details">
+                        <span>📅 2024</span>
+                        <span>📚 Endocrine Oncology</span>
+                    </div>
+                    <p class="pub-abstract">Analysis of incidence patterns and demographic characteristics across multiple rare thyroid cancer histologic subtypes using population-based data.</p>
+                    <a href="#" class="pub-link">
+                        View Publication →
+                    </a>
+                </div>
+
+                <div class="publication-item" data-category="poster" data-scroll-animate>
+                    <span class="pub-badge badge-poster">Poster Presentation</span>
+                    <h3>Molecular Profiling of Rare Gastrointestinal Malignancies</h3>
+                    <p class="authors">Med-RAMP GI Research Team</p>
+                    <div class="pub-details">
+                        <span>📅 2024</span>
+                        <span>🏛️ AACR Annual Meeting</span>
+                    </div>
+                    <p class="pub-abstract">Comprehensive molecular characterization of rare gastrointestinal cancers with implications for targeted therapy development.</p>
+                    <a href="#" class="pub-link">
+                        View Poster →
+                    </a>
+                </div>
+
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
+                    <span class="pub-badge badge-abstract">Conference Abstract</span>
+                    <h3>Treatment Outcomes in Rare Sarcoma Subtypes</h3>
+                    <p class="authors">Med-RAMP Sarcoma Working Group</p>
+                    <div class="pub-details">
+                        <span>📅 2024</span>
+                        <span>🏛️ CTOS Annual Meeting</span>
+                    </div>
+                    <p class="pub-abstract">Retrospective analysis of treatment patterns and survival outcomes across multiple rare sarcoma histologies.</p>
+                    <a href="#" class="pub-link">
+                        View Abstract →
+                    </a>
+                </div>
+
+                <div class="publication-item" data-category="journal" data-scroll-animate>
+                    <span class="pub-badge badge-journal">Journal Article</span>
+                    <h3>Prognostic Factors in Rare Breast Cancer Variants</h3>
+                    <p class="authors">Med-RAMP Breast Oncology Group</p>
+                    <div class="pub-details">
+                        <span>📅 2023</span>
+                        <span>📚 Breast Cancer Research</span>
+                    </div>
+                    <p class="pub-abstract">Investigation of clinicopathologic features and outcomes in rare histologic subtypes of breast cancer using national registry data.</p>
+                    <a href="#" class="pub-link">
+                        View Publication →
+                    </a>
+                </div>
+
+                <div class="publication-item" data-category="poster" data-scroll-animate>
+                    <span class="pub-badge badge-poster">Poster Presentation</span>
+                    <h3>Racial and Ethnic Disparities in Rare Cancer Outcomes</h3>
+                    <p class="authors">Med-RAMP Health Equity Team</p>
+                    <div class="pub-details">
+                        <span>📅 2023</span>
+                        <span>🏛️ ASCO Quality Care Symposium</span>
+                    </div>
+                    <p class="pub-abstract">Examination of disparities in diagnosis, treatment, and survival across different demographic groups in rare cancer populations.</p>
+                    <a href="#" class="pub-link">
+                        View Poster →
+                    </a>
+                </div>
+
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
+                    <span class="pub-badge badge-abstract">Conference Abstract</span>
+                    <h3>Novel Biomarkers in Rare Lung Cancer Subtypes</h3>
+                    <p class="authors">Med-RAMP Thoracic Oncology Group</p>
+                    <div class="pub-details">
+                        <span>📅 2024</span>
+                        <span>🏛️ WCLC</span>
+                    </div>
+                    <p class="pub-abstract">Identification of potential prognostic and predictive biomarkers in uncommon lung cancer histologies through comprehensive database analysis.</p>
+                    <a href="#" class="pub-link">
+                        View Abstract →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section parallax-section">
+        <div class="container">
+            <div class="cta-content" data-scroll-animate>
+                <h2>Contribute to Groundbreaking Research</h2>
+                <p>Join Med-RAMP and add your name to impactful publications</p>
+                <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Med-RAMP</h3>
+                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
+                        <li><a href="success-stories.html">Success Stories</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+                <p class="security-badge">🔒 Secure Site</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
