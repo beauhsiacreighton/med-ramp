@@ -28,9 +28,16 @@
         }
 
         .page-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem); /* Adjusted font size */
+            font-size: clamp(2.8rem, 5vw, 4rem);
             color: var(--white);
             margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
         }
 
         .mission-section {
@@ -39,10 +46,9 @@
         }
 
         .mission-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: left;
         }
 
         .mission-text h2 {
@@ -75,19 +81,6 @@
             left: 0;
             color: var(--primary-color);
             font-weight: bold;
-        }
-
-
-        .mission-image {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .mission-image img {
-            width: 100%;
-            height: auto;
-            display: block;
         }
 
         .values-section {
@@ -125,14 +118,16 @@
         }
 
         .value-icon {
-            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             color: var(--primary-color);
         }
         
         .value-icon svg {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
         }
 
         .value-card h3 {
@@ -153,7 +148,7 @@
 
         .research-areas {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
@@ -236,10 +231,17 @@
             transform: translateY(-3px);
         }
 
-
         @media (max-width: 992px) {
-            .mission-content {
-                gap: 2rem;
+            .values-grid,
+            .research-areas {
+                grid-template-columns: 1fr 1fr;
+                max-width: 700px; /* Constrain width for centering */
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .values-grid > .value-card:first-child,
+            .research-areas > .research-card:first-child {
+                grid-column: 1 / -1; /* Span full width to start the triangle */
             }
         }
 
@@ -247,12 +249,18 @@
             .mission-content {
                 grid-template-columns: 1fr;
             }
-
-            .mission-image {
-                order: -1; /* Image appears above text on mobile */
-            }
-            .values-grid {
+        }
+        
+        @media (max-width: 620px) {
+            /* On small screens, stack everything vertically */
+            .values-grid,
+            .research-areas {
                 grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+            .values-grid > .value-card:first-child,
+            .research-areas > .research-card:first-child {
+                grid-column: auto; /* Reset column span */
             }
         }
     </style>
@@ -284,7 +292,8 @@
     <!-- Page Hero -->
     <section class="page-hero">
         <div class="container">
-            <h1 data-scroll-animate>Empowering the Next Generation of Physicians and Researchers</h1>
+            <h1 data-scroll-animate>About Med-RAMP</h1>
+            <p data-scroll-animate>Empowering the Next Generation of Physicians and Researchers</p>
         </div>
     </section>
 
@@ -309,7 +318,6 @@
                     <h2>Our Mission</h2>
                     <p>To empower aspiring physicians and researchers by providing accessible research opportunities and mentorship, guided by the core values of <strong>Character, Competence, and Care.</strong> We are dedicated to helping you develop as a candidate and a future professional.</p>
                 </div>
-
             </div>
         </div>
     </section>
@@ -321,21 +329,21 @@
             <div class="values-grid">
                 <div class="value-card" data-scroll-animate>
                     <div class="value-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm-2 5h8v-1.5c0-1.33-2.67-2-4-2s-4 .67-4 2V16z"></path></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16V12" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8H12.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <h3>Character</h3>
                     <p>We uphold the highest ethical standards, fostering integrity, honesty, and professionalism in all our interactions and research endeavors.</p>
                 </div>
                 <div class="value-card" data-scroll-animate>
                     <div class="value-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"></path></svg>
+                         <svg viewBox="0 0 24 24"><path d="M2 3H10C11.1046 3 12 3.89543 12 5V21H2V3Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 5L22 5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9L22 9" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13L22 13" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17L22 17" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <h3>Competence</h3>
                     <p>We are committed to excellence, ensuring every participant develops the skills and knowledge needed for impactful medical research.</p>
                 </div>
                 <div class="value-card" data-scroll-animate>
                     <div class="value-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                        <svg viewBox="0 0 24 24"><path d="M16 21V19C16 16.7909 14.2091 15 12 15H5C2.79086 15 1 16.7909 1 19V21" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 11C10.9853 11 13 8.98528 13 6.5C13 4.01472 10.9853 2 8.5 2C6.01472 2 4 4.01472 4 6.5C4 8.98528 6.01472 11 8.5 11Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8V14" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 11H17" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <h3>Care</h3>
                     <p>We cultivate a supportive and collaborative community, prioritizing mentorship and the well-being of every aspiring physician.</p>
@@ -363,10 +371,6 @@
                 <div class="research-card" data-scroll-animate>
                     <h3>Treatment Outcomes</h3>
                     <p>We investigate prognostic factors and treatment responses in understudied cancer variants to guide clinical decision-making.</p>
-                </div>
-                <div class="research-card" data-scroll-animate>
-                    <h3>Clinical Applications</h3>
-                    <p>Translating our research findings into actionable insights that can improve diagnosis, prognosis, and treatment strategies.</p>
                 </div>
             </div>
         </div>
