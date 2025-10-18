@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Stories - Med-RAMP</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .page-hero {
+            padding: 120px 0 80px;
+            background: var(--gradient-1);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .success-section {
+            padding: 6rem 0;
+        }
+
+        .success-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .success-intro p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .story-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 120px;
+            color: rgba(0, 123, 255, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--white);
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .story-info h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .story-info .school {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .story-info .achievements {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .story-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-text {
+            color: var(--text-light);
+            line-height: 1.9;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .story-highlights {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .highlight-icon {
+            font-size: 1.5rem;
+        }
+
+        .stats-showcase {
+            background: var(--light-bg);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-showcase h2 {
+            margin-bottom: 3rem;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .showcase-item {
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .showcase-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .showcase-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .story-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .story-card {
+                padding: 2rem;
+            }
+
+            .story-highlights {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">Med-RAMP</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="success-stories.html" class="active">Success Stories</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 data-scroll-animate>Success Stories</h1>
+            <p data-scroll-animate>Real students, real achievements, real medical school acceptances</p>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="success-section">
+        <div class="container">
+            <div class="success-intro" data-scroll-animate>
+                <p>Our participants have gone on to attend top medical schools across the country. Here are just a few of their stories about how Med-RAMP helped transform their medical school applications.</p>
+            </div>
+
+            <!-- Story 1 -->
+            <div class="story-card" data-scroll-animate>
+                <div class="story-header">
+                    <div class="story-avatar">👩‍⚕️</div>
+                    <div class="story-info">
+                        <h3>Sarah M.</h3>
+                        <div class="school">Johns Hopkins School of Medicine</div>
+                        <div class="achievements">Class of 2028</div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <p class="story-text">"Med-RAMP completely transformed my medical school application. I came in with no research experience, and within a year I had earned authorship on multiple publications and conference abstracts. The mentorship was invaluable—my mentor helped me not just with research, but with navigating the entire application process. When I interviewed at Hopkins, being able to speak confidently about my research experience and understanding of rare cancers made all the difference. I genuinely believe Med-RAMP was the key factor that set my application apart."</p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📝</span>
+                            <span>5 Authorships</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎤</span>
+                            <span>3 Conference Presentations</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎓</span>
+                            <span>3 Medical School Acceptances</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 2 -->
+            <div class="story-card" data-scroll-animate>
+                <div class="story-header">
+                    <div class="story-avatar">👨‍⚕️</div>
+                    <div class="story-info">
+                        <h3>Michael Chen</h3>
+                        <div class="school">Stanford School of Medicine</div>
+                        <div class="achievements">Class of 2027</div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <p class="story-text">"As a non-traditional student, I needed to demonstrate my commitment to medicine and research. Med-RAMP gave me that opportunity. The program's flexibility allowed me to balance research with my full-time job, and the virtual format meant I could participate from anywhere. I worked on rare thyroid cancer epidemiology, and that research became a centerpiece of my personal statement. During interviews, I could speak passionately and knowledgeably about my research contributions. The mentorship I received extended beyond research—my mentor helped me navigate the unique challenges of being a non-traditional applicant."</p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📝</span>
+                            <span>7 Authorships</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🏆</span>
+                            <span>1 Publication in Peer-Reviewed Journal</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎓</span>
+                            <span>4 Medical School Acceptances</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 3 -->
+            <div class="story-card" data-scroll-animate>
+                <div class="story-header">
+                    <div class="story-avatar">👩‍🔬</div>
+                    <div class="story-info">
+                        <h3>Priya Patel</h3>
+                        <div class="school">Harvard Medical School</div>
+                        <div class="achievements">Class of 2029</div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <p class="story-text">"Med-RAMP opened doors I didn't even know existed. Coming from a small liberal arts college without extensive research opportunities, I worried my application would lack the research component that top medical schools expect. Med-RAMP changed everything. Not only did I gain genuine research skills in cancer epidemiology, but I also learned how to think critically about data, formulate research questions, and communicate scientific findings. My mentor became a trusted advisor who helped me refine my interests and supported me through every step of the application cycle. The confidence I gained from knowing I had contributed to meaningful research was evident in my interviews."</p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📝</span>
+                            <span>6 Authorships</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎤</span>
+                            <span>2 ASCO Poster Presentations</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎓</span>
+                            <span>5 Medical School Acceptances</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 4 -->
+            <div class="story-card" data-scroll-animate>
+                <div class="story-header">
+                    <div class="story-avatar">👨‍🎓</div>
+                    <div class="story-info">
+                        <h3>James Rodriguez</h3>
+                        <div class="school">UCSF School of Medicine</div>
+                        <div class="achievements">Class of 2028</div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <p class="story-text">"What I appreciated most about Med-RAMP was the genuine investment in my success. The program didn't just give me research tasks—it taught me how to be a researcher. I learned statistical analysis, manuscript writing, and how to think critically about clinical data. My mentor was incredibly supportive, always available to answer questions and provide guidance. When application season came around, I had a research portfolio that demonstrated sustained commitment and genuine contribution. Multiple interviewers specifically commented on my research experience and how well I could articulate its significance. Med-RAMP gave me the credibility and confidence I needed."</p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📝</span>
+                            <span>4 Authorships</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📊</span>
+                            <span>First-Author Abstract</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎓</span>
+                            <span>2 Medical School Acceptances</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 5 -->
+            <div class="story-card" data-scroll-animate>
+                <div class="story-header">
+                    <div class="story-avatar">👩‍💼</div>
+                    <div class="story-info">
+                        <h3>Emily Thompson</h3>
+                        <div class="school">University of Pennsylvania Perelman School of Medicine</div>
+                        <div class="achievements">Class of 2027</div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <p class="story-text">"Med-RAMP was exactly what I needed at exactly the right time. I was taking a gap year and wanted to strengthen my application with research experience, but most research positions required long-term, in-person commitments. Med-RAMP's virtual format was perfect. I could dedicate significant time to research while also working part-time. The quality of mentorship exceeded my expectations—my mentor treated me as a valued team member, not just a volunteer. The research I conducted on rare cancer genomics became a major talking point in my interviews, and I could tell it genuinely impressed the admissions committees. I'm convinced that Med-RAMP was instrumental in my acceptance to Penn."</p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📝</span>
+                            <span>8 Authorships</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🏆</span>
+                            <span>2 Journal Publications</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🎓</span>
+                            <span>6 Medical School Acceptances</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Showcase -->
+    <section class="stats-showcase">
+        <div class="container">
+            <h2 class="section-title" data-scroll-animate>Our Impact in Numbers</h2>
+            <div class="showcase-grid">
+                <div class="showcase-item" data-scroll-animate>
+                    <div class="showcase-number">50+</div>
+                    <div class="showcase-label">Medical School Acceptances</div>
+                </div>
+                <div class="showcase-item" data-scroll-animate>
+                    <div class="showcase-number">120+</div>
+                    <div class="showcase-label">Total Authorships</div>
+                </div>
+                <div class="showcase-item" data-scroll-animate>
+                    <div class="showcase-number">300+</div>
+                    <div class="showcase-label">Program Participants</div>
+                </div>
+                <div class="showcase-item" data-scroll-animate>
+                    <div class="showcase-number">95%</div>
+                    <div class="showcase-label">Would Recommend</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section parallax-section">
+        <div class="container">
+            <div class="cta-content" data-scroll-animate>
+                <h2>Write Your Own Success Story</h2>
+                <p>Join Med-RAMP and take the next step toward your medical school dreams</p>
+                <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large">Apply Today</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Med-RAMP</h3>
+                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
+                        <li><a href="success-stories.html">Success Stories</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+                <p class="security-badge">🔒 Secure Site</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
