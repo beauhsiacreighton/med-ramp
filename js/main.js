@@ -13,22 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            if (mobileToggle) {
-                mobileToggle.classList.remove('active');
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                if (mobileToggle) {
+                    mobileToggle.classList.remove('active');
+                }
             }
         });
     });
 
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
 
     // Animated counter for statistics
     const animateCounter = (element, target, duration = 2000) => {
@@ -51,24 +55,25 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animated');
                 
-                // Trigger counter animation for stat numbers
                 if (entry.target.classList.contains('stat-card')) {
                     const statNumber = entry.target.querySelector('.stat-number');
                     const target = parseInt(statNumber.getAttribute('data-target'));
-                    animateCounter(statNumber, target);
+                    if (statNumber && !statNumber.classList.contains('is-animated')) {
+                        animateCounter(statNumber, target);
+                        statNumber.classList.add('is-animated'); 
+                    }
                 }
                 
-                observer.unobserve(entry.target);
+                obs.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe all elements with data-scroll-animate attribute
     document.querySelectorAll('[data-scroll-animate]').forEach(element => {
         observer.observe(element);
     });
@@ -77,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            if (href !== '#' && href !== '') {
+            if (href !== '#' && href.length > 1) {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
@@ -119,18 +124,88 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'translateY(0)';
         });
     });
+
+    // *** NEW: Check if we are on the publications page and load publications ***
+    if (document.querySelector('.publications-grid')) {
+        loadPublications();
+    }
+    
+    // *** NEW: Check if we are on the blog page and load posts ***
+    if (document.getElementById('blogContainer')) {
+        loadBlogPosts();
+    }
 });
 
-// Filter publications (for publications page)
-function filterPublications(category) {
+
+// *** NEW: Function to load publications from JSON ***
+async function loadPublications() {
+    try {
+        const response = await fetch('publications.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const publications = await response.json();
+        const grid = document.querySelector('.publications-grid');
+        
+        if (!grid) return;
+
+        // Map categories to badge classes
+        const badgeClasses = {
+            journal: 'badge-journal',
+            abstract: 'badge-abstract',
+            poster: 'badge-poster'
+        };
+
+        grid.innerHTML = publications.map(pub => `
+            <div class="publication-item" data-category="${pub.category}" data-scroll-animate>
+                <span class="pub-badge ${badgeClasses[pub.category] || 'badge-journal'}">${pub.category.charAt(0).toUpperCase() + pub.category.slice(1)}</span>
+                <h3>${pub.title}</h3>
+                <p class="authors">${pub.authors}</p>
+                <div class="pub-details">
+                    <span>📅 ${pub.date}</span>
+                    <span>📚 ${pub.source}</span>
+                </div>
+                <p class="pub-abstract">${pub.abstract}</p>
+                <a href="${pub.link}" target="_blank" class="pub-link">
+                    View Publication →
+                </a>
+            </div>
+        `).join('');
+
+        // Re-initialize observer for newly added elements
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-scroll-animate]').forEach(element => {
+            observer.observe(element);
+        });
+
+    } catch (error) {
+        console.error('Error loading publications:', error);
+        const grid = document.querySelector('.publications-grid');
+        if (grid) {
+            grid.innerHTML = '<p style="text-align: center; color: #6c757d;">Could not load publications.</p>';
+        }
+    }
+}
+
+
+// *** REVISED: Filter publications function ***
+function filterPublications(category, buttonElement) {
     const items = document.querySelectorAll('.publication-item');
     items.forEach(item => {
-        if (category === 'all' || item.dataset.category === category) {
+        const itemCategory = item.dataset.category;
+        if (category === 'all' || itemCategory === category) {
             item.style.display = 'block';
             setTimeout(() => {
                 item.style.opacity = '1';
                 item.style.transform = 'translateY(0)';
-            }, 10);
+            }, 10); 
         } else {
             item.style.opacity = '0';
             item.style.transform = 'translateY(20px)';
@@ -144,50 +219,58 @@ function filterPublications(category) {
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    event.target.classList.add('active');
+    // Add 'active' class to the clicked button
+    if(buttonElement) {
+        buttonElement.classList.add('active');
+    } else {
+        // Fallback for initial load if needed
+        document.querySelector('.filter-btn[onclick*="\'all\'"]').classList.add('active');
+    }
 }
 
-// Search publications (for publications page)
+// *** REVISED: Search publications function ***
 function searchPublications() {
     const searchInput = document.getElementById('publicationSearch');
     if (!searchInput) return;
     
-    const searchTerm = searchInput.value.toLowerCase();
+    const searchTerm = searchInput.value.toLowerCase().trim();
     const items = document.querySelectorAll('.publication-item');
     
     items.forEach(item => {
-        const title = item.querySelector('h3').textContent.toLowerCase();
-        const authors = item.querySelector('.authors').textContent.toLowerCase();
+        // Check content inside the item for a match
+        const itemText = item.textContent.toLowerCase();
         
-        if (title.includes(searchTerm) || authors.includes(searchTerm)) {
-            item.style.display = 'block';
+        if (itemText.includes(searchTerm)) {
+            item.style.display = 'block'; // Show if it matches
         } else {
-            item.style.display = 'none';
+            item.style.display = 'none'; // Hide if it doesn't
         }
     });
 }
+
 
 // FAQ toggle (for FAQ page)
 function toggleFAQ(element) {
     const answer = element.nextElementSibling;
     const icon = element.querySelector('.faq-icon');
     
-    if (answer.style.maxHeight) {
-        answer.style.maxHeight = null;
-        if (icon) icon.textContent = '+';
-    } else {
-        // Close all other FAQs
-        document.querySelectorAll('.faq-answer').forEach(item => {
-            item.style.maxHeight = null;
-        });
-        document.querySelectorAll('.faq-icon').forEach(item => {
-            item.textContent = '+';
-        });
-        
+    const isOpening = !answer.style.maxHeight;
+
+    // Close all other FAQs first
+    document.querySelectorAll('.faq-answer').forEach(item => {
+        item.style.maxHeight = null;
+    });
+    document.querySelectorAll('.faq-icon').forEach(item => {
+        if (item) item.textContent = '+';
+    });
+    
+    // If the clicked one was closed, open it
+    if (isOpening) {
         answer.style.maxHeight = answer.scrollHeight + 'px';
         if (icon) icon.textContent = '−';
     }
 }
+
 
 // Load blog posts from JSON (for blog page)
 async function loadBlogPosts() {
@@ -198,7 +281,6 @@ async function loadBlogPosts() {
         
         if (!container) return;
         
-        // Sort posts by date (newest first)
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
         container.innerHTML = posts.map(post => `
@@ -216,7 +298,6 @@ async function loadBlogPosts() {
             </article>
         `).join('');
         
-        // Re-observe new elements for scroll animations
         document.querySelectorAll('[data-scroll-animate]').forEach(element => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -244,7 +325,17 @@ function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString('en-US', options);
 }
 
-// Initialize blog posts if on blog page
-if (document.getElementById('blogContainer')) {
-    loadBlogPosts();
-}
+// Lastly, you need to slightly adjust the onclick attributes in your HTML to pass the element itself to the function
+// This ensures the 'active' class is set correctly.
+// Go to publications.html and change:
+// onclick="filterPublications('all')"
+// TO:
+// onclick="filterPublications('all', this)"
+
+// Example for all buttons:
+/*
+<button class="filter-btn active" onclick="filterPublications('all', this)">All Publications</button>
+<button class="filter-btn" onclick="filterPublications('journal', this)">Journal Articles</button>
+<button class="filter-btn" onclick="filterPublications('abstract', this)">Conference Abstracts</button>
+<button class="filter-btn" onclick="filterPublications('poster', this)">Posters</button>
+*/
