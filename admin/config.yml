@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: your-username/your-repository-name # e.g., john-doe/my-awesome-site
+  branch: main # or master, depending on your repository's default branch
+
+media_folder: "assets/images" # Where to store uploaded images
+public_folder: "/assets/images" # The src attribute for uploaded images
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "_posts" # The folder where blog posts are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template for new documents
+    fields: # The fields for each document, usually in front matter
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
