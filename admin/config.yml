@@ -2,6 +2,7 @@ backend:
   name: github
   repo: beauhsiacreighton/med-ramp # e.g., john-doe/my-awesome-site
   branch: main # or master, depending on your repository's default branch
+  site_domain: beauhsiacreighton.github.io # Add this line
 
 media_folder: "assets/images" # Where to store uploaded images
 public_folder: "/assets/images" # The src attribute for uploaded images
