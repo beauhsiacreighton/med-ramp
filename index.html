@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med-RAMP - Medical Research Assistance and Mentorship Program</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            overflow: auto;
+            padding: 0 20px;
+        }
+        header {
+            background: #fff;
+            color: #333;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eaeaea;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #007BFF;
+        }
+        .apply-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .apply-button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .hero {
+            background: #f4f7f6;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+        .hero-text {
+            max-width: 600px;
+            text-align: left;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .hero img {
+            max-width: 300px;
+            border-radius: 10px;
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+        .about-grid, .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+        .faq-item {
+            background: #fff;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .faq-item h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .publication-list a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .publication-list a:hover {
+            text-decoration: underline;
+        }
+        .cta-section {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .cta-section h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .cta-section .apply-button-large {
+            background-color: #fff;
+            color: #007BFF;
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .cta-section .apply-button-large:hover {
+            background-color: #f0f0f0;
+        }
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        @media(max-width: 768px) {
+            header .container { flex-direction: column; }
+            nav ul { flex-direction: column; align-items: center; margin-top: 10px; }
+            nav ul li { margin: 10px 0; }
+            .hero-content { flex-direction: column; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">Med-RAMP</div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#faq">FAQs</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-button">Apply Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Medical Research Assistance and Mentorship Program</h1>
+                        <p>Gain invaluable clinical research experience and mentorship from medical students in our virtual program. Applications are now open!</p>
+                        <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-button">Join Us</a>
+                    </div>
+                    <img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8fb7fce2-7c4a-40ce-b5fc-86e320caf108/Med-RAMP.png" alt="Med-RAMP Logo">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About The Program</h2>
+                <div class="about-grid">
+                    <div class="card">
+                        <h3>Your Virtual Research Opportunity</h3>
+                        <p>This program was created with the pre-med in mind. As a fully virtual program, you can contribute to cutting-edge research on rare cancers from anywhere with an internet connection, fitting valuable experience into your schedule.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Mentorship from Medical Students</h3>
+                        <p>We've been there. Navigating the path to medical school is challenging. Our program provides meaningful connections with medical student mentors who offer guidance on research and firsthand experience of the application process.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Publish and Present Your Work</h3>
+                        <p>Your contributions are rewarded with opportunities for authorship on abstracts, poster presentations, and publications. Med-RAMP participants have already earned hundreds of authorships, significantly boosting their medical school applications.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section" style="background-color: #f4f7f6;">
+            <div class="container">
+                <h2>Program Highlights</h2>
+                <div class="features-grid">
+                    <div class="card">
+                        <h3>Focus on Rare Cancers</h3>
+                        <p>Work on impactful projects focusing on the demographics and genomics of various rare cancer types, helping to push the boundaries of current medical knowledge.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Valuable Resources</h3>
+                        <p>Gain access to pre-analyzed data, comprehensive research templates, clear instructions, and potential funding for manuscript submissions.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Flexible Commitment</h3>
+                        <p>There are no minimum or maximum time constraints. Your growth and responsibilities are based on your contributions, allowing for a flexible yet rewarding experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="publications" class="section">
+            <div class="container">
+                <h2>Publications</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Our participants have a strong track record of contributing to significant research. To date, Med-RAMP participants have earned hundreds of authorships. Below are some examples of their work.</p>
+                <div class="publication-list card">
+                    <p><strong>Example Conference Abstracts:</strong> Over 50 abstracts were presented at a single recent ASCO Annual Meeting. You can view them <a href="https://meetings.asco.org/abstracts-presentations/search?query=*&q=creighton&sortBy=Relevancy&filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&size=50" target="_blank">here</a>.</p>
+                    <p><strong>Example Publication 1:</strong> "Demographic and Prognostic Factors of the Columnar Cell Variant of Papillary Thyroid Carcinoma: A National Cancer Database Study." Read the full article <a href="https://www.cureus.com/articles/248826-demographic-and-prognostic-factors-of-the-columnar-cell-variant-of-papillary-thyroid-carcinoma-a-national-cancer-database-study?utm_medium=email&utm_source=transaction#!/" target="_blank">here</a>.</p>
+                    <p><strong>Example Publication 2:</strong> An article on the genomics of cancer, which you can explore <a href="https://www.mdpi.com/2072-6694/17/3/536" target="_blank">here</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section" style="background-color: #f4f7f6;">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <h3>What is Med-RAMP, and what is the focus of the research?</h3>
+                    <div class="faq-answer">
+                        <p>Med-RAMP (Medical Research Assistance and Mentorship Program) connects pre-med students with medical students for mentorship and research collaboration. The research primarily focuses on rare cancers, analyzing data from sources like the National Cancer Database (NCDB).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3>What qualifications are required to join?</h3>
+                    <div class="faq-answer">
+                        <p>No specific qualifications or prior experience are necessary. We are looking for motivated students who are eager to learn, work hard, and contribute to our research goals.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3>What is the time commitment?</h3>
+                    <div class="faq-answer">
+                        <p>The program is flexible. There are no minimum or maximum time commitments. Participants are rewarded with more responsibility and opportunities based on the quality and volume of their contributions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3>How will this program contribute to my education?</h3>
+                    <div class="faq-answer">
+                        <p>You’ll gain practical experience in research, data analysis, and scientific writing. This hands-on experience in cancer research will provide you with valuable skills and knowledge applicable to your future medical education.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="apply" class="cta-section">
+            <div class="container">
+                <h2>Ready to Make a Difference?</h2>
+                <p>Join a community of driven pre-med and medical students and contribute to meaningful cancer research.</p>
+                <a href="https://forms.gle/ajjVewzsPSYG5inD7" target="_blank" class="apply-button-large">Apply to Med-RAMP Today</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
