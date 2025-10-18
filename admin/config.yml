@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-username/your-repository-name # e.g., john-doe/my-awesome-site
+  repo: beauhsiacreighton/med-ramp # e.g., john-doe/my-awesome-site
   branch: main # or master, depending on your repository's default branch
 
 media_folder: "assets/images" # Where to store uploaded images
