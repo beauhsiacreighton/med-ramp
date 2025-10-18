@@ -3,17 +3,17 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #007BFF;
-    --primary-dark: #0056b3;
-    --secondary-color: #6c63ff;
-    --accent-color: #00d4ff;
+    --primary-color: #015da9;
+    --primary-dark: #00427a;
+    --secondary-color: #00b4d8;
+    --accent-color: #90e0ef;
     --dark-bg: #1a1a2e;
     --light-bg: #f8f9fa;
     --text-dark: #2c3e50;
     --text-light: #6c757d;
     --white: #ffffff;
-    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-2: linear-gradient(135deg, #007BFF 0%, #00d4ff 100%);
+    --gradient-1: linear-gradient(135deg, #015da9 0%, #00b4d8 100%);
+    --gradient-2: linear-gradient(135deg, #015da9 0%, #00b4d8 100%);
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
     --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
@@ -90,7 +90,7 @@ a {
 }
 
 .logo img {
-    height: 40px; /* Adjust height as needed */
+    height: 35px; /* Adjusted logo size */
     width: auto;
 }
 
@@ -120,7 +120,7 @@ a {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--gradient-2);
+    background: var(--gradient-1);
     transition: width 0.3s ease;
 }
 
@@ -130,17 +130,17 @@ a {
 }
 
 .apply-btn {
-    background: var(--gradient-2);
+    background: var(--gradient-1);
     color: var(--white) !important;
     padding: 0.7rem 1.5rem;
     border-radius: 50px;
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(1, 93, 169, 0.3);
 }
 
 .apply-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    box-shadow: 0 6px 20px rgba(1, 93, 169, 0.4);
 }
 
 .mobile-toggle {
@@ -161,43 +161,31 @@ a {
     border-radius: 3px;
 }
 
-/* Hero Section */
+/* Hero Section with Animated Gradient */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
     padding-top: 80px;
     overflow: hidden;
+    color: var(--white);
+    background: linear-gradient(135deg, #015da9, #0077b6, #00b4d8, #00427a);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
 }
 
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-    opacity: 0.3;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(108, 99, 255, 0.6));
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
     text-align: center;
-    color: var(--white);
     max-width: 900px;
     padding: 2rem;
 }
@@ -221,46 +209,6 @@ a {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-}
-
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-}
-
-.scroll-indicator span {
-    display: block;
-    width: 30px;
-    height: 50px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
-    position: relative;
-}
-
-.scroll-indicator span::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: var(--white);
-    border-radius: 50%;
-    animation: scroll 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
-}
-
-@keyframes scroll {
-    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
 }
 
 /* Buttons */
@@ -368,7 +316,7 @@ a {
     display: block;
     width: 80px;
     height: 4px;
-    background: var(--gradient-2);
+    background: var(--gradient-1);
     margin: 1rem auto 0;
     border-radius: 2px;
 }
@@ -476,7 +424,7 @@ a {
 .step-number {
     width: 80px;
     height: 80px;
-    background: var(--gradient-2);
+    background: var(--gradient-1);
     color: var(--white);
     border-radius: 50%;
     display: flex;
@@ -485,7 +433,7 @@ a {
     font-size: 2rem;
     font-weight: 700;
     margin: 0 auto 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 20px rgba(1, 93, 169, 0.3);
 }
 
 .process-step h3 {
@@ -579,7 +527,7 @@ a {
 }
 
 .footer-section .footer-logo img {
-    max-width: 120px; /* Adjust size as needed */
+    max-width: 100px; /* Adjusted footer logo size */
 }
 
 .footer-section h4 {
@@ -666,7 +614,7 @@ a {
 
     .nav-links {
         position: fixed;
-        top: 70px; /* Adjust based on navbar height */
+        top: 67px; /* Adjust based on navbar height */
         left: 0;
         right: 0;
         flex-direction: column;
