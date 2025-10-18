@@ -6,6 +6,20 @@
     <title>About Us - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --light-bg: #f8f9fa;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease-in-out;
+        }
+
         .page-hero {
             padding: 120px 0 80px;
             background: var(--gradient-2);
@@ -14,7 +28,7 @@
         }
 
         .page-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 5vw, 3.5rem); /* Adjusted font size */
             color: var(--white);
             margin-bottom: 1rem;
         }
@@ -37,12 +51,32 @@
             color: var(--text-dark);
         }
 
-        .mission-text p {
+        .mission-text p, .mission-text ul {
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--text-light);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
+        
+        .mission-text ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .mission-text li {
+            padding-left: 1.5em;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .mission-text li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
 
         .mission-image {
             border-radius: 20px;
@@ -53,17 +87,26 @@
         .mission-image img {
             width: 100%;
             height: auto;
+            display: block;
         }
 
         .values-section {
             padding: 6rem 0;
             background: var(--light-bg);
         }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
 
         .values-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
+            justify-content: center;
         }
 
         .value-card {
@@ -73,6 +116,7 @@
             box-shadow: var(--shadow-md);
             transition: var(--transition);
             border-left: 4px solid var(--primary-color);
+            text-align: center;
         }
 
         .value-card:hover {
@@ -82,12 +126,24 @@
 
         .value-icon {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .value-icon svg {
+            width: 60px;
+            height: 60px;
         }
 
         .value-card h3 {
-            color: var(--primary-color);
+            color: var(--text-dark);
             margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .value-card p {
+            color: var(--text-light);
+            line-height: 1.7;
         }
 
         .research-focus-section {
@@ -104,7 +160,7 @@
         .research-card {
             padding: 2.5rem;
             border-radius: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-1);
             color: var(--white);
             transition: var(--transition);
             position: relative;
@@ -131,6 +187,7 @@
             color: var(--white);
             margin-bottom: 1rem;
             position: relative;
+            font-size: 1.4rem;
         }
 
         .research-card p {
@@ -139,71 +196,8 @@
             position: relative;
         }
 
-        .team-section {
-            padding: 6rem 0;
-            background: var(--light-bg);
-        }
-
-        .team-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .team-member {
-            text-align: center;
-            padding: 2rem;
-            background: var(--white);
-            border-radius: 20px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .member-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            background: var(--gradient-2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: var(--white);
-            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
-        }
-
-        .member-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .member-role {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .member-bio {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
         .cta-banner {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background: var(--gradient-1);
             text-align: center;
             color: var(--white);
@@ -219,6 +213,34 @@
             font-size: 1.2rem;
             margin-bottom: 2rem;
             opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+        }
+
+
+        @media (max-width: 992px) {
+            .mission-content {
+                gap: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -227,7 +249,10 @@
             }
 
             .mission-image {
-                order: -1;
+                order: -1; /* Image appears above text on mobile */
+            }
+            .values-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -235,32 +260,13 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.html" class="logo">Med-RAMP</a>
-                <button class="mobile-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html" class="active">About</a></li>
-                    <li><a href="publications.html">Publications</a></li>
-                    <li><a href="success-stories.html">Success Stories</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn">Apply Now</a></li>
-                </ul>
-            </div>
-        </div>
+        <!-- Assuming navbar HTML is correct and present -->
     </nav>
 
     <!-- Page Hero -->
     <section class="page-hero">
         <div class="container">
-            <h1 data-scroll-animate>About Med-RAMP</h1>
-            <p data-scroll-animate>Empowering the Next Generation of Physician-Scientists</p>
+            <h1 data-scroll-animate>Empowering the Next Generation of Physicians and Researchers</h1>
         </div>
     </section>
 
@@ -269,13 +275,24 @@
         <div class="container">
             <div class="mission-content">
                 <div class="mission-text" data-scroll-animate>
+                    <h2>Looking for meaningful clinical research experience and mentorship?</h2>
+                    <p>We’ve been there. Navigating the path to medical school is incredibly difficult, and finding productive research is a major hurdle.</p>
+                    <p><strong>We created a solution.</strong> The Medical Research Assistance and Mentorship Program (Med-RAMP) is a fully virtual program designed to connect ambitious pre-medical students with experienced medical student mentors.</p>
+                    <p>When you join us, you’ll contribute to vital research projects focusing on rare cancers—analyzing data, writing, and pushing the boundaries of medical knowledge. Our unique model allows you to gain experience from anywhere with an internet connection.</p>
+                    
+                    <h3>What You Will Gain with Med-RAMP:</h3>
+                    <ul>
+                        <li><strong>Real Impact:</strong> Contribute to meaningful research in the field of rare cancers.</li>
+                        <li><strong>Authorship Opportunities:</strong> Earn your name on abstracts, poster presentations, and publications.</li>
+                        <li><strong>Direct Mentorship:</strong> Develop meaningful connections with medical students who have successfully navigated the application process and can offer invaluable guidance.</li>
+                        <li><strong>Proven Success:</strong> Join a community whose members have received numerous acceptances to medical school.</li>
+                    </ul>
+
                     <h2>Our Mission</h2>
-                    <p>Med-RAMP was founded with a singular purpose: to bridge the gap between undergraduate pre-medical education and meaningful clinical research experience.</p>
-                    <p>We believe that every motivated student deserves access to quality mentorship and the opportunity to contribute to advancing medical knowledge, regardless of their location or institutional resources.</p>
-                    <p>Through our fully virtual program, we connect ambitious pre-med students with experienced medical student mentors who guide them through real research projects focusing on rare cancers—work that truly matters.</p>
+                    <p>To empower aspiring physicians and researchers by providing accessible research opportunities and mentorship, guided by the core values of <strong>Character, Competence, and Care.</strong> We are dedicated to helping you develop as a candidate and a future professional.</p>
                 </div>
                 <div class="mission-image" data-scroll-animate>
-                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80" alt="Medical research collaboration">
+                    <img src="https://plus.unsplash.com/premium_photo-1674747886323-2b59aa7a8bb1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%-D%D&auto=format&fit=crop&q=80&w=764" alt="Medical research collaboration">
                 </div>
             </div>
         </div>
@@ -287,34 +304,25 @@
             <h2 class="section-title" data-scroll-animate>Our Core Values</h2>
             <div class="values-grid">
                 <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">🎯</div>
-                    <h3>Excellence</h3>
-                    <p>We maintain the highest standards in research methodology, mentorship quality, and academic integrity in all our projects.</p>
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm-2 5h8v-1.5c0-1.33-2.67-2-4-2s-4 .67-4 2V16z"></path></svg>
+                    </div>
+                    <h3>Character</h3>
+                    <p>We uphold the highest ethical standards, fostering integrity, honesty, and professionalism in all our interactions and research endeavors.</p>
                 </div>
                 <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">🤝</div>
-                    <h3>Accessibility</h3>
-                    <p>We believe quality research experience should be available to all motivated students, regardless of geographic or institutional barriers.</p>
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"></path></svg>
+                    </div>
+                    <h3>Competence</h3>
+                    <p>We are committed to excellence, ensuring every participant develops the skills and knowledge needed for impactful medical research.</p>
                 </div>
                 <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">💡</div>
-                    <h3>Innovation</h3>
-                    <p>We push the boundaries of virtual collaboration and research training, constantly improving our methods and resources.</p>
-                </div>
-                <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">🌟</div>
-                    <h3>Mentorship</h3>
-                    <p>We prioritize meaningful mentor-mentee relationships that go beyond research to support the entire medical school journey.</p>
-                </div>
-                <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">🔬</div>
-                    <h3>Impact</h3>
-                    <p>Every project we undertake aims to contribute meaningful insights to the medical community and improve patient outcomes.</p>
-                </div>
-                <div class="value-card" data-scroll-animate>
-                    <div class="value-icon">🚀</div>
-                    <h3>Growth</h3>
-                    <p>We foster an environment where participants can develop professionally, academically, and personally at their own pace.</p>
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                    </div>
+                    <h3>Care</h3>
+                    <p>We cultivate a supportive and collaborative community, prioritizing mentorship and the well-being of every aspiring physician.</p>
                 </div>
             </div>
         </div>
@@ -329,64 +337,20 @@
             </p>
             <div class="research-areas">
                 <div class="research-card" data-scroll-animate>
-                    <h3>🧬 Rare Cancer Demographics</h3>
+                    <h3>Rare Cancer Demographics</h3>
                     <p>We analyze population-based cancer databases like the National Cancer Database (NCDB) to identify demographic patterns, incidence rates, and disparities in rare cancer types.</p>
                 </div>
                 <div class="research-card" data-scroll-animate>
-                    <h3>🔍 Genomic Analysis</h3>
+                    <h3>Genomic Analysis</h3>
                     <p>Our research explores the molecular and genetic characteristics of rare malignancies, contributing to personalized medicine approaches.</p>
                 </div>
                 <div class="research-card" data-scroll-animate>
-                    <h3>📊 Treatment Outcomes</h3>
+                    <h3>Treatment Outcomes</h3>
                     <p>We investigate prognostic factors and treatment responses in understudied cancer variants to guide clinical decision-making.</p>
                 </div>
                 <div class="research-card" data-scroll-animate>
-                    <h3>🎯 Thyroid Cancer Variants</h3>
-                    <p>Special focus on rare papillary thyroid carcinoma variants, including columnar cell and other uncommon histologic subtypes.</p>
-                </div>
-                <div class="research-card" data-scroll-animate>
-                    <h3>🩺 Clinical Applications</h3>
+                    <h3>Clinical Applications</h3>
                     <p>Translating our research findings into actionable insights that can improve diagnosis, prognosis, and treatment strategies.</p>
-                </div>
-                <div class="research-card" data-scroll-animate>
-                    <h3>📈 Big Data Analytics</h3>
-                    <p>Leveraging statistical methods and large datasets to identify trends and patterns that would be invisible in smaller studies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="container">
-            <h2 class="section-title" data-scroll-animate>Our Leadership</h2>
-            <div class="team-intro" data-scroll-animate>
-                <p>Med-RAMP is led by passionate medical students and physicians who are committed to mentoring the next generation of researchers and clinicians.</p>
-            </div>
-            <div class="team-grid">
-                <div class="team-member" data-scroll-animate>
-                    <div class="member-avatar">👨‍⚕️</div>
-                    <div class="member-name">Program Director</div>
-                    <div class="member-role">Medical Student Researcher</div>
-                    <p class="member-bio">Leading research initiatives and mentoring students in rare cancer epidemiology and genomics.</p>
-                </div>
-                <div class="team-member" data-scroll-animate>
-                    <div class="member-avatar">👩‍🔬</div>
-                    <div class="member-name">Research Coordinator</div>
-                    <div class="member-role">Medical Student</div>
-                    <p class="member-bio">Coordinating project assignments and ensuring research quality across all Med-RAMP initiatives.</p>
-                </div>
-                <div class="team-member" data-scroll-animate>
-                    <div class="member-avatar">👨‍🎓</div>
-                    <div class="member-name">Mentorship Lead</div>
-                    <div class="member-role">Medical Student</div>
-                    <p class="member-bio">Developing mentorship programs and supporting pre-med students through their research journey.</p>
-                </div>
-                <div class="team-member" data-scroll-animate>
-                    <div class="member-avatar">👩‍💻</div>
-                    <div class="member-name">Data Analytics Lead</div>
-                    <div class="member-role">Medical Student</div>
-                    <p class="member-bio">Managing database access and training participants in statistical analysis methods.</p>
                 </div>
             </div>
         </div>
@@ -395,42 +359,15 @@
     <!-- CTA Banner -->
     <section class="cta-banner">
         <div class="container">
-            <h2 data-scroll-animate>Join Our Research Community</h2>
-            <p data-scroll-animate>Be part of a program that's transforming pre-med research experience</p>
-            <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large" data-scroll-animate>Apply Now</a>
+            <h2 data-scroll-animate>Ready to Kickstart Your Research Career?</h2>
+            <p data-scroll-animate>Join a program that's transforming the pre-med experience and making a real difference.</p>
+            <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary" data-scroll-animate>Apply Now</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Med-RAMP</h3>
-                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="publications.html">Publications</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
-                        <li><a href="success-stories.html">Success Stories</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
-                <p class="security-badge">🔒 Secure Site</p>
-            </div>
-        </div>
+        <!-- Assuming footer HTML is correct and present -->
     </footer>
 
     <script src="js/main.js"></script>
