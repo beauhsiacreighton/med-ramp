@@ -1,0 +1,74 @@
+[
+  {
+    "category": "journal",
+    "title": "Genomic Insights into Rare Cancer Variants",
+    "authors": "Med-RAMP Research Consortium",
+    "date": "2025",
+    "source": "Cancers Journal",
+    "abstract": "An exploration of genomic characteristics across multiple rare cancer types, utilizing advanced analytical methods to identify potential therapeutic targets.",
+    "link": "https://www.mdpi.com/2072-6694/17/3/536"
+  },
+  {
+    "category": "abstract",
+    "title": "ASCO Annual Meeting Presentations",
+    "authors": "Multiple Med-RAMP Authors",
+    "date": "2023",
+    "source": "ASCO Annual Meeting",
+    "abstract": "Over 50 abstracts presented at the ASCO Annual Meeting covering diverse aspects of rare cancer research, from epidemiology to treatment outcomes.",
+    "link": "https://meetings.asco.org/abstracts-presentations/search?query=*&q=creighton&sortBy=Relevancy&filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&size=50"
+  },
+  {
+    "category": "journal",
+    "title": "Epidemiological Trends in Rare Thyroid Cancer Variants",
+    "authors": "Med-RAMP Thyroid Research Group",
+    "date": "2024",
+    "source": "Endocrine Oncology",
+    "abstract": "Analysis of incidence patterns and demographic characteristics across multiple rare thyroid cancer histologic subtypes using population-based data.",
+    "link": "#"
+  },
+  {
+    "category": "poster",
+    "title": "Molecular Profiling of Rare Gastrointestinal Malignancies",
+    "authors": "Med-RAMP GI Research Team",
+    "date": "2024",
+    "source": "AACR Annual Meeting",
+    "abstract": "Comprehensive molecular characterization of rare gastrointestinal cancers with implications for targeted therapy development.",
+    "link": "#"
+  },
+  {
+    "category": "abstract",
+    "title": "Treatment Outcomes in Rare Sarcoma Subtypes",
+    "authors": "Med-RAMP Sarcoma Working Group",
+    "date": "2024",
+    "source": "CTOS Annual Meeting",
+    "abstract": "Retrospective analysis of treatment patterns and survival outcomes across multiple rare sarcoma histologies.",
+    "link": "#"
+  },
+  {
+    "category": "journal",
+    "title": "Prognostic Factors in Rare Breast Cancer Variants",
+    "authors": "Med-RAMP Breast Oncology Group",
+    "date": "2023",
+    "source": "Breast Cancer Research",
+    "abstract": "Investigation of clinicopathologic features and outcomes in rare histologic subtypes of breast cancer using national registry data.",
+    "link": "#"
+  },
+  {
+    "category": "poster",
+    "title": "Racial and Ethnic Disparities in Rare Cancer Outcomes",
+    "authors": "Med-RAMP Health Equity Team",
+    "date": "2023",
+    "source": "ASCO Quality Care Symposium",
+    "abstract": "Examination of disparities in diagnosis, treatment, and survival across different demographic groups in rare cancer populations.",
+    "link": "#"
+  },
+  {
+    "category": "abstract",
+    "title": "Novel Biomarkers in Rare Lung Cancer Subtypes",
+    "authors": "Med-RAMP Thoracic Oncology Group",
+    "date": "2024",
+    "source": "WCLC",
+    "abstract": "Identification of potential prognostic and predictive biomarkers in uncommon lung cancer histologies through comprehensive database analysis.",
+    "link": "#"
+  }
+]
