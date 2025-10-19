@@ -127,8 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-// Publications page: Filter and search functionality
-    const publicationsGrid = document.querySelector('.publications-grid');
+// Publications page: Filter and search functionality INSERT THE CODE HERE
+    // Publications page: Filter and search functionality
+const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
         const searchInput = document.getElementById('publicationSearch');
         const filterButtons = document.querySelectorAll('.filter-btn');
@@ -175,6 +176,21 @@ function updatePublicationsView() {
     
     const activeCategory = activeFilterButton.dataset.category;
     const items = document.querySelectorAll('.publication-item');
+
+    // Check if we should show stats and featured sections
+    const showExtraSections = (activeCategory === 'all' && searchTerm === '');
+    
+    // Hide/show stats banner and featured section
+    const statsBanner = document.querySelector('.stats-banner');
+    const featuredSection = document.querySelector('.featured-section');
+    
+    if (statsBanner) {
+        statsBanner.style.display = showExtraSections ? 'block' : 'none';
+    }
+    
+    if (featuredSection) {
+        featuredSection.style.display = showExtraSections ? 'block' : 'none';
+    }
 
     let visibleCount = 0;
 
@@ -227,6 +243,7 @@ function showNoResultsMessage(visibleCount) {
         grid.appendChild(message);
     }
 }
+
 // FAQ toggle (for FAQ page)
 function toggleFAQ(element) {
     const answer = element.nextElementSibling;
