@@ -292,7 +292,45 @@ a {
     color: var(--primary-color);
 }
 
+/* =============================================
+   Page Hero Section Styles
+   ============================================= */
+.page-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 40vh; /* Gives the section a good height */
+    padding: 4rem 1rem;
+    color: var(--white);
+}
 
+.page-hero h1 {
+    font-size: 3.5rem; /* Larger, more impactful font size */
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.page-hero p {
+    font-size: 1.25rem;
+    max-width: 600px; /* Keeps the subtitle from getting too wide */
+    opacity: 0.9;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+    .page-hero {
+        min-height: 30vh;
+        padding: 3rem 1rem;
+    }
+    .page-hero h1 {
+        font-size: 2.5rem;
+    }
+    .page-hero p {
+        font-size: 1.1rem;
+    }
+}
 /* A reusable class for all glass elements */
 .glass-card {
     background: var(--glass-bg);
