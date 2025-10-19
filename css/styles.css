@@ -189,9 +189,8 @@ a {
 /* Hero Section */
 .hero {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid; /* Changed from flex to grid */
+    place-items: center; /* This centers your content container */
     position: relative; /* Crucial for positioning child elements */
     padding-top: 80px; /* Keeps content below the nav */
     overflow: hidden; /* Prevents video from spilling out */
