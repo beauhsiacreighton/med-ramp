@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to load publications from JSON
 async function loadPublications() {
     try {
-        const response = await fetch('/data/publications.json'); // Absolute path for GitHub Pages
+        const response = await fetch('data/publications.json'); // MODIFIED: Changed path from absolute to relative
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
