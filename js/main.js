@@ -127,12 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Publications page: Load publications and attach event listeners
+    // Publications page: Attach event listeners for search and filter
     const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
-        // Load publications from JSON
-        loadPublications();
-
         // Attach event listener to search input
         const searchInput = document.getElementById('publicationSearch');
         if (searchInput) {
@@ -155,62 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to load publications from JSON
-async function loadPublications() {
-    try {
-        const response = await fetch('data/publications.json'); // MODIFIED: Changed path from absolute to relative
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const publications = await response.json();
-        const grid = document.querySelector('.publications-grid');
-        
-        if (!grid) return;
-
-        // Map categories to badge classes
-        const badgeClasses = {
-            journal: 'badge-journal',
-            abstract: 'badge-abstract',
-            poster: 'badge-poster'
-        };
-
-        grid.innerHTML = publications.map(pub => `
-            <div class="publication-item" data-category="${pub.category}" data-scroll-animate>
-                <span class="pub-badge ${badgeClasses[pub.category] || 'badge-journal'}">${pub.category.charAt(0).toUpperCase() + pub.category.slice(1)}</span>
-                <h3>${pub.title}</h3>
-                <p class="authors">${pub.authors}</p>
-                <div class="pub-details">
-                    <span>📅 ${pub.date}</span>
-                    <span>📚 ${pub.source}</span>
-                </div>
-                <p class="pub-abstract">${pub.abstract}</p>
-                <a href="${pub.link}" target="_blank" class="pub-link">
-                    View Publication →
-                </a>
-            </div>
-        `).join('');
-
-        // Re-initialize observer for newly added elements
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('[data-scroll-animate]').forEach(element => {
-            observer.observe(element);
-        });
-
-    } catch (error) {
-        console.error('Error loading publications:', error);
-        const grid = document.querySelector('.publications-grid');
-        if (grid) {
-            grid.innerHTML = '<p style="text-align: center; color: #6c757d;">Could not load publications. Please check the console for errors.</p>';
-        }
-    }
-}
+// NOTE: The loadPublications function has been removed as it is no longer needed.
 
 // Filter publications function
 function filterPublications(category, buttonElement) {
@@ -238,8 +180,6 @@ function filterPublications(category, buttonElement) {
     });
     if (buttonElement) {
         buttonElement.classList.add('active');
-    } else {
-        document.querySelector('.filter-btn[onclick*="\'all\'"]').classList.add('active');
     }
 }
 
@@ -286,7 +226,7 @@ function toggleFAQ(element) {
 // Load blog posts from JSON (for blog page)
 async function loadBlogPosts() {
     try {
-        const response = await fetch('/blog-posts/posts.json'); // Absolute path for GitHub Pages
+        const response = await fetch('/blog-posts/posts.json');
         const posts = await response.json();
         const container = document.getElementById('blogContainer');
         
@@ -309,7 +249,6 @@ async function loadBlogPosts() {
             </article>
         `).join('');
         
-        // Re-initialize observer for newly added elements
         document.querySelectorAll('[data-scroll-animate]').forEach(element => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -334,5 +273,5 @@ async function loadBlogPosts() {
 // Format date helper
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateDateString('en-US', options);
 }
