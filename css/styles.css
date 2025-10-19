@@ -186,15 +186,22 @@ a {
     border-radius: 3px;
 }
 
+
+/* ================================================= */
+/* === REPLACE THE HERO SECTION CSS WITH THIS BLOCK === */
+/* ================================================= */
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
-    display: grid; /* Changed from flex to grid */
-    place-items: center; /* This centers your content container */
-    position: relative; /* Crucial for positioning child elements */
+    position: relative; /* Establishes a positioning context for children */
+    display: flex; /* Use flexbox to easily center the content */
+    align-items: center;
+    justify-content: center;
     padding-top: 80px; /* Keeps content below the nav */
     overflow: hidden; /* Prevents video from spilling out */
-    color: var(--white); /* Set default text color for the section */
+    color: var(--white);
+    text-align: center;
 }
 
 .hero-video-wrapper {
@@ -203,7 +210,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Places the video behind everything */
+    z-index: 1; /* Lowest layer */
 }
 
 #hero-video {
@@ -218,15 +225,19 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast. Adjust 0.5 to make it darker or lighter */
-    z-index: 1; /* Sits on top of the video but below the content */
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
+    z-index: 2; /* Sits on top of the video */
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2; /* Ensures content is on top of the overlay and video */
-    text-align: center;
+/* The .container within the hero section holds the text content */
+.hero .container {
+    position: relative; /* Required for z-index to take effect */
+    z-index: 3; /* Sits on top of the overlay and video */
     max-width: 900px;
+}
+
+/* No special positioning needed for hero-content anymore */
+.hero-content {
     padding: 2rem;
 }
 
@@ -234,7 +245,7 @@ a {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     margin-bottom: 1.5rem;
     color: var(--white);
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow for better readability */
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
@@ -244,7 +255,6 @@ a {
     font-weight: 300;
 }
 
-/* --- Buttons, Scroll Indicator, and other styles can remain as they are --- */
 .hero-buttons {
     display: flex;
     gap: 1.5rem;
@@ -252,47 +262,7 @@ a {
     flex-wrap: wrap;
 }
 
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-    z-index: 2; /* Ensure it's above the overlay */
-}
-
-.scroll-indicator span {
-    display: block;
-    width: 30px;
-    height: 50px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
-    position: relative;
-}
-
-.scroll-indicator span::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: var(--white);
-    border-radius: 50%;
-    animation: scroll 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
-}
-
-@keyframes scroll {
-    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-}
-
+/* --- General Button Styles (keeping them with the hero section for context) --- */
 .btn {
     display: inline-block;
     padding: 0.9rem 2rem;
@@ -326,10 +296,6 @@ a {
     color: var(--primary-color);
 }
 
-.btn-large {
-    padding: 1.2rem 3rem;
-    font-size: 1.1rem;
-}
 
 /* A reusable class for all glass elements */
 .glass-card {
