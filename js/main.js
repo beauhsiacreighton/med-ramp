@@ -127,24 +127,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Publications page: Attach event listeners for search and filter
+    // --- START: MODIFIED PUBLICATIONS LOGIC ---
     const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
-        // Attach event listener to search input
         const searchInput = document.getElementById('publicationSearch');
-        if (searchInput) {
-            searchInput.addEventListener('keyup', searchPublications);
-        }
-
-        // Attach event listeners to filter buttons
         const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // Event listener for filter buttons
         filterButtons.forEach(button => {
             button.addEventListener('click', (event) => {
-                const category = event.currentTarget.dataset.category;
-                filterPublications(category, event.currentTarget);
+                // First, update the active state on the clicked button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+
+                // Then, run the function to update the view
+                updatePublicationsView();
             });
         });
+
+        // Event listener for the search input
+        if (searchInput) {
+            searchInput.addEventListener('keyup', updatePublicationsView);
+        }
     }
+    // --- END: MODIFIED PUBLICATIONS LOGIC ---
+
 
     // Blog page: Load blog posts
     if (document.getElementById('blogContainer')) {
@@ -152,54 +159,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// NOTE: The loadPublications function has been removed as it is no longer needed.
+/**
+ * NEW: A single function to handle all publication filtering and searching.
+ * This is more reliable because it checks both the active filter and the
+ * search term at the same time, preventing them from overriding each other.
+ */
+function updatePublicationsView() {
+    const searchInput = document.getElementById('publicationSearch');
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    
+    // Find the currently active filter button to get its category
+    const activeFilterButton = document.querySelector('.filter-btn.active');
+    const activeCategory = activeFilterButton.dataset.category;
 
-// Filter publications function
-function filterPublications(category, buttonElement) {
     const items = document.querySelectorAll('.publication-item');
+
     items.forEach(item => {
         const itemCategory = item.dataset.category;
-        if (category === 'all' || itemCategory === category) {
-            item.style.display = 'block';
-            setTimeout(() => {
-                item.style.opacity = '1';
-                item.style.transform = 'translateY(0)';
-            }, 10);
-        } else {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                item.style.display = 'none';
-            }, 300);
-        }
-    });
-
-    // Update active filter button
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    if (buttonElement) {
-        buttonElement.classList.add('active');
-    }
-}
-
-// Search publications function
-function searchPublications() {
-    const searchInput = document.getElementById('publicationSearch');
-    if (!searchInput) return;
-    
-    const searchTerm = searchInput.value.toLowerCase().trim();
-    const items = document.querySelectorAll('.publication-item');
-    
-    items.forEach(item => {
         const itemText = item.textContent.toLowerCase();
-        if (itemText.includes(searchTerm)) {
+
+        // Condition 1: Does the item match the active category?
+        const categoryMatch = (activeCategory === 'all' || itemCategory === activeCategory);
+        
+        // Condition 2: Does the item's text include the search term?
+        const searchMatch = itemText.includes(searchTerm);
+
+        // Show the item ONLY if both conditions are true
+        if (categoryMatch && searchMatch) {
             item.style.display = 'block';
         } else {
             item.style.display = 'none';
         }
     });
 }
+
 
 // FAQ toggle (for FAQ page)
 function toggleFAQ(element) {
@@ -273,5 +266,5 @@ async function loadBlogPosts() {
 // Format date helper
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString('en-US', options); // Corrected typo here
 }
