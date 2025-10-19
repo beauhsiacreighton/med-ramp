@@ -1,5 +1,7 @@
-// Mobile Navigation Toggle
+// main.js
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Navigation Toggle
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const target = parseInt(statNumber.getAttribute('data-target'));
                     if (statNumber && !statNumber.classList.contains('is-animated')) {
                         animateCounter(statNumber, target);
-                        statNumber.classList.add('is-animated'); 
+                        statNumber.classList.add('is-animated');
                     }
                 }
                 
@@ -125,22 +127,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // *** NEW: Check if we are on the publications page and load publications ***
-    if (document.querySelector('.publications-grid')) {
+    // Publications page: Load publications and attach event listeners
+    const publicationsGrid = document.querySelector('.publications-grid');
+    if (publicationsGrid) {
+        // Load publications from JSON
         loadPublications();
+
+        // Attach event listener to search input
+        const searchInput = document.getElementById('publicationSearch');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', searchPublications);
+        }
+
+        // Attach event listeners to filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const category = event.currentTarget.dataset.category;
+                filterPublications(category, event.currentTarget);
+            });
+        });
     }
-    
-    // *** NEW: Check if we are on the blog page and load posts ***
+
+    // Blog page: Load blog posts
     if (document.getElementById('blogContainer')) {
         loadBlogPosts();
     }
 });
 
-
-// *** NEW: Function to load publications from JSON ***
+// Function to load publications from JSON
 async function loadPublications() {
     try {
-        const response = await fetch('data/publications.json');
+        const response = await fetch('/data/publications.json'); // Absolute path for GitHub Pages
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -189,13 +207,12 @@ async function loadPublications() {
         console.error('Error loading publications:', error);
         const grid = document.querySelector('.publications-grid');
         if (grid) {
-            grid.innerHTML = '<p style="text-align: center; color: #6c757d;">Could not load publications.</p>';
+            grid.innerHTML = '<p style="text-align: center; color: #6c757d;">Could not load publications. Please check the console for errors.</p>';
         }
     }
 }
 
-
-// *** REVISED: Filter publications function ***
+// Filter publications function
 function filterPublications(category, buttonElement) {
     const items = document.querySelectorAll('.publication-item');
     items.forEach(item => {
@@ -205,7 +222,7 @@ function filterPublications(category, buttonElement) {
             setTimeout(() => {
                 item.style.opacity = '1';
                 item.style.transform = 'translateY(0)';
-            }, 10); 
+            }, 10);
         } else {
             item.style.opacity = '0';
             item.style.transform = 'translateY(20px)';
@@ -219,16 +236,14 @@ function filterPublications(category, buttonElement) {
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    // Add 'active' class to the clicked button
-    if(buttonElement) {
+    if (buttonElement) {
         buttonElement.classList.add('active');
     } else {
-        // Fallback for initial load if needed
         document.querySelector('.filter-btn[onclick*="\'all\'"]').classList.add('active');
     }
 }
 
-// *** REVISED: Search publications function ***
+// Search publications function
 function searchPublications() {
     const searchInput = document.getElementById('publicationSearch');
     if (!searchInput) return;
@@ -237,17 +252,14 @@ function searchPublications() {
     const items = document.querySelectorAll('.publication-item');
     
     items.forEach(item => {
-        // Check content inside the item for a match
         const itemText = item.textContent.toLowerCase();
-        
         if (itemText.includes(searchTerm)) {
-            item.style.display = 'block'; // Show if it matches
+            item.style.display = 'block';
         } else {
-            item.style.display = 'none'; // Hide if it doesn't
+            item.style.display = 'none';
         }
     });
 }
-
 
 // FAQ toggle (for FAQ page)
 function toggleFAQ(element) {
@@ -271,11 +283,10 @@ function toggleFAQ(element) {
     }
 }
 
-
 // Load blog posts from JSON (for blog page)
 async function loadBlogPosts() {
     try {
-        const response = await fetch('blog-posts/posts.json');
+        const response = await fetch('/blog-posts/posts.json'); // Absolute path for GitHub Pages
         const posts = await response.json();
         const container = document.getElementById('blogContainer');
         
@@ -298,6 +309,7 @@ async function loadBlogPosts() {
             </article>
         `).join('');
         
+        // Re-initialize observer for newly added elements
         document.querySelectorAll('[data-scroll-animate]').forEach(element => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -324,18 +336,3 @@ function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
 }
-
-// Lastly, you need to slightly adjust the onclick attributes in your HTML to pass the element itself to the function
-// This ensures the 'active' class is set correctly.
-// Go to publications.html and change:
-// onclick="filterPublications('all')"
-// TO:
-// onclick="filterPublications('all', this)"
-
-// Example for all buttons:
-/*
-<button class="filter-btn active" onclick="filterPublications('all', this)">All Publications</button>
-<button class="filter-btn" onclick="filterPublications('journal', this)">Journal Articles</button>
-<button class="filter-btn" onclick="filterPublications('abstract', this)">Conference Abstracts</button>
-<button class="filter-btn" onclick="filterPublications('poster', this)">Posters</button>
-*/
