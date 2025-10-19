@@ -3,31 +3,29 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #2f0fbd;
+    --primary-color: #007BFF;
     --primary-dark: #0056b3;
     --secondary-color: #6c63ff;
-    --accent-color: ;
+    --accent-color: #00d4ff;
     --dark-bg: #1a1a2e;
-    --light-bg: #f8f9fa; /* Kept for fallback, but we will use glass instead */
+    --light-bg: #f8f9fa;
     --text-dark: #2c3e50;
-    --text-light: #495057; /* Darkened slightly for better readability on glass */
+    --text-light: #495057;
     --white: #ffffff;
     --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --gradient-2: linear-gradient(135deg, #007BFF 0%, #00d4ff 100%);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* --- Variables for the Glass Effect --- */
+    /* Variables for the Glass Effect */
     --glass-bg: rgba(255, 255, 255, 0.15);
     --glass-border: 1px solid rgba(255, 255, 255, 0.25);
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
     --glass-blur: blur(12px);
 
-    /* --- Replaced old shadows with a more glow-like effect --- */
     --shadow-sm: 0 2px 8px rgba(31, 38, 135, 0.1);
     --shadow-md: 0 4px 16px rgba(31, 38, 135, 0.15);
     --shadow-lg: 0 8px 32px rgba(31, 38, 135, 0.2);
 
-    /* --- Larger border radius for a more "liquid" feel --- */
     --radius-md: 16px;
     --radius-lg: 24px;
 }
@@ -48,8 +46,41 @@ body {
     line-height: 1.7;
     color: var(--text-dark);
     overflow-x: hidden;
-    /* Set the main background here to show through glass elements */
     background: var(--gradient-1);
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Video Background */
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.3;
+    filter: brightness(0.5);
+}
+
+/* Dark overlay for additional background darkening */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Ensure content is above video */
+body > *:not(#video-background) {
+    position: relative;
+    z-index: 1;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -84,12 +115,11 @@ a {
     top: 0;
     left: 0;
     right: 0;
-    /* Made the navbar a glass element */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: var(--glass-border);
-    box-shadow: none; /* Shadow is less important on a floating glass nav */
+    box-shadow: none;
     z-index: 1000;
     transition: var(--transition);
 }
@@ -110,11 +140,7 @@ a {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--white); /* Changed for contrast */
-    background: none;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: unset;
-    background-clip: unset;
+    color: var(--white);
 }
 
 .nav-links {
@@ -125,7 +151,7 @@ a {
 }
 
 .nav-links a {
-    color: var(--white); /* Changed for contrast */
+    color: var(--white);
     font-weight: 500;
     position: relative;
     padding: 0.5rem 0;
@@ -157,10 +183,11 @@ a {
 .apply-btn {
     background: var(--gradient-2);
     color: var(--white) !important;
-    padding: 0.7rem 1.5rem;
+    padding: 0.9rem 2rem;
     border-radius: 50px;
     font-weight: 600;
     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    opacity: 1 !important;
 }
 
 .apply-btn:hover {
@@ -181,58 +208,34 @@ a {
 .mobile-toggle span {
     width: 25px;
     height: 3px;
-    background: var(--white); /* Changed for contrast */
+    background: var(--white);
     transition: var(--transition);
     border-radius: 3px;
 }
 
-
-/* ================================================= */
-/* === REPLACE THE HERO SECTION CSS WITH THIS BLOCK === */
-/* ================================================= */
-
 /* Hero Section */
-/* === Replace this rule in your css/styles.css === */
-#vanta-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    filter: blur(3px);
-
-}
-
 .hero {
-    min-height: 80vh; /* Adjusted height since there's no video */
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding-top: 80px; /* Keeps content below the nav */
+    padding-top: 80px;
     color: var(--white);
-    /* The hero will now use the body's gradient background */
+    position: relative;
 }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
-    z-index: 2; /* Sits on top of the video */
+/* Remove any dark overlays from hero */
+.hero::before {
+    display: none;
 }
 
-/* The .container within the hero section holds the text content */
 .hero .container {
-    position: relative; /* Required for z-index to take effect */
-    z-index: 3; /* Sits on top of the overlay and video */
+    position: relative;
+    z-index: 3;
     max-width: 900px;
 }
 
-/* No special positioning needed for hero-content anymore */
 .hero-content {
     padding: 2rem;
 }
@@ -258,7 +261,7 @@ a {
     flex-wrap: wrap;
 }
 
-/* --- General Button Styles (keeping them with the hero section for context) --- */
+/* General Button Styles */
 .btn {
     display: inline-block;
     padding: 0.9rem 2rem;
@@ -291,65 +294,13 @@ a {
     background: var(--white);
     color: var(--primary-color);
 }
-/* =============================================
-   Page Hero Section Styles (Half-height Hero)
-   ============================================= */
 
-.page-hero {
-    min-height: 40vh; /* Adjusted height since there's no video */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding-top: 80px; /* Keeps content below the nav */
-    color: var(--white);
-    /* The hero will now use the body's gradient background */
+.btn-large {
+    padding: 1.1rem 2.5rem;
+    font-size: 1.1rem;
 }
 
-.page-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
-    z-index: 2; /* Sits on top of the video */
-}
-
-/* The .container within the hero section holds the text content */
-.page-hero .container {
-    position: relative; /* Required for z-index to take effect */
-    z-index: 3; /* Sits on top of the overlay and video */
-    max-width: 900px;
-}
-
-/* No special positioning needed for hero-content anymore */
-.page-hero-content {
-    padding: 2rem;
-}
-
-.page-hero-title {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    margin-bottom: 1.5rem;
-    color: var(--white);
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.page-hero-subtitle {
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    margin-bottom: 2.5rem;
-    opacity: 0.95;
-    font-weight: 300;
-}
-
-.page-hero-buttons {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* A reusable class for all glass elements */
+/* Glass Card - Reusable class */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
@@ -371,7 +322,7 @@ a {
     font-size: clamp(2rem, 4vw, 3rem);
     text-align: center;
     margin-bottom: 3rem;
-    color: var(--white); /* Changed for contrast */
+    color: var(--white);
     position: relative;
     text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
@@ -404,7 +355,6 @@ a {
 .stat-card {
     text-align: center;
     padding: 2rem;
-    /* This element will now need the .glass-card class in HTML */
 }
 
 .stat-icon { font-size: 3rem; margin-bottom: 1rem; }
@@ -412,7 +362,6 @@ a {
 .stat-number::after { content: '+'; }
 .stat-label { font-size: 1.1rem; margin-top: 0.5rem; }
 
-/* Changed colors for contrast on glass */
 .stat-icon, .stat-number { color: var(--white); text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 .stat-label { color: rgba(255, 255, 255, 0.8); }
 
@@ -430,7 +379,6 @@ a {
 
 .feature-card {
     padding: 2.5rem;
-    /* This element will now need the .glass-card class in HTML */
 }
 
 .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--white); }
@@ -440,7 +388,7 @@ a {
 /* CTA Section */
 .cta-section {
     padding: 6rem 0;
-    background: rgba(10, 10, 30, 0.3); /* Darker glass overlay */
+    background: rgba(10, 10, 30, 0.3);
     position: relative;
     overflow: hidden;
     border-top: var(--glass-border);
@@ -453,28 +401,107 @@ a {
 .cta-content h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; color: var(--white); }
 .cta-content p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95; }
 
-/* ... (Process, Testimonial, etc. sections will become transparent. You need to apply .glass-card to their cards in HTML) ... */
-.process-section, .testimonial-preview, .final-cta { padding: 6rem 0; background: transparent; }
+/* Process Section */
+.process-section { padding: 6rem 0; background: transparent; }
 
-.process-timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative; }
-.process-step { text-align: center; padding: 2rem; }
-.step-number { width: 80px; height: 80px; background: var(--gradient-2); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; margin: 0 auto 1.5rem; box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3); }
+.process-timeline { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 2rem; 
+    position: relative; 
+}
+
+.process-step { 
+    text-align: center; 
+    padding: 2rem; 
+}
+
+.step-number { 
+    width: 80px; 
+    height: 80px; 
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    color: var(--white); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 2rem; 
+    font-weight: 700; 
+    margin: 0 auto 1.5rem; 
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition);
+}
+
+.process-step:hover .step-number {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
 .process-step h3 { margin-bottom: 1rem; color: var(--white); }
 .process-step p { color: rgba(255, 255, 255, 0.8); }
 
-.testimonial-card { max-width: 800px; margin: 0 auto; padding: 3rem; text-align: center; /* Add .glass-card in HTML */ }
-.testimonial-text { font-size: 1.3rem; font-style: italic; color: var(--white); margin-bottom: 2rem; line-height: 1.8; }
-.testimonial-author { display: flex; flex-direction: column; gap: 0.5rem; }
-.testimonial-author strong { color: var(--white); font-size: 1.1rem; opacity: 0.9; }
-.testimonial-author span { color: rgba(255, 255, 255, 0.7); }
+/* Testimonial Section */
+.testimonial-preview { padding: 6rem 0; background: transparent; }
 
-.cta-box { text-align: center; padding: 4rem 2rem; max-width: 800px; margin: 0 auto; /* Add .glass-card in HTML */ }
-.cta-box h2 { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 1rem; color: var(--white); }
-.cta-box p { font-size: 1.2rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 2rem; }
+.testimonial-card { 
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 3rem; 
+    text-align: center; 
+}
+
+.testimonial-text { 
+    font-size: 1.3rem; 
+    font-style: italic; 
+    color: var(--white); 
+    margin-bottom: 2rem; 
+    line-height: 1.8; 
+}
+
+.testimonial-author { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+}
+
+.testimonial-author strong { 
+    color: var(--white); 
+    font-size: 1.1rem; 
+    opacity: 0.9; 
+}
+
+.testimonial-author span { 
+    color: rgba(255, 255, 255, 0.7); 
+}
+
+/* Final CTA */
+.final-cta { padding: 6rem 0; background: transparent; }
+
+.cta-box { 
+    text-align: center; 
+    padding: 4rem 2rem; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.cta-box h2 { 
+    font-size: clamp(2rem, 4vw, 2.5rem); 
+    margin-bottom: 1rem; 
+    color: var(--white); 
+}
+
+.cta-box p { 
+    font-size: 1.2rem; 
+    color: rgba(255, 255, 255, 0.85); 
+    margin-bottom: 2rem; 
+}
 
 /* Footer */
 .footer {
-    background: transparent; /* Changed */
+    background: transparent;
     border-top: var(--glass-border);
     color: var(--white);
     padding: 4rem 0 2rem;
@@ -515,8 +542,27 @@ a {
     font-size: 0.9rem;
 }
 
+/* Page Hero (for sub-pages) */
+.page-hero {
+    padding: 120px 0 80px;
+    background: transparent;
+    color: var(--white);
+    text-align: center;
+}
 
-/* ... (Animations and Utilities are fine as-is) ... */
+.page-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+}
+
+/* Animations */
 .fade-in { animation: fadeIn 1s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 [data-scroll-animate] { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -528,17 +574,22 @@ a {
     .mobile-toggle { display: flex; }
     .nav-links {
         position: fixed;
-        top: 70px; /* Adjust based on your nav height */
+        top: 70px;
         left: 0; right: 0;
         flex-direction: column;
-        background: rgba(25, 25, 46, 0.9); /* Darker glass for mobile menu */
-        backdrop-filter: blur(10px);
-        padding: 2rem; gap: 1rem;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        padding: 2rem; 
+        gap: 1rem;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
         box-shadow: var(--shadow-md);
         border-bottom-left-radius: var(--radius-lg);
         border-bottom-right-radius: var(--radius-lg);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
     }
     .nav-links.active { transform: translateX(0); }
     .container { padding: 0 1.5rem; }
