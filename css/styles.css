@@ -295,15 +295,13 @@ a {
    Page Hero Section Styles (Half-height Hero)
    ============================================= */
 .page-hero {
+    min-height: 40vh; /* Adjusted height since there's no video */
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    min-height: 40vh; /* Half of .hero’s 80vh */
-    padding-top: 60px; /* Slight top offset like .hero */
+    padding-top: 80px; /* Keeps content below the nav */
     color: var(--white);
-    position: relative;
 }
 
 /* Optional: subtle overlay if you want same text contrast */
