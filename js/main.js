@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- START: MODIFIED PUBLICATIONS LOGIC ---
+// Publications page: Filter and search functionality
     const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
         const searchInput = document.getElementById('publicationSearch');
@@ -136,22 +136,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Event listener for filter buttons
         filterButtons.forEach(button => {
             button.addEventListener('click', (event) => {
-                // First, update the active state on the clicked button
+                // Update active state
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 event.currentTarget.classList.add('active');
 
-                // Then, run the function to update the view
+                // Update the display
                 updatePublicationsView();
             });
         });
 
         // Event listener for the search input
         if (searchInput) {
-            searchInput.addEventListener('keyup', updatePublicationsView);
+            searchInput.addEventListener('input', updatePublicationsView);
         }
-    }
-    // --- END: MODIFIED PUBLICATIONS LOGIC ---
 
+        // Initialize the view
+        updatePublicationsView();
+    }
 
     // Blog page: Load blog posts
     if (document.getElementById('blogContainer')) {
@@ -160,40 +161,72 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * NEW: A single function to handle all publication filtering and searching.
- * This is more reliable because it checks both the active filter and the
- * search term at the same time, preventing them from overriding each other.
+ * Updates the publications display based on both filter category and search term
  */
 function updatePublicationsView() {
     const searchInput = document.getElementById('publicationSearch');
+    if (!searchInput) return;
+    
     const searchTerm = searchInput.value.toLowerCase().trim();
     
-    // Find the currently active filter button to get its category
+    // Find the currently active filter button
     const activeFilterButton = document.querySelector('.filter-btn.active');
+    if (!activeFilterButton) return;
+    
     const activeCategory = activeFilterButton.dataset.category;
-
     const items = document.querySelectorAll('.publication-item');
+
+    let visibleCount = 0;
 
     items.forEach(item => {
         const itemCategory = item.dataset.category;
         const itemText = item.textContent.toLowerCase();
 
-        // Condition 1: Does the item match the active category?
+        // Check if item matches the category filter
         const categoryMatch = (activeCategory === 'all' || itemCategory === activeCategory);
         
-        // Condition 2: Does the item's text include the search term?
-        const searchMatch = itemText.includes(searchTerm);
+        // Check if item matches the search term (or search is empty)
+        const searchMatch = searchTerm === '' || itemText.includes(searchTerm);
 
-        // Show the item ONLY if both conditions are true
+        // Show item only if both conditions are met
         if (categoryMatch && searchMatch) {
             item.style.display = 'block';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+            visibleCount++;
         } else {
             item.style.display = 'none';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
         }
     });
+
+    // Optional: Show a "no results" message if nothing matches
+    showNoResultsMessage(visibleCount);
 }
 
+/**
+ * Shows or hides a "no results" message
+ */
+function showNoResultsMessage(visibleCount) {
+    const grid = document.querySelector('.publications-grid');
+    if (!grid) return;
 
+    // Remove existing message if present
+    const existingMessage = document.getElementById('noResultsMessage');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+
+    // Add message if no results
+    if (visibleCount === 0) {
+        const message = document.createElement('div');
+        message.id = 'noResultsMessage';
+        message.style.cssText = 'text-align: center; padding: 3rem; color: #6c757d; font-size: 1.1rem;';
+        message.innerHTML = '📭 No publications match your search criteria. Try adjusting your filters or search terms.';
+        grid.appendChild(message);
+    }
+}
 // FAQ toggle (for FAQ page)
 function toggleFAQ(element) {
     const answer = element.nextElementSibling;
