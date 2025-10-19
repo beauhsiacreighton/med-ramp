@@ -271,10 +271,12 @@
                 <input type="text" id="publicationSearch" placeholder="Search by title, authors, or keywords..." onkeyup="searchPublications()">
             </div>
             <div class="filter-buttons" data-scroll-animate>
-                <button class="filter-btn active" onclick="filterPublications('all')">All Publications</button>
-                <button class="filter-btn" onclick="filterPublications('journal')">Journal Articles</button>
-                <button class="filter-btn" onclick="filterPublications('abstract')">Conference Abstracts</button>
-                <button class="filter-btn" onclick="filterPublications('poster')">Posters</button>
+                <div class="filter-buttons" data-scroll-animate>
+                    <button class="filter-btn active" onclick="filterPublications('all', this)">All Publications</button>
+                    <button class="filter-btn" onclick="filterPublications('journal', this)">Journal Articles</button>
+                    <button class="filter-btn" onclick="filterPublications('abstract', this)">Conference Abstracts</button>
+                    <button class="filter-btn" onclick="filterPublications('poster', this)">Posters</button>
+                </div>
             </div>
         </div>
     </section>
