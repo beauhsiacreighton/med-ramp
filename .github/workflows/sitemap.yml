@@ -1,0 +1,30 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches:
+      - main # Change to your default branch if different (e.g., master)
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Generate Sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url: https://med-ramp.com
+          path-to-root: . # Root directory of your site files
+          include-hidden: false # Skip hidden files like .git
+
+      - name: Commit Sitemap
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add sitemap.xml
+          git commit -m "Update sitemap" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
