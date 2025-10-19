@@ -100,6 +100,7 @@ a {
 }
 
 /* Navigation */
+/* Navigation */
 .navbar {
     position: fixed !important;
     top: 0 !important;
@@ -111,8 +112,9 @@ a {
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: var(--glass-border);
     box-shadow: none;
-    z-index: 9999 !important;
+    z-index: 99999 !important;
     transition: var(--transition);
+    pointer-events: auto !important;
 }
 
 .navbar.scrolled {
@@ -564,20 +566,26 @@ a {
 [data-scroll-animate].animated { opacity: 1; transform: translateY(0); }
 .text-center { text-align: center; }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
-    .mobile-toggle { display: flex; z-index: 10000; position: relative; }
+    .mobile-toggle { 
+        display: flex; 
+        z-index: 99999 !important; 
+        position: relative; 
+    }
     .nav-links {
-        position: fixed;
+        position: fixed !important;
         top: 70px;
-        left: 0; right: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
         flex-direction: column;
-        background: rgba(21, 25, 60, 0.95);
+        background: rgba(21, 25, 60, 0.98) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.25);
         padding: 2rem; 
-        gap: 1rem;
+        gap: 1.5rem;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -585,18 +593,37 @@ a {
         border-bottom-right-radius: var(--radius-lg);
         max-height: calc(100vh - 70px);
         overflow-y: auto;
-        z-index: 9998;
+        z-index: 99998 !important;
     }
-    .nav-links.active { transform: translateX(0); }
-    .nav-links a {
+    .nav-links.active { 
+        transform: translateX(0); 
+        pointer-events: auto !important;
+    }
+    .nav-links li {
+        z-index: 99999 !important;
         position: relative;
-        z-index: 9999;
-        pointer-events: auto;
+        pointer-events: auto !important;
     }
+    .nav-links a {
+        display: block !important;
+        position: relative !important;
+        z-index: 99999 !important;
+        pointer-events: auto !important;
+        padding: 0.75rem 1rem !important;
+        width: 100%;
+        text-align: left;
+    }
+    .nav-links a:active {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
     .container { padding: 0 1.5rem; }
     .hero-buttons { flex-direction: column; align-items: center; }
     .stats-grid, .features-grid, .process-timeline { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; text-align: center; }
+    .navbar, .navbar * {
+        pointer-events: auto !important;
+    }
 }
 
 @media (max-width: 480px) {
