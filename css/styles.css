@@ -192,60 +192,41 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent; /* The body now has the background */
-    position: relative;
-    padding-top: 80px;
-    overflow: hidden;
+    position: relative; /* Crucial for positioning child elements */
+    padding-top: 80px; /* Keeps content below the nav */
+    overflow: hidden; /* Prevents video from spilling out */
+    color: var(--white); /* Set default text color for the section */
 }
 
-/* Animated liquid blobs for the background */
-.hero::before, .hero::after {
-    content: '';
+.hero-video-wrapper {
     position: absolute;
-    border-radius: 50%;
-    z-index: -1;
-    filter: blur(80px); /* This makes them soft and ethereal */
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Places the video behind everything */
 }
 
-.hero::before {
-    width: 400px;
-    height: 400px;
-    background: rgba(0, 212, 255, 0.3);
-    top: -10%;
-    left: -10%;
-    animation-name: liquid-blob-1;
-    animation-duration: 15s;
+#hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the video covers the area without distortion */
 }
 
-.hero::after {
-    width: 300px;
-    height: 300px;
-    background: rgba(108, 99, 255, 0.4);
-    bottom: 5%;
-    right: 5%;
-    animation-name: liquid-blob-2;
-    animation-duration: 12s;
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast. Adjust 0.5 to make it darker or lighter */
+    z-index: 1; /* Sits on top of the video but below the content */
 }
-
-@keyframes liquid-blob-1 {
-    from { transform: translate(0, 0) scale(1); }
-    to { transform: translate(100px, 50px) scale(1.2); }
-}
-
-@keyframes liquid-blob-2 {
-    from { transform: translate(0, 0) scale(1); }
-    to { transform: translate(-80px, -40px) scale(0.8); }
-}
-
 
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Ensures content is on top of the overlay and video */
     text-align: center;
-    color: var(--white);
     max-width: 900px;
     padding: 2rem;
 }
@@ -254,7 +235,7 @@ a {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     margin-bottom: 1.5rem;
     color: var(--white);
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow for better readability */
 }
 
 .hero-subtitle {
@@ -264,20 +245,92 @@ a {
     font-weight: 300;
 }
 
-/* ... (The rest of the hero, buttons, scroll indicator will work as-is) ... */
+/* --- Buttons, Scroll Indicator, and other styles can remain as they are --- */
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-.hero-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-.scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
-.scroll-indicator span { display: block; width: 30px; height: 50px; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 25px; position: relative; }
-.scroll-indicator span::before { content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: var(--white); border-radius: 50%; animation: scroll 2s infinite; }
-@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-10px); } }
-@keyframes scroll { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(20px); } }
-.btn { display: inline-block; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 600; transition: var(--transition); cursor: pointer; border: none; font-size: 1rem; }
-.btn-primary { background: var(--white); color: var(--primary-color); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3); }
-.btn-secondary { background: transparent; color: var(--white); border: 2px solid var(--white); }
-.btn-secondary:hover { background: var(--white); color: var(--primary-color); }
-.btn-large { padding: 1.2rem 3rem; font-size: 1.1rem; }
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    z-index: 2; /* Ensure it's above the overlay */
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    position: relative;
+}
+
+.scroll-indicator span::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: var(--white);
+    border-radius: 50%;
+    animation: scroll 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+@keyframes scroll {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--white);
+    color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--primary-color);
+}
+
+.btn-large {
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+}
 
 /* A reusable class for all glass elements */
 .glass-card {
