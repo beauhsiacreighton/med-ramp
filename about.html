@@ -6,61 +6,38 @@
     <title>About Us - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --text-dark: #333;
-            --text-light: #666;
-            --white: #fff;
-            --light-bg: #f8f9fa;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --transition: all 0.3s ease-in-out;
-        }
-
-        .page-hero {
-            padding: 120px 0 80px;
-            background: var(--gradient-2);
-            color: var(--white);
-            text-align: center;
-        }
-
-        .page-hero h1 {
-            font-size: clamp(2.8rem, 5vw, 4rem);
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        .page-hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
-            margin: 0 auto;
-            opacity: 0.95;
-        }
-
         .mission-section {
             padding: 6rem 0;
-            background: var(--white);
+            background: transparent;
         }
 
         .mission-content {
             max-width: 900px;
             margin: 0 auto;
-            text-align: left;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: var(--shadow-lg);
         }
 
         .mission-text h2 {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: var(--text-dark);
+            color: var(--white);
+        }
+
+        .mission-text h3 {
+            color: var(--white);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
         .mission-text p, .mission-text ul {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 1.5rem;
         }
         
@@ -79,20 +56,13 @@
             content: '✓';
             position: absolute;
             left: 0;
-            color: var(--primary-color);
+            color: var(--white);
             font-weight: bold;
         }
 
         .values-section {
             padding: 6rem 0;
-            background: var(--light-bg);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 3rem;
-            color: var(--text-dark);
+            background: transparent;
         }
 
         .values-grid {
@@ -104,22 +74,24 @@
 
         .value-card {
             padding: 2.5rem;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
             box-shadow: var(--shadow-md);
             transition: var(--transition);
-            border-left: 4px solid var(--primary-color);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             text-align: center;
         }
 
         .value-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .value-icon {
             margin-bottom: 1.5rem;
-            color: var(--primary-color);
+            color: var(--white);
         }
         
         .value-icon svg {
@@ -131,31 +103,33 @@
         }
 
         .value-card h3 {
-            color: var(--text-dark);
+            color: var(--white);
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
         
         .value-card p {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.7;
         }
 
         .research-focus-section {
             padding: 6rem 0;
-            background: var(--white);
+            background: transparent;
         }
 
         .research-areas {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
         .research-card {
             padding: 2.5rem;
             border-radius: 20px;
-            background: var(--gradient-1);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: var(--white);
             transition: var(--transition);
             position: relative;
@@ -176,6 +150,7 @@
 
         .research-card:hover {
             transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .research-card h3 {
@@ -189,13 +164,17 @@
             line-height: 1.7;
             opacity: 0.95;
             position: relative;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .cta-banner {
             padding: 5rem 0;
-            background: var(--gradient-1);
+            background: rgba(10, 10, 30, 0.3);
+            backdrop-filter: blur(12px);
             text-align: center;
             color: var(--white);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .cta-banner h2 {
@@ -213,59 +192,19 @@
             margin-right: auto;
         }
 
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: var(--transition);
-        }
-
-        .btn-primary {
-            background: var(--white);
-            color: var(--primary-color);
-        }
-        
-        .btn-primary:hover {
-            background: #f0f0f0;
-            transform: translateY(-3px);
-        }
-
-        @media (max-width: 992px) {
-            .values-grid,
-            .research-areas {
-                grid-template-columns: 1fr 1fr;
-                max-width: 700px; /* Constrain width for centering */
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .values-grid > .value-card:first-child,
-            .research-areas > .research-card:first-child {
-                grid-column: 1 / -1; /* Span full width to start the triangle */
-            }
-        }
-
         @media (max-width: 768px) {
             .mission-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 620px) {
-            /* On small screens, stack everything vertically */
-            .values-grid,
-            .research-areas {
-                grid-template-columns: 1fr;
-                max-width: 100%;
-            }
-            .values-grid > .value-card:first-child,
-            .research-areas > .research-card:first-child {
-                grid-column: auto; /* Reset column span */
+                padding: 2rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="images/moving_dots.mp4" type="video/mp4">
+    </video>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -300,12 +239,12 @@
     <!-- Mission Section -->
     <section class="mission-section">
         <div class="container">
-            <div class="mission-content">
-                <div class="mission-text" data-scroll-animate>
+            <div class="mission-content" data-scroll-animate>
+                <div class="mission-text">
                     <h2>Looking for meaningful clinical research experience and mentorship?</h2>
-                    <p>We’ve been there. Navigating the path to medical school is incredibly difficult, and finding productive research is a major hurdle.</p>
+                    <p>We've been there. Navigating the path to medical school is incredibly difficult, and finding productive research is a major hurdle.</p>
                     <p><strong>We created a solution.</strong> The Medical Research Assistance and Mentorship Program (Med-RAMP) is a fully virtual program designed to connect ambitious pre-medical students with experienced medical student mentors.</p>
-                    <p>When you join us, you’ll contribute to vital research projects focusing on rare cancers—analyzing data, writing, and pushing the boundaries of medical knowledge. Our unique model allows you to gain experience from anywhere with an internet connection.</p>
+                    <p>When you join us, you'll contribute to vital research projects focusing on rare cancers—analyzing data, writing, and pushing the boundaries of medical knowledge. Our unique model allows you to gain experience from anywhere with an internet connection.</p>
                     
                     <h3>What You Will Gain with Med-RAMP:</h3>
                     <ul>
@@ -364,7 +303,7 @@
     <section class="research-focus-section">
         <div class="container">
             <h2 class="section-title" data-scroll-animate>Our Research Focus</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-light); font-size: 1.1rem;" data-scroll-animate>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: rgba(255,255,255,0.9); font-size: 1.1rem;" data-scroll-animate>
                 Med-RAMP specializes in rare cancer research, utilizing large databases to uncover demographic and genomic patterns that can inform treatment strategies and improve patient outcomes.
             </p>
             <div class="research-areas">
