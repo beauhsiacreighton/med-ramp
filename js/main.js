@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.nav-links');
     
     if (mobileToggle) {
-        mobileToggle.addEventListener('click', function() {
+        mobileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
             this.classList.toggle('active');
         });
@@ -14,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            // Allow the link to work
             if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 if (mobileToggle) {
@@ -22,6 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navLinks && mobileToggle) {
+            if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+        }
     });
 
     // Navbar scroll effect
@@ -101,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set active nav link based on current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.querySelectorAll('.nav-links a:not(.apply-btn)').forEach(link => {
         const linkPage = link.getAttribute('href');
         if (linkPage === currentPage) {
             link.classList.add('active');
