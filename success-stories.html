@@ -6,19 +6,6 @@
     <title>Success Stories - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .page-hero {
-            padding: 120px 0 80px;
-            background: var(--gradient-1);
-            color: var(--white);
-            text-align: center;
-        }
-
-        .page-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
         .success-section {
             padding: 6rem 0;
         }
@@ -31,12 +18,14 @@
 
         .success-intro p {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.8;
         }
 
         .story-card {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 30px;
             padding: 3rem;
             margin-bottom: 3rem;
@@ -52,14 +41,15 @@
             top: -20px;
             left: 30px;
             font-size: 120px;
-            color: rgba(0, 123, 255, 0.1);
+            color: rgba(255, 255, 255, 0.1);
             font-family: Georgia, serif;
             line-height: 1;
         }
 
         .story-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .story-header {
@@ -86,19 +76,19 @@
         }
 
         .story-info h3 {
-            color: var(--text-dark);
+            color: var(--white);
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
 
         .story-info .school {
-            color: var(--primary-color);
+            color: rgba(255, 255, 255, 0.95);
             font-weight: 600;
             margin-bottom: 0.3rem;
         }
 
         .story-info .achievements {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
         }
 
@@ -108,7 +98,7 @@
         }
 
         .story-text {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.9;
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
@@ -120,14 +110,14 @@
             gap: 2rem;
             flex-wrap: wrap;
             padding-top: 1.5rem;
-            border-top: 2px solid #f0f0f0;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .highlight-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-dark);
+            color: var(--white);
             font-weight: 600;
         }
 
@@ -136,7 +126,7 @@
         }
 
         .stats-showcase {
-            background: var(--light-bg);
+            background: transparent;
             padding: 4rem 0;
             text-align: center;
         }
@@ -155,20 +145,28 @@
 
         .showcase-item {
             padding: 2rem;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 20px;
             box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .showcase-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .showcase-number {
             font-size: 3rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--white);
             margin-bottom: 0.5rem;
         }
 
         .showcase-label {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.85);
             font-size: 1.1rem;
         }
 
@@ -190,6 +188,11 @@
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="images/moving_dots.mp4" type="video/mp4">
+    </video>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
