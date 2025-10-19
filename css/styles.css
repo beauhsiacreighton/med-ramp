@@ -193,6 +193,16 @@ a {
 
 /* Hero Section */
 /* === Replace this rule in your css/styles.css === */
+#vanta-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(3px);
+
+}
 
 .hero {
     min-height: 80vh; /* Adjusted height since there's no video */
@@ -485,12 +495,4 @@ a {
     .hero-title { font-size: 2rem; }
     .hero-subtitle { font-size: 1rem; }
     .btn { padding: 0.8rem 1.5rem; }
-}
-#vanta-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
 }
