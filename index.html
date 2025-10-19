@@ -209,22 +209,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script>
-          // Initialize the Vanta.js animation on your background element
-          VANTA.NET({
-              el: "#vanta-background",
-              mouseControls: true,
-              touchControls: true,
-              gyroControls: false,
-              minHeight: 200.00,
-              minWidth: 200.00,
-              scale: 1.00,
-              scaleMobile: 1.00,
-              color: 0x720bbb,
-              backgroundColor: 0x15193c,
-              spacing: 18.00,
-              points: 7.00,
-              maxDistance: 24.00,
-              showDots: false
+          // Wait for everything to load before initializing Vanta
+          window.addEventListener('load', function() {
+              VANTA.NET({
+                  el: "#vanta-background",
+                  mouseControls: true,
+                  touchControls: true,
+                  gyroControls: false,
+                  minHeight: 200.00,
+                  minWidth: 200.00,
+                  scale: 1.00,
+                  scaleMobile: 1.00,
+                  color: 0x720bbb,
+                  backgroundColor: 0x15193c,
+                  spacing: 18.00,
+                  points: 7.00,
+                  maxDistance: 24.00,
+                  showDots: false
+              });
           });
     </script>
     <script src="js/main.js"></script>
