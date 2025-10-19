@@ -127,9 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-// Publications page: Filter and search functionality INSERT THE CODE HERE
     // Publications page: Filter and search functionality
-const publicationsGrid = document.querySelector('.publications-grid');
+    const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
         const searchInput = document.getElementById('publicationSearch');
         const filterButtons = document.querySelectorAll('.filter-btn');
@@ -316,5 +315,5 @@ async function loadBlogPosts() {
 // Format date helper
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options); // Corrected typo here
+    return new Date(dateString).toLocaleDateString('en-US', options);
 }
