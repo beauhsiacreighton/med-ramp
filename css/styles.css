@@ -291,9 +291,8 @@ a {
     background: var(--white);
     color: var(--primary-color);
 }
-
 /* =============================================
-   Page Hero Section Styles
+   Page Hero Section Styles (Half-height Hero)
    ============================================= */
 .page-hero {
     display: flex;
@@ -301,36 +300,58 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 40vh; /* Gives the section a good height */
-    padding: 4rem 1rem;
+    min-height: 40vh; /* Half of .hero’s 80vh */
+    padding-top: 60px; /* Slight top offset like .hero */
     color: var(--white);
+    position: relative;
+}
+
+/* Optional: subtle overlay if you want same text contrast */
+.page-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.page-hero .container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 2rem;
 }
 
 .page-hero h1 {
-    font-size: 3.5rem; /* Larger, more impactful font size */
-    margin-bottom: 0.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
     font-weight: 700;
+    color: var(--white);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
 }
 
 .page-hero p {
-    font-size: 1.25rem;
-    max-width: 600px; /* Keeps the subtitle from getting too wide */
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 600px;
     opacity: 0.9;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
 }
 
-/* Responsive adjustment for smaller screens */
+/* Responsive adjustment */
 @media (max-width: 768px) {
     .page-hero {
         min-height: 30vh;
         padding: 3rem 1rem;
     }
     .page-hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     .page-hero p {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 }
+
 /* A reusable class for all glass elements */
 .glass-card {
     background: var(--glass-bg);
