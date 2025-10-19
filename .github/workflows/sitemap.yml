@@ -2,8 +2,7 @@ name: Generate Sitemap
 
 on:
   push:
-    branches:
-      - main # Change to your default branch if different (e.g., master)
+    branches: [ main ]  # Adjust if your default branch is 'master'
 
 jobs:
   sitemap:
@@ -11,20 +10,32 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required: Fetches full history for accurate <lastmod> dates
 
       - name: Generate Sitemap
+        id: sitemap
         uses: cicirello/generate-sitemap@v1
         with:
-          base-url: https://med-ramp.com
-          path-to-root: . # Root directory of your site files
-          include-hidden: false # Skip hidden files like .git
+          base-url-path: https://med-ramp.com  # Your custom domain; ends with / for root
 
-      - name: Commit Sitemap
+      - name: Output Stats (for debugging)
+        run: |
+          echo "Sitemap path: ${{ steps.sitemap.outputs.sitemap-path }}"
+          echo "URL count: ${{ steps.sitemap.outputs.url-count }}"
+          echo "Excluded count: ${{ steps.sitemap.outputs.excluded-count }}"
+
+      - name: Commit Sitemap if Changed
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add sitemap.xml
-          git commit -m "Update sitemap" || echo "No changes to commit"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to sitemap; skipping commit."
+          else
+            git commit -m "Update sitemap [skip ci]"  # [skip ci] avoids re-triggering the workflow
+            git push
+            echo "Sitemap committed and pushed."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
