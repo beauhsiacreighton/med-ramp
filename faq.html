@@ -6,21 +6,9 @@
     <title>FAQ - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .page-hero {
-            padding: 120px 0 80px;
-            background: var(--gradient-2);
-            color: var(--white);
-            text-align: center;
-        }
-
-        .page-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
         .faq-section {
             padding: 6rem 0;
+            background: transparent;
         }
 
         .faq-categories {
@@ -32,18 +20,19 @@
 
         .category-card {
             padding: 1.5rem;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 15px;
             box-shadow: var(--shadow-md);
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            border: 2px solid transparent;
         }
 
         .category-card:hover {
             transform: translateY(-5px);
-            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .category-icon {
@@ -53,7 +42,7 @@
 
         .category-name {
             font-weight: 600;
-            color: var(--text-dark);
+            color: var(--white);
         }
 
         .faq-container {
@@ -67,14 +56,16 @@
 
         .category-title {
             font-size: 2rem;
-            color: var(--text-dark);
+            color: var(--white);
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
         }
 
         .faq-item {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 15px;
             margin-bottom: 1rem;
             box-shadow: var(--shadow-sm);
@@ -84,6 +75,7 @@
 
         .faq-item:hover {
             box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .faq-question {
@@ -93,24 +85,24 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            background: var(--white);
+            background: transparent;
             transition: var(--transition);
         }
 
         .faq-question:hover {
-            background: var(--light-bg);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .faq-question h3 {
             margin: 0;
             font-size: 1.15rem;
-            color: var(--text-dark);
+            color: var(--white);
             flex: 1;
         }
 
         .faq-icon {
             font-size: 1.5rem;
-            color: var(--primary-color);
+            color: var(--white);
             font-weight: bold;
             flex-shrink: 0;
             transition: transform 0.3s ease;
@@ -124,7 +116,7 @@
 
         .faq-answer-content {
             padding: 0 2rem 1.5rem 2rem;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.8;
         }
 
@@ -142,7 +134,9 @@
         }
 
         .still-questions {
-            background: var(--light-bg);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             padding: 4rem 2rem;
             border-radius: 30px;
             text-align: center;
@@ -150,12 +144,12 @@
         }
 
         .still-questions h2 {
-            color: var(--text-dark);
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
         .still-questions p {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
             margin-bottom: 2rem;
         }
@@ -172,6 +166,11 @@
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="images/moving_dots.mp4" type="video/mp4">
+    </video>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
