@@ -3,10 +3,10 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #007BFF;
+    --primary-color: #2f0fbd;
     --primary-dark: #0056b3;
     --secondary-color: #6c63ff;
-    --accent-color: #00d4ff;
+    --accent-color: ;
     --dark-bg: #1a1a2e;
     --light-bg: #f8f9fa; /* Kept for fallback, but we will use glass instead */
     --text-dark: #2c3e50;
