@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="container">
+    <div class="nav-content">
+      <a href="/index.html" class="logo">Med-RAMP</a>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/publications.html">Publications</a></li>
+        <li><a href="/success-stories.html">Success Stories</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn">Apply Now</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Add an "active" class to the current page link
+    (function () {
+      try {
+        const navLinks = document.querySelectorAll('.nav-links a');
+        if (!navLinks || !navLinks.length) return;
+        const path = location.pathname.split('/').pop() || 'index.html';
+        navLinks.forEach(a => {
+          const href = a.getAttribute('href') || '';
+          const compare = href.split('/').pop();
+          if (compare === path) a.classList.add('active');
+        });
+      } catch (e) {
+        console.warn('header: active link script failed', e);
+      }
+    })();
+  </script>
+</header>
