@@ -6,22 +6,9 @@
     <title>Publications - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .page-hero {
-            padding: 120px 0 80px;
-            background: var(--gradient-2);
-            color: var(--white);
-            text-align: center;
-        }
-
-        .page-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
         .search-filter-section {
             padding: 3rem 0;
-            background: var(--light-bg);
+            background: transparent;
         }
 
         .search-box {
@@ -34,15 +21,22 @@
             width: 100%;
             padding: 1rem 1.5rem;
             border-radius: 50px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             font-size: 1rem;
             transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--white);
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .search-box input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+            border-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
         }
 
         .filter-buttons {
@@ -55,9 +49,9 @@
         .filter-btn {
             padding: 0.7rem 1.5rem;
             border-radius: 50px;
-            border: 2px solid var(--primary-color);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             background: transparent;
-            color: var(--primary-color);
+            color: var(--white);
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -65,8 +59,8 @@
 
         .filter-btn:hover,
         .filter-btn.active {
-            background: var(--primary-color);
-            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--white);
         }
 
         .publications-section {
@@ -74,12 +68,14 @@
         }
 
         .stats-banner {
-            background: var(--gradient-1);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
             padding: 3rem;
             border-radius: 20px;
             color: var(--white);
             text-align: center;
             margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .stats-banner h3 {
@@ -88,17 +84,112 @@
             margin-bottom: 1rem;
         }
 
+        /* Featured Carousel */
+        .featured-section {
+            margin-bottom: 4rem;
+        }
+
+        .featured-carousel {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .carousel-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-item.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .featured-pub {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            color: var(--white);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .featured-pub h3 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .featured-pub .authors {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .featured-pub .pub-abstract {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-pub .pub-link {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .featured-pub .pub-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.5rem;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: var(--white);
+        }
+
         .publications-grid {
             display: grid;
             gap: 2rem;
         }
 
         .publication-item {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
             padding: 2.5rem;
             border-radius: 20px;
             box-shadow: var(--shadow-md);
             transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             opacity: 1;
             transform: translateY(0);
         }
@@ -106,6 +197,7 @@
         .publication-item:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .pub-badge {
@@ -118,29 +210,32 @@
         }
 
         .badge-journal {
-            background: #e3f2fd;
-            color: #1976d2;
+            background: rgba(25, 118, 210, 0.3);
+            color: #90caf9;
+            border: 1px solid rgba(25, 118, 210, 0.5);
         }
 
         .badge-abstract {
-            background: #f3e5f5;
-            color: #7b1fa2;
+            background: rgba(123, 31, 162, 0.3);
+            color: #ce93d8;
+            border: 1px solid rgba(123, 31, 162, 0.5);
         }
 
         .badge-poster {
-            background: #e8f5e9;
-            color: #388e3c;
+            background: rgba(56, 142, 60, 0.3);
+            color: #a5d6a7;
+            border: 1px solid rgba(56, 142, 60, 0.5);
         }
 
         .publication-item h3 {
-            color: var(--text-dark);
+            color: var(--white);
             margin-bottom: 1rem;
             font-size: 1.4rem;
             line-height: 1.4;
         }
 
         .authors {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
             margin-bottom: 1rem;
             font-style: italic;
@@ -152,7 +247,7 @@
             margin-bottom: 1rem;
             flex-wrap: wrap;
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .pub-details span {
@@ -162,7 +257,7 @@
         }
 
         .pub-abstract {
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
@@ -171,7 +266,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary-color);
+            color: var(--white);
             font-weight: 600;
             text-decoration: none;
             transition: var(--transition);
@@ -179,45 +274,6 @@
 
         .pub-link:hover {
             gap: 0.8rem;
-        }
-
-        .featured-section {
-            margin-bottom: 4rem;
-        }
-
-        .featured-pub {
-            background: var(--gradient-2);
-            color: var(--white);
-            padding: 3rem;
-            border-radius: 30px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .featured-pub h3 {
-            color: var(--white);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .featured-pub .authors {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .featured-pub .pub-abstract {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.1rem;
-        }
-
-        .featured-pub .pub-link {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        .featured-pub .pub-link:hover {
-            background: rgba(255, 255, 255, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -229,10 +285,19 @@
             .filter-btn {
                 width: 100%;
             }
+
+            .featured-pub {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="images/moving_dots.mp4" type="video/mp4">
+    </video>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -288,25 +353,61 @@
                 <p>Med-RAMP students have contributed to groundbreaking research in rare cancer studies</p>
             </div>
 
-            <!-- Featured Publication -->
+            <!-- Featured Publication Carousel -->
             <div class="featured-section" data-scroll-animate>
                 <h2 class="section-title">Featured Research</h2>
-                <div class="featured-pub">
-                    <span class="pub-badge badge-journal">Journal Article</span>
-                    <h3>Demographic and Prognostic Factors of the Columnar Cell Variant of Papillary Thyroid Carcinoma: A National Cancer Database Study</h3>
-                    <p class="authors">Med-RAMP Research Team et al.</p>
-                    <p class="pub-abstract">This comprehensive study analyzes demographic patterns and prognostic factors in columnar cell variant papillary thyroid carcinoma using the National Cancer Database, providing crucial insights for clinical management of this rare cancer subtype.</p>
-                    <a href="https://www.cureus.com/articles/248826-demographic-and-prognostic-factors-of-the-columnar-cell-variant-of-papillary-thyroid-carcinoma-a-national-cancer-database-study" target="_blank" class="pub-link">
-                        Read Full Article →
-                    </a>
+                <div class="featured-carousel">
+                    <!-- Carousel Item 1 -->
+                    <div class="carousel-item active">
+                        <div class="featured-pub">
+                            <span class="pub-badge badge-journal">Journal Article</span>
+                            <h3>Demographic and Prognostic Factors of the Columnar Cell Variant of Papillary Thyroid Carcinoma</h3>
+                            <p class="authors">Med-RAMP Research Team et al.</p>
+                            <p class="pub-abstract">This comprehensive study analyzes demographic patterns and prognostic factors in columnar cell variant papillary thyroid carcinoma using the National Cancer Database, providing crucial insights for clinical management of this rare cancer subtype.</p>
+                            <a href="https://www.cureus.com/articles/248826-demographic-and-prognostic-factors-of-the-columnar-cell-variant-of-papillary-thyroid-carcinoma-a-national-cancer-database-study" target="_blank" class="pub-link">
+                                Read Full Article →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 2 -->
+                    <div class="carousel-item">
+                        <div class="featured-pub">
+                            <span class="pub-badge badge-journal">Journal Article</span>
+                            <h3>Genomic Insights into Rare Cancer Variants</h3>
+                            <p class="authors">Med-RAMP Research Consortium</p>
+                            <p class="pub-abstract">An exploration of genomic characteristics across multiple rare cancer types, utilizing advanced analytical methods to identify potential therapeutic targets and improve patient outcomes.</p>
+                            <a href="https://www.mdpi.com/2072-6694/17/3/536" target="_blank" class="pub-link">
+                                Read Full Article →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 3 -->
+                    <div class="carousel-item">
+                        <div class="featured-pub">
+                            <span class="pub-badge badge-abstract">Conference Abstracts</span>
+                            <h3>ASCO Annual Meeting Presentations</h3>
+                            <p class="authors">Multiple Med-RAMP Authors</p>
+                            <p class="pub-abstract">Over 50 abstracts presented at the ASCO Annual Meeting covering diverse aspects of rare cancer research, from epidemiology to treatment outcomes, showcasing the breadth of Med-RAMP participant contributions.</p>
+                            <a href="https://meetings.asco.org/abstracts-presentations/search?query=*&q=creighton&sortBy=Relevancy&filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&size=50" target="_blank" class="pub-link">
+                                View Abstracts →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Navigation -->
+                <div class="carousel-nav">
+                    <button class="carousel-btn carousel-prev">‹</button>
+                    <button class="carousel-btn carousel-next">›</button>
                 </div>
             </div>
 
             <!-- Publications Grid -->
             <h2 class="section-title" data-scroll-animate>All Publications</h2>
             <div class="publications-grid">
-                <!-- Hard-coded publication items START -->
-                <div class="publication-item" data-category="journal" data-scroll-animate="">
+                <div class="publication-item" data-category="journal" data-scroll-animate>
                     <span class="pub-badge badge-journal">Journal</span>
                     <h3>Genomic Insights into Rare Cancer Variants</h3>
                     <p class="authors">Med-RAMP Research Consortium</p>
@@ -319,7 +420,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="abstract" data-scroll-animate="">
+
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
                     <span class="pub-badge badge-abstract">Abstract</span>
                     <h3>ASCO Annual Meeting Presentations</h3>
                     <p class="authors">Multiple Med-RAMP Authors</p>
@@ -328,11 +430,12 @@
                         <span>📚 ASCO Annual Meeting</span>
                     </div>
                     <p class="pub-abstract">Over 50 abstracts presented at the ASCO Annual Meeting covering diverse aspects of rare cancer research, from epidemiology to treatment outcomes.</p>
-                    <a href="https://meetings.asco.org/abstracts-presentations/search?query=*&amp;q=creighton&amp;sortBy=Relevancy&amp;filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&amp;size=50" target="_blank" class="pub-link">
+                    <a href="https://meetings.asco.org/abstracts-presentations/search?query=*&q=creighton&sortBy=Relevancy&filters=%7B%22presentationType%22:%5B%7B%22key%22:%22Abstract%20Presentation%22%7D,%7B%22key%22:%22Poster%22%7D,%7B%22key%22:%22Abstract%22%7D%5D,%22meetingYear%22:%5B%7B%22key%22:%222023%22%7D%5D,%22meetingTypeName%22:%5B%7B%22key%22:%22ASCO%20Annual%20Meeting%22%7D%5D%7D&size=50" target="_blank" class="pub-link">
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="journal" data-scroll-animate="">
+
+                <div class="publication-item" data-category="journal" data-scroll-animate>
                     <span class="pub-badge badge-journal">Journal</span>
                     <h3>Epidemiological Trends in Rare Thyroid Cancer Variants</h3>
                     <p class="authors">Med-RAMP Thyroid Research Group</p>
@@ -345,7 +448,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="poster" data-scroll-animate="">
+
+                <div class="publication-item" data-category="poster" data-scroll-animate>
                     <span class="pub-badge badge-poster">Poster</span>
                     <h3>Molecular Profiling of Rare Gastrointestinal Malignancies</h3>
                     <p class="authors">Med-RAMP GI Research Team</p>
@@ -358,7 +462,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="abstract" data-scroll-animate="">
+
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
                     <span class="pub-badge badge-abstract">Abstract</span>
                     <h3>Treatment Outcomes in Rare Sarcoma Subtypes</h3>
                     <p class="authors">Med-RAMP Sarcoma Working Group</p>
@@ -371,7 +476,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="journal" data-scroll-animate="">
+
+                <div class="publication-item" data-category="journal" data-scroll-animate>
                     <span class="pub-badge badge-journal">Journal</span>
                     <h3>Prognostic Factors in Rare Breast Cancer Variants</h3>
                     <p class="authors">Med-RAMP Breast Oncology Group</p>
@@ -384,7 +490,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="poster" data-scroll-animate="">
+
+                <div class="publication-item" data-category="poster" data-scroll-animate>
                     <span class="pub-badge badge-poster">Poster</span>
                     <h3>Racial and Ethnic Disparities in Rare Cancer Outcomes</h3>
                     <p class="authors">Med-RAMP Health Equity Team</p>
@@ -397,7 +504,8 @@
                         View Publication →
                     </a>
                 </div>
-                <div class="publication-item" data-category="abstract" data-scroll-animate="">
+
+                <div class="publication-item" data-category="abstract" data-scroll-animate>
                     <span class="pub-badge badge-abstract">Abstract</span>
                     <h3>Novel Biomarkers in Rare Lung Cancer Subtypes</h3>
                     <p class="authors">Med-RAMP Thoracic Oncology Group</p>
@@ -410,7 +518,6 @@
                         View Publication →
                     </a>
                 </div>
-                <!-- Hard-coded publication items END -->
             </div>
         </div>
     </section>
