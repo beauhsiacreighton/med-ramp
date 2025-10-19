@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    const offset = 80; // Account for fixed navbar
+                    const offset = 80;
                     const targetPosition = target.offsetTop - offset;
                     window.scrollTo({
                         top: targetPosition,
@@ -133,25 +133,39 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('publicationSearch');
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        // Event listener for filter buttons
         filterButtons.forEach(button => {
             button.addEventListener('click', (event) => {
-                // Update active state
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 event.currentTarget.classList.add('active');
-
-                // Update the display
                 updatePublicationsView();
             });
         });
 
-        // Event listener for the search input
         if (searchInput) {
             searchInput.addEventListener('input', updatePublicationsView);
         }
 
-        // Initialize the view
         updatePublicationsView();
+    }
+
+    // Featured Research Carousel (Publications page)
+    initFeaturedCarousel();
+
+    // FAQ page: Category filtering
+    const faqCategories = document.querySelectorAll('.category-card');
+    if (faqCategories.length > 0) {
+        faqCategories.forEach(card => {
+            card.addEventListener('click', () => {
+                const categoryName = card.querySelector('.category-name').textContent.trim();
+                filterFAQByCategory(categoryName);
+                
+                // Scroll to FAQ sections
+                const faqContainer = document.querySelector('.faq-container');
+                if (faqContainer) {
+                    faqContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     }
 
     // Blog page: Load blog posts
@@ -161,25 +175,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Updates the publications display based on both filter category and search term
+ * Updates the publications display based on filter category and search term
  */
 function updatePublicationsView() {
     const searchInput = document.getElementById('publicationSearch');
     if (!searchInput) return;
     
     const searchTerm = searchInput.value.toLowerCase().trim();
-    
-    // Find the currently active filter button
     const activeFilterButton = document.querySelector('.filter-btn.active');
     if (!activeFilterButton) return;
     
     const activeCategory = activeFilterButton.dataset.category;
     const items = document.querySelectorAll('.publication-item');
 
-    // Check if we should show stats and featured sections
+    // Show/hide stats banner and featured section
     const showExtraSections = (activeCategory === 'all' && searchTerm === '');
     
-    // Hide/show stats banner and featured section
     const statsBanner = document.querySelector('.stats-banner');
     const featuredSection = document.querySelector('.featured-section');
     
@@ -197,13 +208,9 @@ function updatePublicationsView() {
         const itemCategory = item.dataset.category;
         const itemText = item.textContent.toLowerCase();
 
-        // Check if item matches the category filter
         const categoryMatch = (activeCategory === 'all' || itemCategory === activeCategory);
-        
-        // Check if item matches the search term (or search is empty)
         const searchMatch = searchTerm === '' || itemText.includes(searchTerm);
 
-        // Show item only if both conditions are met
         if (categoryMatch && searchMatch) {
             item.style.display = 'block';
             item.style.opacity = '1';
@@ -216,7 +223,6 @@ function updatePublicationsView() {
         }
     });
 
-    // Optional: Show a "no results" message if nothing matches
     showNoResultsMessage(visibleCount);
 }
 
@@ -227,23 +233,115 @@ function showNoResultsMessage(visibleCount) {
     const grid = document.querySelector('.publications-grid');
     if (!grid) return;
 
-    // Remove existing message if present
     const existingMessage = document.getElementById('noResultsMessage');
     if (existingMessage) {
         existingMessage.remove();
     }
 
-    // Add message if no results
     if (visibleCount === 0) {
         const message = document.createElement('div');
         message.id = 'noResultsMessage';
-        message.style.cssText = 'text-align: center; padding: 3rem; color: #6c757d; font-size: 1.1rem;';
+        message.style.cssText = 'text-align: center; padding: 3rem; color: rgba(255,255,255,0.8); font-size: 1.1rem;';
         message.innerHTML = '📭 No publications match your search criteria. Try adjusting your filters or search terms.';
         grid.appendChild(message);
     }
 }
 
-// FAQ toggle (for FAQ page)
+/**
+ * Initialize Featured Research Carousel
+ */
+function initFeaturedCarousel() {
+    const carousel = document.querySelector('.featured-carousel');
+    if (!carousel) return;
+
+    const items = carousel.querySelectorAll('.carousel-item');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    function showSlide(index) {
+        items.forEach((item, i) => {
+            item.classList.remove('active');
+            if (i === index) {
+                item.classList.add('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showSlide(currentIndex);
+    }
+
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
+
+    if (items.length > 0) {
+        showSlide(0);
+        startAutoSlide();
+
+        carousel.addEventListener('mouseenter', stopAutoSlide);
+        carousel.addEventListener('mouseleave', startAutoSlide);
+    }
+}
+
+/**
+ * Filter FAQ by category
+ */
+function filterFAQByCategory(categoryName) {
+    const sections = document.querySelectorAll('.faq-category-section');
+    
+    // Map category card names to section titles
+    const categoryMap = {
+        'Application Process': 'Application Process',
+        'Time Commitment': 'Time Commitment & Flexibility',
+        'Research Experience': 'Research Experience',
+        'Publications': 'Publications & Authorship'
+    };
+
+    const targetCategory = categoryMap[categoryName];
+
+    sections.forEach(section => {
+        const sectionTitle = section.querySelector('.category-title').textContent.trim();
+        
+        if (!targetCategory || sectionTitle === targetCategory) {
+            section.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * FAQ toggle
+ */
 function toggleFAQ(element) {
     const answer = element.nextElementSibling;
     const icon = element.querySelector('.faq-icon');
@@ -265,7 +363,9 @@ function toggleFAQ(element) {
     }
 }
 
-// Load blog posts from JSON (for blog page)
+/**
+ * Load blog posts from JSON
+ */
 async function loadBlogPosts() {
     try {
         const response = await fetch('/blog-posts/posts.json');
@@ -276,17 +376,17 @@ async function loadBlogPosts() {
         
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        container.innerHTML = posts.map(post => `
-            <article class="blog-post glass-effect" data-scroll-animate>
+        container.innerHTML = posts.map((post, index) => `
+            <article class="blog-post glass-card" data-scroll-animate>
                 <div class="post-header">
                     <span class="post-category">${post.category}</span>
                     <span class="post-date">${formatDate(post.date)}</span>
                 </div>
                 <h2 class="post-title">${post.title}</h2>
                 <p class="post-excerpt">${post.excerpt}</p>
-                <div class="post-content">${post.content}</div>
                 <div class="post-footer">
                     <span class="post-author">By ${post.author}</span>
+                    <a href="blog-post-${index + 1}.html" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">Read Full Post</a>
                 </div>
             </article>
         `).join('');
@@ -307,12 +407,14 @@ async function loadBlogPosts() {
         console.error('Error loading blog posts:', error);
         const container = document.getElementById('blogContainer');
         if (container) {
-            container.innerHTML = '<p style="text-align: center; color: #6c757d;">No blog posts available at this time.</p>';
+            container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.8);">No blog posts available at this time.</p>';
         }
     }
 }
 
-// Format date helper
+/**
+ * Format date helper
+ */
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
