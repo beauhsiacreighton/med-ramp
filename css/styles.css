@@ -7,7 +7,7 @@
     --primary-dark: #0056b3;
     --secondary-color: #6c63ff;
     --accent-color: #00d4ff;
-    --dark-bg: #1a1a2e;
+    --dark-bg: #252552;
     --light-bg: #f8f9fa;
     --text-dark: #2c3e50;
     --text-light: #495057;
@@ -51,21 +51,22 @@ body {
     line-height: 1.7;
     color: var(--text-dark);
     overflow-x: hidden;
-    background: #15193c;
+    background: linear-gradient(145deg, #0f172a 0%, #1a1f2e 100%);
     position: relative;
     min-height: 100vh;
+    transition: var(--transition);
+}
+@keyframes softGradientShift {
+  0% { background: linear-gradient(145deg, #0f172a, #1a1f2e); }
+  50% { background: linear-gradient(145deg, #121b30, #232d45); }
+  100% { background: linear-gradient(145deg, #0f172a, #1a1f2e); }
 }
 
-/* Vanta Background */
-#vanta-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
+body {
+  animation: softGradientShift 60s ease-in-out infinite;
 }
+
+
 
 /* Ensure content is above background but footer stays normal */
 body > *:not(#vanta-background):not(.footer):not(.navbar) {
