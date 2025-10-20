@@ -1,23 +1,259 @@
 [
   {
+    "id": "med-ramp-transformed-application",
     "title": "How Med-RAMP Transformed My Medical School Application",
     "excerpt": "Learn how one student leveraged Med-RAMP research experience to stand out in a competitive application cycle and earned acceptances to top medical schools.",
     "category": "Success Stories",
     "date": "2025-01-15",
-    "author": "Sarah Johnson"
+    "author": "Sarah Johnson",
+    "authorRole": "Current Medical Student",
+    "readTime": "8 min read",
+    "tags": ["medical school", "application", "success story", "research experience"],
+    "featured": true,
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "When I started my pre-med journey, I knew research experience would be crucial for medical school applications. But as a student at a small liberal arts college without an affiliated medical school, finding meaningful research opportunities felt impossible. That's when I discovered Med-RAMP—and it completely transformed my path to medical school."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The Challenge: Finding Quality Research"
+      },
+      {
+        "type": "paragraph",
+        "text": "Like many pre-med students, I faced several obstacles:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Limited research opportunities at my small college",
+          "No connections to researchers in my area",
+          "Uncertainty about how to even begin looking for research",
+          "Fear that without research experience, my application would be incomplete"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "I spent months searching for research positions, only to find that most required long-term, in-person commitments that didn't fit with my academic schedule. Others were unpaid positions that expected 20+ hours per week—impossible for a full-time student working part-time to pay for college."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Discovering Med-RAMP"
+      },
+      {
+        "type": "paragraph",
+        "text": "I found Med-RAMP through a pre-med forum where another student was sharing their positive experience. What immediately caught my attention was that the program was:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "<strong>Completely virtual</strong> - I could participate from anywhere",
+          "<strong>Flexible</strong> - No minimum hour requirements",
+          "<strong>Free</strong> - No fees or hidden costs",
+          "<strong>Focused on real research</strong> - Contributing to actual publications, not just doing busy work"
+        ]
+      },
+      {
+        "type": "callout",
+        "style": "success",
+        "text": "I applied immediately, and within two weeks, I was accepted and paired with my mentor—a second-year medical student who had been exactly where I was just a few years ago."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The Results"
+      },
+      {
+        "type": "paragraph",
+        "text": "I applied to 15 medical schools and received 3 acceptances, including my top choice. While I can't attribute my success solely to Med-RAMP, I'm certain it was a crucial differentiator. My application went from 'solid but unremarkable' to 'demonstrates sustained commitment to research and medicine.'"
+      },
+      {
+        "type": "stats",
+        "data": [
+          { "label": "Abstracts Published", "value": "5" },
+          { "label": "Conferences Attended", "value": "1" },
+          { "label": "Research Hours", "value": "400+" }
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Advice for Future Applicants"
+      },
+      {
+        "type": "paragraph",
+        "text": "If you're considering Med-RAMP, here's my advice:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "<strong>Start early:</strong> The more time you invest, the more you'll gain. I started sophomore year, which gave me plenty of time to build a strong research portfolio.",
+          "<strong>Be proactive:</strong> Your mentor will guide you, but take initiative in suggesting project ideas and asking questions.",
+          "<strong>Communicate openly:</strong> If you're struggling with time management or understanding concepts, speak up. The program is designed to be flexible and supportive.",
+          "<strong>Think long-term:</strong> Don't just focus on getting authorships—focus on genuinely learning and contributing. The authorships will follow."
+        ]
+      },
+      {
+        "type": "callout",
+        "style": "primary",
+        "text": "Ready to start your own Med-RAMP journey? The application is free and takes just a few minutes. Your future self will thank you."
+      }
+    ]
   },
   {
+    "id": "rare-cancer-research-tips",
     "title": "5 Tips for Conducting Rare Cancer Research",
     "excerpt": "Expert advice on navigating rare cancer databases and producing meaningful research outcomes from experienced Med-RAMP mentors.",
     "category": "Research Tips",
     "date": "2025-01-10",
-    "author": "Dr. Michael Chen"
+    "author": "Dr. Michael Chen",
+    "authorRole": "Med-RAMP Mentor & Oncology Resident",
+    "readTime": "6 min read",
+    "tags": ["research tips", "cancer research", "databases", "methodology"],
+    "featured": false,
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Rare cancer research presents unique challenges, but with the right approach, even undergraduate researchers can make meaningful contributions. Here are five essential tips from my experience mentoring Med-RAMP students."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Master Your Database Tools"
+      },
+      {
+        "type": "paragraph",
+        "text": "Understanding databases like the National Cancer Database (NCDB) or SEER is crucial. Take time to learn the data dictionary thoroughly—it's your roadmap to meaningful analysis."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Start with Focused Questions"
+      },
+      {
+        "type": "paragraph",
+        "text": "Rare cancers have limited sample sizes. Begin with specific, answerable questions rather than broad exploratory analyses. This approach yields more impactful results."
+      },
+      {
+        "type": "callout",
+        "style": "tip",
+        "text": "Pro tip: Review recent literature to identify gaps your research can fill. This makes your work more publishable."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Understand Statistical Power"
+      },
+      {
+        "type": "paragraph",
+        "text": "Small sample sizes require careful statistical consideration. Work with your mentor to ensure your analyses are appropriate for your dataset size."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Document Everything"
+      },
+      {
+        "type": "paragraph",
+        "text": "Keep detailed notes on your methodology, variable definitions, and decision-making process. This makes manuscript writing much easier and ensures reproducibility."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "5. Think Beyond P-Values"
+      },
+      {
+        "type": "paragraph",
+        "text": "Clinical significance matters as much as statistical significance. Always consider what your findings mean for patient care and future research directions."
+      }
+    ]
   },
   {
+    "id": "medical-school-application-timeline",
     "title": "Understanding the Medical School Application Timeline",
     "excerpt": "A comprehensive guide to planning your medical school application journey with Med-RAMP research experience integrated into your timeline.",
     "category": "Application Advice",
     "date": "2025-01-05",
-    "author": "Emily Rodriguez"
+    "author": "Emily Rodriguez",
+    "authorRole": "Pre-Med Advisor & Med-RAMP Coordinator",
+    "readTime": "10 min read",
+    "tags": ["medical school", "application", "timeline", "planning"],
+    "featured": false,
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Understanding the medical school application timeline is crucial for success. Here's how to strategically integrate Med-RAMP research into your journey."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The Complete Timeline"
+      },
+      {
+        "type": "paragraph",
+        "text": "Medical school applications follow a structured timeline. Here's when to start each component:"
+      },
+      {
+        "type": "timeline",
+        "events": [
+          {
+            "period": "Freshman/Sophomore Year",
+            "title": "Foundation Building",
+            "description": "Join Med-RAMP early to maximize your research portfolio. Focus on coursework and initial clinical exposure."
+          },
+          {
+            "period": "Junior Year (Fall/Winter)",
+            "title": "MCAT Preparation",
+            "description": "Take the MCAT while continuing Med-RAMP research. Aim for spring junior year test date."
+          },
+          {
+            "period": "Junior Year (Spring)",
+            "title": "Application Prep",
+            "description": "Begin drafting personal statement. Accumulate meaningful Med-RAMP authorships and presentations."
+          },
+          {
+            "period": "Summer Before Senior Year",
+            "title": "Primary Applications",
+            "description": "Submit AMCAS/AACOMAS in early June. Highlight Med-RAMP research prominently."
+          },
+          {
+            "period": "Fall Senior Year",
+            "title": "Secondary & Interviews",
+            "description": "Complete secondaries promptly. Use Med-RAMP experiences in interview responses."
+          },
+          {
+            "period": "Winter/Spring Senior Year",
+            "title": "Decisions & Acceptance",
+            "description": "Receive acceptances and make your choice. Continue Med-RAMP work if possible!"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Maximizing Med-RAMP Impact"
+      },
+      {
+        "type": "paragraph",
+        "text": "To make the most of Med-RAMP for your application:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Start early (freshman or sophomore year) for maximum publication potential",
+          "Maintain consistent engagement even during busy semesters",
+          "Present at conferences when possible—this creates great interview talking points",
+          "Build a narrative connecting your research to your medical school goals",
+          "Stay in touch with your mentor for strong letters of recommendation"
+        ]
+      },
+      {
+        "type": "callout",
+        "style": "warning",
+        "text": "Remember: Quality matters more than quantity. Two or three substantial projects with meaningful contributions beat a long list of minimal involvements."
+      }
+    ]
   }
 ]
