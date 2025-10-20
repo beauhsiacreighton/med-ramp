@@ -58,6 +58,10 @@ function renderPost(post) {
     
     const headerHTML = `
         <div class="post-container">
+            ${post.featuredImage ? `
+                <img src="${post.featuredImage}" alt="${post.title}" class="post-featured-image">
+            ` : ''}
+            
             <div class="post-header-section">
                 <div class="post-meta-top">
                     <span class="post-category-badge">${post.category}</span>
@@ -117,6 +121,14 @@ function renderContent(contentArray) {
                     <ul>
                         ${block.items.map(item => `<li>${item}</li>`).join('')}
                     </ul>
+                `;
+            
+            case 'image':
+                return `
+                    <div class="content-image-wrapper">
+                        <img src="${block.src}" alt="${block.alt}" class="content-image">
+                        ${block.caption ? `<p class="image-caption">${block.caption}</p>` : ''}
+                    </div>
                 `;
             
             case 'callout':
