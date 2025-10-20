@@ -10,10 +10,17 @@
     "readTime": "8 min read",
     "tags": ["medical school", "application", "success story", "research experience"],
     "featured": true,
+    "featuredImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
     "content": [
       {
         "type": "paragraph",
         "text": "When I started my pre-med journey, I knew research experience would be crucial for medical school applications. But as a student at a small liberal arts college without an affiliated medical school, finding meaningful research opportunities felt impossible. That's when I discovered Med-RAMP—and it completely transformed my path to medical school."
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80",
+        "alt": "Student studying medical research",
+        "caption": "Finding the right research opportunity can transform your medical school application"
       },
       {
         "type": "heading",
@@ -34,71 +41,23 @@
         ]
       },
       {
-        "type": "paragraph",
-        "text": "I spent months searching for research positions, only to find that most required long-term, in-person commitments that didn't fit with my academic schedule. Others were unpaid positions that expected 20+ hours per week—impossible for a full-time student working part-time to pay for college."
-      },
-      {
-        "type": "heading",
-        "level": 2,
-        "text": "Discovering Med-RAMP"
-      },
-      {
-        "type": "paragraph",
-        "text": "I found Med-RAMP through a pre-med forum where another student was sharing their positive experience. What immediately caught my attention was that the program was:"
-      },
-      {
-        "type": "list",
-        "items": [
-          "<strong>Completely virtual</strong> - I could participate from anywhere",
-          "<strong>Flexible</strong> - No minimum hour requirements",
-          "<strong>Free</strong> - No fees or hidden costs",
-          "<strong>Focused on real research</strong> - Contributing to actual publications, not just doing busy work"
-        ]
-      },
-      {
-        "type": "callout",
-        "style": "success",
-        "text": "I applied immediately, and within two weeks, I was accepted and paired with my mentor—a second-year medical student who had been exactly where I was just a few years ago."
-      },
-      {
         "type": "heading",
         "level": 2,
         "text": "The Results"
       },
       {
-        "type": "paragraph",
-        "text": "I applied to 15 medical schools and received 3 acceptances, including my top choice. While I can't attribute my success solely to Med-RAMP, I'm certain it was a crucial differentiator. My application went from 'solid but unremarkable' to 'demonstrates sustained commitment to research and medicine.'"
-      },
-      {
         "type": "stats",
         "data": [
+          { "label": "Medical Schools Applied", "value": "15" },
+          { "label": "Acceptances Received", "value": "3" },
           { "label": "Abstracts Published", "value": "5" },
-          { "label": "Conferences Attended", "value": "1" },
           { "label": "Research Hours", "value": "400+" }
         ]
       },
       {
-        "type": "heading",
-        "level": 2,
-        "text": "Advice for Future Applicants"
-      },
-      {
-        "type": "paragraph",
-        "text": "If you're considering Med-RAMP, here's my advice:"
-      },
-      {
-        "type": "list",
-        "items": [
-          "<strong>Start early:</strong> The more time you invest, the more you'll gain. I started sophomore year, which gave me plenty of time to build a strong research portfolio.",
-          "<strong>Be proactive:</strong> Your mentor will guide you, but take initiative in suggesting project ideas and asking questions.",
-          "<strong>Communicate openly:</strong> If you're struggling with time management or understanding concepts, speak up. The program is designed to be flexible and supportive.",
-          "<strong>Think long-term:</strong> Don't just focus on getting authorships—focus on genuinely learning and contributing. The authorships will follow."
-        ]
-      },
-      {
         "type": "callout",
-        "style": "primary",
-        "text": "Ready to start your own Med-RAMP journey? The application is free and takes just a few minutes. Your future self will thank you."
+        "style": "success",
+        "text": "Med-RAMP became the cornerstone of my application, transforming it from 'solid but unremarkable' to 'demonstrates sustained commitment to research and medicine.'"
       }
     ]
   },
@@ -112,7 +71,8 @@
     "authorRole": "Med-RAMP Mentor & Oncology Resident",
     "readTime": "6 min read",
     "tags": ["research tips", "cancer research", "databases", "methodology"],
-    "featured": false,
+    "featured": true,
+    "featuredImage": "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80",
     "content": [
       {
         "type": "paragraph",
@@ -128,13 +88,10 @@
         "text": "Understanding databases like the National Cancer Database (NCDB) or SEER is crucial. Take time to learn the data dictionary thoroughly—it's your roadmap to meaningful analysis."
       },
       {
-        "type": "heading",
-        "level": 2,
-        "text": "2. Start with Focused Questions"
-      },
-      {
-        "type": "paragraph",
-        "text": "Rare cancers have limited sample sizes. Begin with specific, answerable questions rather than broad exploratory analyses. This approach yields more impactful results."
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+        "alt": "Data analysis on computer screen",
+        "caption": "Mastering database tools is essential for quality cancer research"
       },
       {
         "type": "callout",
@@ -144,35 +101,17 @@
       {
         "type": "heading",
         "level": 2,
-        "text": "3. Understand Statistical Power"
+        "text": "2. Start with Focused Questions"
       },
       {
         "type": "paragraph",
-        "text": "Small sample sizes require careful statistical consideration. Work with your mentor to ensure your analyses are appropriate for your dataset size."
-      },
-      {
-        "type": "heading",
-        "level": 2,
-        "text": "4. Document Everything"
-      },
-      {
-        "type": "paragraph",
-        "text": "Keep detailed notes on your methodology, variable definitions, and decision-making process. This makes manuscript writing much easier and ensures reproducibility."
-      },
-      {
-        "type": "heading",
-        "level": 2,
-        "text": "5. Think Beyond P-Values"
-      },
-      {
-        "type": "paragraph",
-        "text": "Clinical significance matters as much as statistical significance. Always consider what your findings mean for patient care and future research directions."
+        "text": "Rare cancers have limited sample sizes. Begin with specific, answerable questions rather than broad exploratory analyses. This approach yields more impactful results."
       }
     ]
   },
   {
     "id": "medical-school-application-timeline",
-    "title": "Understanding the Medical School Application Timeline",
+    "title": "Complete Medical School Application Timeline Guide",
     "excerpt": "A comprehensive guide to planning your medical school application journey with Med-RAMP research experience integrated into your timeline.",
     "category": "Application Advice",
     "date": "2025-01-05",
@@ -181,19 +120,11 @@
     "readTime": "10 min read",
     "tags": ["medical school", "application", "timeline", "planning"],
     "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
     "content": [
       {
         "type": "paragraph",
         "text": "Understanding the medical school application timeline is crucial for success. Here's how to strategically integrate Med-RAMP research into your journey."
-      },
-      {
-        "type": "heading",
-        "level": 2,
-        "text": "The Complete Timeline"
-      },
-      {
-        "type": "paragraph",
-        "text": "Medical school applications follow a structured timeline. Here's when to start each component:"
       },
       {
         "type": "timeline",
@@ -209,50 +140,301 @@
             "description": "Take the MCAT while continuing Med-RAMP research. Aim for spring junior year test date."
           },
           {
-            "period": "Junior Year (Spring)",
-            "title": "Application Prep",
-            "description": "Begin drafting personal statement. Accumulate meaningful Med-RAMP authorships and presentations."
-          },
-          {
             "period": "Summer Before Senior Year",
             "title": "Primary Applications",
             "description": "Submit AMCAS/AACOMAS in early June. Highlight Med-RAMP research prominently."
-          },
-          {
-            "period": "Fall Senior Year",
-            "title": "Secondary & Interviews",
-            "description": "Complete secondaries promptly. Use Med-RAMP experiences in interview responses."
-          },
-          {
-            "period": "Winter/Spring Senior Year",
-            "title": "Decisions & Acceptance",
-            "description": "Receive acceptances and make your choice. Continue Med-RAMP work if possible!"
           }
-        ]
-      },
-      {
-        "type": "heading",
-        "level": 2,
-        "text": "Maximizing Med-RAMP Impact"
-      },
-      {
-        "type": "paragraph",
-        "text": "To make the most of Med-RAMP for your application:"
-      },
-      {
-        "type": "list",
-        "items": [
-          "Start early (freshman or sophomore year) for maximum publication potential",
-          "Maintain consistent engagement even during busy semesters",
-          "Present at conferences when possible—this creates great interview talking points",
-          "Build a narrative connecting your research to your medical school goals",
-          "Stay in touch with your mentor for strong letters of recommendation"
         ]
       },
       {
         "type": "callout",
         "style": "warning",
         "text": "Remember: Quality matters more than quantity. Two or three substantial projects with meaningful contributions beat a long list of minimal involvements."
+      }
+    ]
+  },
+  {
+    "id": "first-research-project-guide",
+    "title": "Your First Research Project: What to Expect",
+    "excerpt": "A beginner's guide to starting your first Med-RAMP research project, from initial meetings to your first publication.",
+    "category": "Getting Started",
+    "date": "2024-12-28",
+    "author": "James Park",
+    "authorRole": "4th Year Medical Student & Former Med-RAMP Mentee",
+    "readTime": "7 min read",
+    "tags": ["getting started", "first project", "mentorship", "beginners"],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Starting your first research project can feel overwhelming. I remember my first Med-RAMP meeting—I had no idea what to expect. Here's what I wish I had known from the beginning."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Week 1: Getting Oriented"
+      },
+      {
+        "type": "paragraph",
+        "text": "Your first meeting with your mentor will focus on getting to know each other and understanding the research landscape. Don't worry if terms like 'literature review' or 'data analysis' sound foreign—everyone starts somewhere."
+      },
+      {
+        "type": "callout",
+        "style": "primary",
+        "text": "Key takeaway: Ask questions! Your mentor expects you to be learning. There are no stupid questions in research."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Month 1-2: Building Skills"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Learn to navigate PubMed and other databases",
+          "Start reading relevant literature in your research area",
+          "Practice critical evaluation of research papers",
+          "Begin understanding basic statistical concepts"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
+        "alt": "Person taking notes while reading",
+        "caption": "The first few months focus on building foundational research skills"
+      }
+    ]
+  },
+  {
+    "id": "balancing-research-and-coursework",
+    "title": "Balancing Research with Coursework: A Student's Guide",
+    "excerpt": "Practical strategies for managing Med-RAMP research alongside demanding pre-med courses and extracurriculars.",
+    "category": "Time Management",
+    "date": "2024-12-20",
+    "author": "Maria Santos",
+    "authorRole": "Junior Pre-Med Student",
+    "readTime": "5 min read",
+    "tags": ["time management", "coursework", "balance", "productivity"],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "One of the most common questions I get is: 'How do you balance Med-RAMP research with organic chemistry and volunteering?' Here's my honest answer and practical tips."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The Flexibility Advantage"
+      },
+      {
+        "type": "paragraph",
+        "text": "Unlike lab-based research, Med-RAMP's virtual format means you can work whenever and wherever. I do most of my research on Sunday afternoons and Wednesday evenings when my schedule is lighter."
+      },
+      {
+        "type": "callout",
+        "style": "tip",
+        "text": "Schedule research like a class. Block out specific times each week and treat them as non-negotiable appointments with yourself."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Time Management Strategies"
+      },
+      {
+        "type": "list",
+        "items": [
+          "<strong>Use dead time wisely:</strong> Read research papers during your commute or between classes",
+          "<strong>Batch similar tasks:</strong> Do all your literature searches in one sitting",
+          "<strong>Communicate with your mentor:</strong> Be upfront about exam weeks and busy periods",
+          "<strong>Set realistic goals:</strong> 5-8 hours per week is perfectly fine"
+        ]
+      },
+      {
+        "type": "stats",
+        "data": [
+          { "label": "Average Weekly Hours", "value": "6-8" },
+          { "label": "Current GPA", "value": "3.85" },
+          { "label": "Research Projects", "value": "3" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "from-abstract-to-publication",
+    "title": "From Abstract to Publication: The Research Journey",
+    "excerpt": "Understanding the complete publication process and how Med-RAMP guides you from your first abstract to peer-reviewed papers.",
+    "category": "Research Tips",
+    "date": "2024-12-15",
+    "author": "Dr. Lisa Thompson",
+    "authorRole": "Med-RAMP Faculty Advisor",
+    "readTime": "9 min read",
+    "tags": ["publication", "abstract", "manuscript", "research process"],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Many students wonder what happens after they complete their data analysis. How does research become a publication? Let me walk you through the journey."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Stage 1: The Abstract"
+      },
+      {
+        "type": "paragraph",
+        "text": "Most Med-RAMP students start with conference abstracts. These are 250-300 word summaries of your research findings that get submitted to conferences."
+      },
+      {
+        "type": "callout",
+        "style": "primary",
+        "text": "Your first abstract is a huge milestone! Even if it's not accepted, you've learned to communicate research concisely."
+      },
+      {
+        "type": "timeline",
+        "events": [
+          {
+            "period": "Months 1-3",
+            "title": "Data Collection & Analysis",
+            "description": "Work with your mentor to gather and analyze data. Learn statistical methods and interpretation."
+          },
+          {
+            "period": "Month 4",
+            "title": "First Abstract",
+            "description": "Draft your first conference abstract. Receive feedback and revise."
+          },
+          {
+            "period": "Months 5-8",
+            "title": "Conference Presentation",
+            "description": "Present your findings at a regional or national conference. Gain presentation experience."
+          },
+          {
+            "period": "Months 9-12",
+            "title": "Manuscript Development",
+            "description": "Expand your work into a full manuscript. Navigate the peer review process."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80",
+        "alt": "Conference presentation",
+        "caption": "Presenting at conferences is an important step in the publication journey"
+      }
+    ]
+  },
+  {
+    "id": "interview-tips-research-experience",
+    "title": "How to Discuss Research in Medical School Interviews",
+    "excerpt": "Expert strategies for effectively presenting your Med-RAMP research experience during medical school interviews.",
+    "category": "Application Advice",
+    "date": "2024-12-08",
+    "author": "Dr. Robert Kim",
+    "authorRole": "Medical School Admissions Committee Member",
+    "readTime": "8 min read",
+    "tags": ["interviews", "medical school", "research", "communication"],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "As someone who has sat on admissions committees for years, I've noticed a pattern: students who can articulate their research clearly and passionately stand out. Here's how to do it right."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The Framework: What, Why, How, Impact"
+      },
+      {
+        "type": "paragraph",
+        "text": "When discussing your research, follow this simple framework:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "<strong>What:</strong> Briefly describe your research question (1-2 sentences)",
+          "<strong>Why:</strong> Explain why this question matters for patient care",
+          "<strong>How:</strong> Describe your methodology in simple terms",
+          "<strong>Impact:</strong> Share your findings and their implications"
+        ]
+      },
+      {
+        "type": "callout",
+        "style": "warning",
+        "text": "Avoid jargon! If your grandmother wouldn't understand it, rephrase it. Remember, not all interviewers are researchers."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Common Interview Questions"
+      },
+      {
+        "type": "paragraph",
+        "text": "Practice answering these questions about your Med-RAMP experience:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "What was the most challenging aspect of your research?",
+          "How did this experience influence your decision to pursue medicine?",
+          "What would you do differently if you could start over?",
+          "How will research skills help you as a physician?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "statistical-analysis-beginners",
+    "title": "Statistical Analysis for Beginners: A Med-RAMP Guide",
+    "excerpt": "Demystifying statistical concepts and tools for students conducting their first epidemiological research projects.",
+    "category": "Research Tips",
+    "date": "2024-12-01",
+    "author": "Dr. Amanda Lee",
+    "authorRole": "Biostatistician & Med-RAMP Mentor",
+    "readTime": "11 min read",
+    "tags": ["statistics", "data analysis", "methodology", "beginners"],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Statistics can feel intimidating, but you don't need a PhD to conduct meaningful cancer epidemiology research. Let me break down the essentials you'll actually use in Med-RAMP."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Understanding P-Values"
+      },
+      {
+        "type": "paragraph",
+        "text": "The p-value answers one question: 'If there were truly no difference between groups, what's the probability of seeing a difference this large just by chance?'"
+      },
+      {
+        "type": "callout",
+        "style": "tip",
+        "text": "A p-value < 0.05 doesn't mean your finding is clinically important—it just means it's unlikely to be due to chance. Always consider clinical significance!"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Common Tests in Cancer Research"
+      },
+      {
+        "type": "list",
+        "items": [
+          "<strong>Chi-square test:</strong> Comparing proportions between groups (e.g., treatment rates by race)",
+          "<strong>T-test:</strong> Comparing continuous variables (e.g., age at diagnosis)",
+          "<strong>Logistic regression:</strong> Predicting binary outcomes while controlling for confounders",
+          "<strong>Survival analysis:</strong> Analyzing time-to-event data"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+        "alt": "Statistical charts and graphs",
+        "caption": "Understanding basic statistical concepts is essential for quality research"
       }
     ]
   }
