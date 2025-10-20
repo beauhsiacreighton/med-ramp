@@ -326,6 +326,71 @@
             z-index: 10;
         }
 
+        /* Pagination Styles */
+        .pagination-container {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .pagination-info {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            padding: 0.75rem 1.25rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 50px;
+        }
+
+        .pagination-btn:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .pagination-btn.active {
+            background: var(--gradient-2);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-ellipsis {
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0 0.5rem;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .blog-post {
                 padding: 0;
@@ -371,7 +436,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="publications.html">Publications</a></li>
-                    
+                    <li><a href="success-stories.html">Success Stories</a></li>
                     <li><a href="blog.html" class="active">Blog</a></li>
                     <li><a href="faq.html">FAQ</a></li>
                     <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn glass-card">Apply Now</a></li>
@@ -461,7 +526,7 @@
                     <h4>Connect</h4>
                     <ul>
                         <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
-                        
+                        <li><a href="success-stories.html">Success Stories</a></li>
                     </ul>
                 </div>
             </div>
