@@ -1,8 +1,10 @@
-// blog-listing.js - Search and filter functionality for blog
+// blog-listing.js - Search, filter, and pagination functionality
 
 let allPosts = [];
 let currentCategory = 'all';
 let currentSearchTerm = '';
+let currentPage = 1;
+const POSTS_PER_PAGE = 12; // Adjust this number as needed
 
 document.addEventListener('DOMContentLoaded', async function() {
     await loadBlogPosts();
@@ -17,8 +19,7 @@ async function loadBlogPosts() {
         // Sort by date (newest first)
         allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        displayPosts(allPosts);
-        updateResultsInfo(allPosts.length, allPosts.length);
+        displayPosts(allPosts, 1);
         
     } catch (error) {
         console.error('Error loading blog posts:', error);
@@ -45,6 +46,7 @@ function initializeSearchAndFilters() {
         }
         
         searchTimeout = setTimeout(() => {
+            currentPage = 1; // Reset to first page on new search
             filterAndDisplayPosts();
         }, 300);
     });
@@ -54,6 +56,7 @@ function initializeSearchAndFilters() {
         searchInput.value = '';
         currentSearchTerm = '';
         clearBtn.classList.remove('visible');
+        currentPage = 1;
         filterAndDisplayPosts();
         searchInput.focus();
     });
@@ -66,6 +69,7 @@ function initializeSearchAndFilters() {
             button.classList.add('active');
             
             currentCategory = button.dataset.category;
+            currentPage = 1; // Reset to first page on filter change
             filterAndDisplayPosts();
         });
     });
@@ -84,6 +88,7 @@ function initializeSearchAndFilters() {
                 }
             });
             
+            currentPage = 1;
             filterAndDisplayPosts();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -96,6 +101,7 @@ function initializeSearchAndFilters() {
             searchInput.value = tag;
             currentSearchTerm = tag.toLowerCase();
             clearBtn.classList.add('visible');
+            currentPage = 1;
             filterAndDisplayPosts();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -125,11 +131,10 @@ function filterAndDisplayPosts() {
         });
     }
     
-    displayPosts(filteredPosts);
-    updateResultsInfo(filteredPosts.length, allPosts.length);
+    displayPosts(filteredPosts, currentPage);
 }
 
-function displayPosts(posts) {
+function displayPosts(posts, page) {
     const container = document.getElementById('blogContainer');
     
     if (posts.length === 0) {
@@ -143,11 +148,25 @@ function displayPosts(posts) {
                 </button>
             </div>
         `;
+        updateResultsInfo(0, allPosts.length);
         return;
     }
     
-    const postsHTML = posts.map(post => createPostCard(post)).join('');
-    container.innerHTML = postsHTML;
+    // Calculate pagination
+    const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    const startIndex = (page - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    const paginatedPosts = posts.slice(startIndex, endIndex);
+    
+    // Render posts
+    const postsHTML = paginatedPosts.map(post => createPostCard(post)).join('');
+    
+    // Render pagination
+    const paginationHTML = totalPages > 1 ? createPagination(page, totalPages, posts.length) : '';
+    
+    container.innerHTML = postsHTML + paginationHTML;
+    
+    updateResultsInfo(posts.length, allPosts.length, page, totalPages);
     
     // Animate posts
     const postElements = container.querySelectorAll('.blog-post');
@@ -173,7 +192,7 @@ function createPostCard(post) {
             ${featuredBadge}
             ${post.featuredImage ? `
                 <div class="post-image-container">
-                    <img src="${post.featuredImage}" alt="${post.title}" class="post-image">
+                    <img src="${post.featuredImage}" alt="${post.title}" class="post-image" loading="lazy">
                 </div>
             ` : ''}
             <div class="post-content-wrapper">
@@ -200,13 +219,132 @@ function createPostCard(post) {
     `;
 }
 
-function updateResultsInfo(showing, total) {
+function createPagination(currentPage, totalPages, totalResults) {
+    let paginationHTML = `
+        <div class="pagination-container">
+            <div class="pagination-info">
+                Showing ${(currentPage - 1) * POSTS_PER_PAGE + 1}-${Math.min(currentPage * POSTS_PER_PAGE, totalResults)} of ${totalResults}
+            </div>
+            <div class="pagination-controls">
+    `;
+    
+    // Previous button
+    if (currentPage > 1) {
+        paginationHTML += `
+            <button class="pagination-btn" onclick="goToPage(${currentPage - 1})">
+                ← Previous
+            </button>
+        `;
+    } else {
+        paginationHTML += `
+            <button class="pagination-btn disabled" disabled>
+                ← Previous
+            </button>
+        `;
+    }
+    
+    // Page numbers
+    const pageNumbers = getPageNumbers(currentPage, totalPages);
+    pageNumbers.forEach(pageNum => {
+        if (pageNum === '...') {
+            paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+        } else {
+            const activeClass = pageNum === currentPage ? 'active' : '';
+            paginationHTML += `
+                <button class="pagination-btn ${activeClass}" onclick="goToPage(${pageNum})">
+                    ${pageNum}
+                </button>
+            `;
+        }
+    });
+    
+    // Next button
+    if (currentPage < totalPages) {
+        paginationHTML += `
+            <button class="pagination-btn" onclick="goToPage(${currentPage + 1})">
+                Next →
+            </button>
+        `;
+    } else {
+        paginationHTML += `
+            <button class="pagination-btn disabled" disabled>
+                Next →
+            </button>
+        `;
+    }
+    
+    paginationHTML += `
+            </div>
+        </div>
+    `;
+    
+    return paginationHTML;
+}
+
+function getPageNumbers(current, total) {
+    // Always show first page, last page, current page, and pages around current
+    const pages = [];
+    
+    if (total <= 7) {
+        // Show all pages if 7 or fewer
+        for (let i = 1; i <= total; i++) {
+            pages.push(i);
+        }
+    } else {
+        // Always include first page
+        pages.push(1);
+        
+        if (current > 3) {
+            pages.push('...');
+        }
+        
+        // Pages around current
+        for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) {
+            pages.push(i);
+        }
+        
+        if (current < total - 2) {
+            pages.push('...');
+        }
+        
+        // Always include last page
+        pages.push(total);
+    }
+    
+    return pages;
+}
+
+function goToPage(page) {
+    currentPage = page;
+    filterAndDisplayPosts();
+    
+    // Smooth scroll to top of blog section
+    const blogSection = document.querySelector('.blog-controls');
+    if (blogSection) {
+        blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function updateResultsInfo(showing, total, page, totalPages) {
     const infoElement = document.getElementById('resultsInfo');
     
+    if (showing === 0) {
+        infoElement.textContent = '';
+        return;
+    }
+    
     if (showing === total) {
-        infoElement.textContent = `Showing all ${total} posts`;
+        if (totalPages && totalPages > 1) {
+            infoElement.textContent = `Page ${page} of ${totalPages} • ${total} total posts`;
+        } else {
+            infoElement.textContent = `Showing all ${total} posts`;
+        }
     } else {
-        infoElement.textContent = `Showing ${showing} of ${total} posts`;
+        if (totalPages && totalPages > 1) {
+            infoElement.textContent = `${showing} posts found • Page ${page} of ${totalPages}`;
+        } else {
+            infoElement.textContent = `Showing ${showing} of ${total} posts`;
+        }
     }
 }
 
@@ -226,6 +364,9 @@ function resetFilters() {
             btn.classList.add('active');
         }
     });
+    
+    // Reset page
+    currentPage = 1;
     
     filterAndDisplayPosts();
 }
