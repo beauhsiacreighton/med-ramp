@@ -22,11 +22,36 @@ document.addEventListener('DOMContentLoaded', async function() {
         renderPost(post);
         document.getElementById('pageTitle').textContent = `${post.title} - Med-RAMP Blog`;
         
+        // Initialize navbar color change on scroll
+        initNavbarColorChange();
+        
     } catch (error) {
         console.error('Error loading post:', error);
         showError('Failed to load post content');
     }
 });
+
+function initNavbarColorChange() {
+    const navbar = document.querySelector('.navbar');
+    const postContainer = document.querySelector('.post-container');
+    
+    function checkNavbarPosition() {
+        if (!postContainer) return;
+        
+        const containerTop = postContainer.getBoundingClientRect().top;
+        const navbarHeight = navbar.offsetHeight;
+        
+        // When navbar overlaps white content area
+        if (containerTop <= navbarHeight) {
+            navbar.classList.add('scrolled-white');
+        } else {
+            navbar.classList.remove('scrolled-white');
+        }
+    }
+    
+    window.addEventListener('scroll', checkNavbarPosition);
+    checkNavbarPosition(); // Check initial position
+}
 
 function renderPost(post) {
     const container = document.getElementById('postContent');
