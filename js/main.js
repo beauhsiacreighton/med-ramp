@@ -378,6 +378,10 @@ function toggleFAQ(element) {
 /**
  * Load blog posts from JSON
  */
+/**
+ * Enhanced blog loading with better card generation
+ * Add this to main.js or replace the existing loadBlogPosts function
+ */
 async function loadBlogPosts() {
     try {
         const response = await fetch('/blog-posts/posts.json');
@@ -386,23 +390,46 @@ async function loadBlogPosts() {
         
         if (!container) return;
         
+        // Sort by date (newest first)
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        container.innerHTML = posts.map((post, index) => `
-            <article class="blog-post glass-card" data-scroll-animate>
-                <div class="post-header">
-                    <span class="post-category">${post.category}</span>
-                    <span class="post-date">${formatDate(post.date)}</span>
-                </div>
-                <h2 class="post-title">${post.title}</h2>
-                <p class="post-excerpt">${post.excerpt}</p>
-                <div class="post-footer">
-                    <span class="post-author">By ${post.author}</span>
-                    <a href="blog-post-${index + 1}.html" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">Read Full Post</a>
-                </div>
-            </article>
-        `).join('');
+        // Separate featured posts
+        const featuredPosts = posts.filter(p => p.featured);
+        const regularPosts = posts.filter(p => !p.featured);
         
+        let html = '';
+        
+        // Featured section if there are featured posts
+        if (featuredPosts.length > 0) {
+            html += `
+                <div class="featured-posts-section" style="margin-bottom: 4rem;">
+                    <h2 style="color: var(--white); text-align: center; margin-bottom: 2rem; font-size: 1.75rem;">
+                        ⭐ Featured Posts
+                    </h2>
+                    <div class="featured-posts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                        ${featuredPosts.map(post => createBlogCard(post, true)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Regular posts section
+        if (regularPosts.length > 0) {
+            html += `
+                <div class="regular-posts-section">
+                    ${featuredPosts.length > 0 ? `
+                        <h2 style="color: var(--white); text-align: center; margin-bottom: 2rem; font-size: 1.75rem;">
+                            Recent Posts
+                        </h2>
+                    ` : ''}
+                    ${regularPosts.map(post => createBlogCard(post, false)).join('')}
+                </div>
+            `;
+        }
+        
+        container.innerHTML = html;
+        
+        // Animate posts
         document.querySelectorAll('[data-scroll-animate]').forEach(element => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -419,9 +446,52 @@ async function loadBlogPosts() {
         console.error('Error loading blog posts:', error);
         const container = document.getElementById('blogContainer');
         if (container) {
-            container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.8);">No blog posts available at this time.</p>';
+            container.innerHTML = `
+                <div class="no-posts">
+                    <p>Unable to load blog posts at this time. Please try again later.</p>
+                </div>
+            `;
         }
     }
+}
+
+/**
+ * Create a blog card with enhanced styling
+ */
+function createBlogCard(post, isFeatured) {
+    const featuredBadge = isFeatured ? '<span style="position: absolute; top: 1rem; right: 1rem; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 600;">FEATURED</span>' : '';
+    
+    return `
+        <article class="blog-post glass-card" data-scroll-animate style="position: relative;">
+            ${featuredBadge}
+            <div class="post-header">
+                <span class="post-category">${post.category}</span>
+                <span class="post-date">${formatDate(post.date)}</span>
+            </div>
+            <h2 class="post-title">${post.title}</h2>
+            <p class="post-excerpt">${post.excerpt}</p>
+            
+            ${post.tags ? `
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0;">
+                    ${post.tags.slice(0, 3).map(tag => `
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(255, 255, 255, 0.2); border-radius: 15px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.9);">
+                            #${tag}
+                        </span>
+                    `).join('')}
+                </div>
+            ` : ''}
+            
+            <div class="post-footer">
+                <div>
+                    <span class="post-author">${post.author}</span>
+                    ${post.readTime ? `<span style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; display: block; margin-top: 0.25rem;">${post.readTime}</span>` : ''}
+                </div>
+                <a href="blog-post.html?id=${post.id}" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    Read More →
+                </a>
+            </div>
+        </article>
+    `;
 }
 
 /**
