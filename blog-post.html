@@ -37,6 +37,15 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: var(--shadow-lg);
             overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        /* Featured Image at Top */
+        .post-featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
         }
 
         /* Header Section - Keep glassmorphism */
@@ -130,6 +139,29 @@
 
         .post-content > * + * {
             margin-top: 1.5rem;
+        }
+
+        /* Image support */
+        .content-image-wrapper {
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 0.75rem;
+            padding: 0 1rem;
         }
 
         .post-content h2 {
@@ -297,11 +329,16 @@
         }
 
         /* Navigation */
+        .back-link-section {
+            background: linear-gradient(180deg, rgba(21, 25, 60, 0.95) 0%, rgba(21, 25, 60, 0.7) 100%);
+            padding: 2rem 0 3rem;
+            margin-top: 70px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 2rem;
             color: var(--white);
             text-decoration: none;
             opacity: 0.9;
@@ -377,7 +414,8 @@
     </style>
 </head>
 <body>
-    <!-- Video Background -->
+
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
