@@ -56,14 +56,18 @@ body {
     min-height: 100vh;
     transition: var(--transition);
 }
+
 @keyframes softGradientShift {
-  0% { background: linear-gradient(145deg, #0f172a, #1a1f2e); }
-  50% { background: linear-gradient(145deg, #121b30, #232d45); }
+  0%   { background: linear-gradient(145deg, #0f172a, #1a1f2e); }
+  25%  { background: linear-gradient(145deg, #111d33, #28314f); }
+  50%  { background: linear-gradient(145deg, #1a2742, #2f3c5c); }
+  75%  { background: linear-gradient(145deg, #111d33, #28314f); }
   100% { background: linear-gradient(145deg, #0f172a, #1a1f2e); }
 }
 
+
 body {
-  animation: softGradientShift 20s ease-in-out infinite;
+  animation: softGradientShift 10s ease-in-out infinite;
 }
 
 
