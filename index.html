@@ -204,30 +204,14 @@
         </div>
     </footer>
 
-    <!-- Vanta.js scripts for the animated background -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script>
-          // Wait for everything to load before initializing Vanta
-          window.addEventListener('load', function() {
-              VANTA.NET({
-                  el: "#vanta-background",
-                  mouseControls: true,
-                  touchControls: true,
-                  gyroControls: false,
-                  minHeight: 200.00,
-                  minWidth: 200.00,
-                  scale: 1.00,
-                  scaleMobile: 1.00,
-                  color: 0x720bbb,
-                  backgroundColor: 0x15193c,
-                  spacing: 18.00,
-                  points: 7.00,
-                  maxDistance: 24.00,
-                  showDots: false
-              });
-          });
+    document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 10;  // max ±10%
+    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+    document.body.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
+    });
     </script>
     <script src="js/main.js"></script>
+    
 </body>
 </html>

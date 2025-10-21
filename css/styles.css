@@ -69,8 +69,8 @@ body {
   #1b2645,
   #0f172a
   );
-  background-size: 1000% 1000%;
-  animation: flowingAurora 13s ease-in-out infinite;
+  background-size: 800% 800%;
+  animation: flowingAurora 18s ease-in-out infinite;
 }
 
 @keyframes flowingAurora {
@@ -93,7 +93,6 @@ body::before {
   animation: float1 18s ease-in-out infinite;
   pointer-events: none;
 }
-
 
 
 /* Ensure content is above background but footer stays normal */
