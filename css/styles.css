@@ -47,6 +47,16 @@ nav.navbar {
 }
 
 
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  transition: var(--transition);
+  
+  /* glowing gradient base */
   background: linear-gradient(
   145deg,
   #0f172a,
@@ -83,7 +93,6 @@ body::before {
   animation: float1 18s ease-in-out infinite;
   pointer-events: none;
 }
-
 
 
 
