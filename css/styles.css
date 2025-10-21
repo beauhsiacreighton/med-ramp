@@ -45,37 +45,40 @@ nav.navbar {
     position: fixed !important;
     top: 0 !important;
 }
-
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 1.7;
-    color: var(--text-dark);
-    overflow-x: hidden;
-    background: linear-gradient(145deg, #0f172a 0%, #1a1f2e 100%);
-    position: relative;
-    min-height: 100vh;
-    transition: var(--transition);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  transition: var(--transition);
+  background: linear-gradient(145deg, #0f172a, #1a1f2e);
+  background-size: 400% 400%;
+  animation: softGradientWave 18s ease-in-out infinite;
 }
 
-@keyframes softGradientShift {
+@keyframes softGradientWave {
   0% {
     background-position: 0% 50%;
     background: linear-gradient(145deg, #0f172a, #1a1f2e);
   }
+  25% {
+    background-position: 50% 50%;
+    background: linear-gradient(145deg, #16263f, #283b5e);
+  }
   50% {
     background-position: 100% 50%;
-    background: linear-gradient(145deg, #1a2742, #2f3c5c);
+    background: linear-gradient(145deg, #1e3052, #3a4b77);
+  }
+  75% {
+    background-position: 50% 50%;
+    background: linear-gradient(145deg, #222d4f, #342c57);
   }
   100% {
     background-position: 0% 50%;
     background: linear-gradient(145deg, #0f172a, #1a1f2e);
   }
-}
-
-
-body {
-    animation: softGradientShift 10s ease-in-out infinite;
-    background-size: 400% 400%; /* enhances wave flow */
 }
 
 
