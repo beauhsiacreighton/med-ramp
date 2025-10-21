@@ -55,7 +55,7 @@ body {
   transition: var(--transition);
   background: linear-gradient(145deg, #0f172a, #1a1f2e);
   background-size: 400% 400%;
-  animation: softGradientWave 18s ease-in-out infinite;
+  animation: softGradientWave 12s ease-in-out infinite;
 }
 
 @keyframes softGradientWave {
