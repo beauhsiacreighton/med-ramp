@@ -45,41 +45,45 @@ nav.navbar {
     position: fixed !important;
     top: 0 !important;
 }
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.7;
-  color: var(--text-dark);
-  overflow-x: hidden;
-  position: relative;
-  min-height: 100vh;
-  transition: var(--transition);
-  background: linear-gradient(145deg, #0f172a, #1a1f2e);
-  background-size: 400% 400%;
-  animation: softGradientWave 12s ease-in-out infinite;
+
+
+  background: linear-gradient(
+  145deg,
+  #0f172a,
+  #1c2b45,
+  #2a3e63,
+  #3a5280,
+  #3b2160,   /* darker purple */
+  #1a1030,   /* very dark purple */
+  #2e3c6d,
+  #1b2645,
+  #0f172a
+  );
+  background-size: 1000% 1000%;
+  animation: flowingAurora 13s ease-in-out infinite;
 }
 
-@keyframes softGradientWave {
-  0% {
-    background-position: 0% 50%;
-    background: linear-gradient(145deg, #0f172a, #1a1f2e);
-  }
-  25% {
-    background-position: 50% 50%;
-    background: linear-gradient(145deg, #16263f, #283b5e);
-  }
-  50% {
-    background-position: 100% 50%;
-    background: linear-gradient(145deg, #1e3052, #3a4b77);
-  }
-  75% {
-    background-position: 50% 50%;
-    background: linear-gradient(145deg, #222d4f, #342c57);
-  }
-  100% {
-    background-position: 0% 50%;
-    background: linear-gradient(145deg, #0f172a, #1a1f2e);
-  }
+@keyframes flowingAurora {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 55%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 45%; }
+  100% { background-position: 0% 50%; }
 }
+/* base glow layer */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 35%, rgba(60,110,255,0.20), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,140,190,0.10), transparent 45%);
+  mix-blend-mode: screen;
+  filter: blur(22px) saturate(1.05);
+  animation: float1 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
 
 
 
