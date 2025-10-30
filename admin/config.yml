@@ -1,20 +1,37 @@
 backend:
-  name: github
-  repo: beauhsiacreighton/med-ramp # e.g., john-doe/my-awesome-site
-  branch: main # or master, depending on your repository's default branch
-  site_domain: beauhsiacreighton.github.io # Add this line
+  name: git-gateway
+  branch: main
 
-media_folder: "assets/images" # Where to store uploaded images
-public_folder: "/assets/images" # The src attribute for uploaded images
+# Uncomment when using GitHub as backend (requires OAuth)
+# backend:
+#   name: github
+#   repo: beauhsiacreighton/med-ramp
+#   branch: main
+
+media_folder: "images"
+public_folder: "/images"
 
 collections:
-  - name: "blog" # Used in routes, e.g., /admin/collections/blog
-    label: "Blog" # Used in the UI
-    folder: "_posts" # The folder where blog posts are stored
-    create: true # Allow users to create new documents in this collection
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template for new documents
-    fields: # The fields for each document, usually in front matter
-      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "blog-posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - {label: "ID", name: "id", widget: "string", hint: "URL-friendly ID (e.g., my-blog-post-title)"}
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary (1-2 sentences)"}
+      - {label: "Category", name: "category", widget: "select", options: ["Research Tips", "Success Stories", "Application Advice", "Getting Started", "Time Management"]}
+      - {label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", dateFormat: "YYYY-MM-DD", timeFormat: false}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Author Role", name: "authorRole", widget: "string", hint: "e.g., MS4, Creighton University SOM"}
+      - {label: "Read Time", name: "readTime", widget: "string", hint: "e.g., 7 min read"}
+      - {label: "Tags", name: "tags", widget: "list", hint: "Press Enter after each tag"}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Featured Image", name: "featuredImage", widget: "image", required: false, hint: "Optimal size: 1200x630px"}
+      - {label: "Body", name: "body", widget: "markdown", hint: "Use markdown formatting. HTML is supported for special elements."}
+    
+    # Preview in the CMS
+    preview_path: blog/{{slug}}.html
