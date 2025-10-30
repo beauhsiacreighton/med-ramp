@@ -59,7 +59,7 @@ function renderPost(post) {
     const headerHTML = `
         <div class="post-container">
             ${post.featuredImage ? `
-                <img src="${post.featuredImage}" alt="${post.title}" class="post-featured-image">
+                <img src="${post.featuredImage}" alt="${post.title}" class="post-featured-image" loading="eager" decoding="async">
             ` : ''}
             
             <div class="post-header-section">
@@ -126,7 +126,7 @@ function renderContent(contentArray) {
             case 'image':
                 return `
                     <div class="content-image-wrapper">
-                        <img src="${block.src}" alt="${block.alt}" class="content-image">
+                        <img src="${block.src}" alt="${block.alt}" class="content-image" loading="lazy" decoding="async">
                         ${block.caption ? `<p class="image-caption">${block.caption}</p>` : ''}
                     </div>
                 `;
