@@ -211,7 +211,7 @@ function createPostCard(post) {
                     <span class="post-date">${formatDate(post.date)}</span>
                 </div>
                 <h2 class="post-title">
-                    <a href="blog-post.html?id=${post.id}">${post.title}</a>
+                    <a href="blog/${post.id}.html">${post.title}</a>
                 </h2>
                 <p class="post-excerpt">${post.excerpt}</p>
                 ${tagsHTML ? `<div class="post-tags">${tagsHTML}</div>` : ''}
@@ -220,7 +220,7 @@ function createPostCard(post) {
                         <span class="post-author">${post.author}</span>
                         <span class="post-read-time">${post.readTime}</span>
                     </div>
-                    <a href="blog-post.html?id=${post.id}" class="read-more-btn">
+                    <a href="blog/${post.id}.html" class="read-more-btn">
                         Read More →
                     </a>
                 </div>

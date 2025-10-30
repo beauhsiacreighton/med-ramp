@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PAGE_TITLE}}</title>
+    
+    {{META_TAGS}}
+    
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://forms.gle">
+    
+    <!-- Optimized Font Loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/png" href="../images/Circle logo.png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {{STRUCTURED_DATA}}
+    </script>
+    
+    <style>
+        /* Fixed navbar color issue */
+        .navbar.scrolled-white {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar.scrolled-white .logo,
+        .navbar.scrolled-white .nav-links a:not(.apply-btn) {
+            color: #2c3e50 !important;
+        }
+
+        .navbar.scrolled-white .mobile-toggle span {
+            background: #2c3e50;
+        }
+
+        .blog-post-page {
+            padding: 0 0 6rem;
+            background: transparent;
+        }
+
+        .post-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        /* Featured Image at Top */
+        .post-featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Header Section - Keep glassmorphism */
+        .post-header-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            padding: 3rem 3rem 2rem;
+            color: var(--white);
+        }
+
+        .post-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .post-category-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .post-date, .post-read-time {
+            opacity: 0.9;
+        }
+
+        .post-title-main {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .post-excerpt-main {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        .post-author-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .author-info strong {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .author-info span {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Content Section - High readability */
+        .post-content-section {
+            padding: 3rem;
+            background: white;
+            color: #2c3e50;
+        }
+
+        .post-content {
+            line-height: 1.8;
+            font-size: 1.125rem;
+            color: #2c3e50;
+        }
+
+        .post-content > * + * {
+            margin-top: 1.5rem;
+        }
+
+        /* Image support */
+        .content-image-wrapper {
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 0.75rem;
+            padding: 0 1rem;
+        }
+
+        .post-content h2 {
+            font-size: 1.875rem;
+            color: #1a202c;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .post-content h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .post-content strong {
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .post-content ul, .post-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .post-content li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .post-content ul li {
+            list-style-type: disc;
+        }
+
+        /* Callout boxes */
+        .callout {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 4px solid;
+        }
+
+        .callout-success {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .callout-primary {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .callout-tip {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        .callout-warning {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        /* Stats display */
+        .stats-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Tags */
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: #f1f5f9;
+            color: #475569;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .post-footer-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .post-footer-cta h3 {
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+
+        .post-footer-cta p {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .post-header-section,
+            .post-content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .post-title-main {
+                font-size: 1.75rem;
+            }
+
+            .post-content {
+                font-size: 1.0625rem;
+            }
+
+            .post-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .stats-display {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="../index.html" class="logo">Med-RAMP</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../publications.html">Publications</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn glass-card">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero" style="padding: 140px 0 60px;">
+        <div class="container">
+            <a href="../blog.html" class="back-link" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--white); text-decoration: none; opacity: 0.9; transition: var(--transition); font-weight: 500; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.25);">← Back to Blog</a>
+        </div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <section class="blog-post-page">
+        <div class="container">
+            <div class="post-container">
+                {{FEATURED_IMAGE}}
+                
+                <div class="post-header-section">
+                    <div class="post-meta-top">
+                        <span class="post-category-badge">{{CATEGORY}}</span>
+                        <span class="post-date">{{DATE}}</span>
+                        <span class="post-read-time">• {{READ_TIME}}</span>
+                    </div>
+                    
+                    <h1 class="post-title-main">{{TITLE}}</h1>
+                    <p class="post-excerpt-main">{{EXCERPT}}</p>
+                    
+                    <div class="post-author-section">
+                        <div class="author-avatar">{{AUTHOR_INITIALS}}</div>
+                        <div class="author-info">
+                            <strong>{{AUTHOR}}</strong>
+                            <span>{{AUTHOR_ROLE}}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post-content-section">
+                    <article class="post-content">
+                        {{CONTENT}}
+                        
+                        <div class="post-tags">
+                            {{TAGS}}
+                        </div>
+                    </article>
+                    
+                    <div class="post-footer-cta">
+                        <h3>Ready to Start Your Research Journey?</h3>
+                        <p>Join Med-RAMP and gain valuable research experience for your medical school application.</p>
+                        <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large">Apply to Med-RAMP</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Med-RAMP</h3>
+                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../publications.html">Publications</a></li>
+                        <li><a href="../faq.html">FAQ</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+                <p class="security-badge">🔒 Secure Site</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js" defer></script>
+    
+    <script>
+        // Navbar color change on scroll
+        function initNavbarColorChange() {
+            const navbar = document.querySelector('.navbar');
+            const postContainer = document.querySelector('.post-container');
+            
+            function checkNavbarPosition() {
+                if (!postContainer) return;
+                
+                const containerTop = postContainer.getBoundingClientRect().top;
+                const navbarHeight = navbar.offsetHeight;
+                
+                if (containerTop <= navbarHeight) {
+                    navbar.classList.add('scrolled-white');
+                } else {
+                    navbar.classList.remove('scrolled-white');
+                }
+            }
+            
+            window.addEventListener('scroll', checkNavbarPosition);
+            checkNavbarPosition();
+        }
+        
+        initNavbarColorChange();
+    </script>
+</body>
+</html>
