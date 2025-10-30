@@ -1,6 +1,3 @@
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 /* CSS Variables */
 :root {
     --primary-color: #007BFF;
@@ -40,6 +37,14 @@
 html {
     scroll-behavior: smooth;
 }
+
+/* Performance optimization: Use will-change for animated elements */
+.glass-card,
+.navbar,
+.btn {
+    will-change: transform;
+}
+
 /* Force navbar to stay fixed */
 nav.navbar {
     position: fixed !important;
@@ -55,6 +60,7 @@ body {
   position: relative;
   min-height: 100vh;
   transition: var(--transition);
+  opacity: 0;
   
   /* glowing gradient base */
   background: linear-gradient(
@@ -79,6 +85,15 @@ body {
   50%  { background-position: 100% 50%; }
   75%  { background-position: 50% 45%; }
   100% { background-position: 0% 50%; }
+}
+
+/* Optimize animations for better performance */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 /* base glow layer */
 body::before {
@@ -143,6 +158,8 @@ a {
     z-index: 99999 !important;
     transition: var(--transition);
     pointer-events: auto !important;
+    transform: translateZ(0); /* Enable hardware acceleration */
+    contain: layout style paint; /* CSS containment for better performance */
 }
 
 .navbar.scrolled {
@@ -330,10 +347,11 @@ a {
     border: var(--glass-border);
     box-shadow: var(--glass-shadow);
     transition: var(--transition);
+    transform: translateZ(0); /* Enable hardware acceleration */
 }
 
 .glass-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateZ(0);
     box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
     background: rgba(255, 255, 255, 0.2);
 }
@@ -365,6 +383,7 @@ a {
     background: transparent;
     position: relative;
     z-index: 10;
+    content-visibility: auto; /* Improve rendering performance for off-screen content */
 }
 
 .stats-grid {
@@ -390,6 +409,7 @@ a {
 .features-section {
     padding: 6rem 0;
     background: transparent;
+    content-visibility: auto; /* Improve rendering performance for off-screen content */
 }
 
 .features-grid {
@@ -531,6 +551,7 @@ a {
     margin-top: 4rem;
     position: relative;
     z-index: 10;
+    content-visibility: auto; /* Improve rendering performance for off-screen content */
 }
 
 .footer-content {

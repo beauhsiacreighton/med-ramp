@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Med-RAMP - Medical Research Assistance and Mentorship Program</title>
+    
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://forms.gle">
+    
+    <!-- Optimized Font Loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/png" href="images/Circle logo.png">
+    
+    <!-- Performance: Preload critical assets -->
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
 </head> 
 <body>
     <!-- Video Background -->
@@ -204,14 +217,14 @@
         </div>
     </footer>
 
-    <script>
+    <script defer>
     document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 10;  // max ±10%
     const y = (e.clientY / window.innerHeight - 0.5) * 10;
     document.body.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
     });
     </script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     
 </body>
 </html>

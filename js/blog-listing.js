@@ -168,17 +168,27 @@ function displayPosts(posts, page) {
     
     updateResultsInfo(posts.length, allPosts.length, page, totalPages);
     
-    // Animate posts
+    // Animate posts (optimized with requestAnimationFrame)
     const postElements = container.querySelectorAll('.blog-post');
-    postElements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, index * 50);
-    });
+    if (postElements.length > 0) {
+        requestAnimationFrame(() => {
+            postElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            });
+            
+            // Stagger animations
+            postElements.forEach((el, index) => {
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    });
+                }, index * 50);
+            });
+        });
+    }
 }
 
 function createPostCard(post) {
@@ -192,7 +202,7 @@ function createPostCard(post) {
             ${featuredBadge}
             ${post.featuredImage ? `
                 <div class="post-image-container">
-                    <img src="${post.featuredImage}" alt="${post.title}" class="post-image" loading="lazy">
+                    <img src="${post.featuredImage}" alt="${post.title}" class="post-image" loading="lazy" decoding="async">
                 </div>
             ` : ''}
             <div class="post-content-wrapper">
