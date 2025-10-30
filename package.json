@@ -4,7 +4,9 @@
   "description": "Med-RAMP blog build system",
   "scripts": {
     "build": "node scripts/build-blog.js",
-    "build:watch": "nodemon scripts/build-blog.js"
+    "build:watch": "nodemon scripts/build-blog.js",
+    "dev": "npm run build && npx http-server -p 8000 -o",
+    "preview": "npx http-server -p 8000 -o"
   },
   "keywords": ["blog", "markdown", "static-site"],
   "author": "Med-RAMP",
