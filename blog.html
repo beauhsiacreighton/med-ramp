@@ -172,10 +172,11 @@
         .post-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 1rem;
+            position: relative;
         }
 
         .post-category {
@@ -198,6 +199,7 @@
         .post-date {
             color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
+            margin-left: auto;
         }
 
         .post-title {
@@ -291,14 +293,14 @@
         .blog-intro h1 {
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             color: var(--white);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .blog-intro .subtitle {
             font-size: clamp(1.1rem, 2vw, 1.3rem);
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             opacity: 0.95;
         }
 
@@ -306,14 +308,14 @@
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.8;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         /* Featured badge */
         .featured-badge {
             position: absolute;
             top: 1rem;
-            right: 1rem;
+            left: 1rem;
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             color: white;
             padding: 0.4rem 1rem;
@@ -473,10 +475,9 @@
 
                 <div class="category-filters" id="categoryFilters">
                     <button class="filter-btn active" data-category="all">All Posts</button>
-                    <button class="filter-btn" data-category="Success Stories">Success Stories</button>
+                    <button class="filter-btn" data-category="MCAT Advice">MCAT Advice</button>
                     <button class="filter-btn" data-category="Research Tips">Research Tips</button>
                     <button class="filter-btn" data-category="Application Advice">Application Advice</button>
-                    <button class="filter-btn" data-category="Getting Started">Getting Started</button>
                     <button class="filter-btn" data-category="Time Management">Time Management</button>
                 </div>
 
