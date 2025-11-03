@@ -391,6 +391,51 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Blog Article Link Styling - Blue and Highlighted */
+        .post-content a,
+        .post-content-section a,
+        article a {
+            color: #007BFF !important;
+            text-decoration: underline !important;
+            text-decoration-color: #007BFF !important;
+            text-decoration-thickness: 2px !important;
+            text-underline-offset: 3px !important;
+            transition: var(--transition) !important;
+            font-weight: 500 !important;
+            background: linear-gradient(to bottom, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05)) !important;
+            padding: 0 2px !important;
+            border-radius: 3px !important;
+        }
+
+        .post-content a:hover,
+        .post-content-section a:hover,
+        article a:hover {
+            color: #0056b3 !important;
+            text-decoration-color: #0056b3 !important;
+            background: linear-gradient(to bottom, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.1)) !important;
+            text-shadow: 0 0 8px rgba(0, 123, 255, 0.3) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Ensure links in callouts are also styled */
+        .callout a,
+        .callout-primary a,
+        .callout-success a,
+        .callout-tip a,
+        .callout-warning a {
+            color: #007BFF !important;
+            text-decoration: underline !important;
+            font-weight: 600 !important;
+        }
+
+        .callout a:hover,
+        .callout-primary a:hover,
+        .callout-success a:hover,
+        .callout-tip a:hover,
+        .callout-warning a:hover {
+            color: #0056b3 !important;
+        }
     </style>
 </head>
 <body>
