@@ -4,7 +4,7 @@ let allPosts = [];
 let currentCategory = 'all';
 let currentSearchTerm = '';
 let currentPage = 1;
-const POSTS_PER_PAGE = 12; // Adjust this number as needed
+const POSTS_PER_PAGE = 6; // Show 6 posts per page for better two-column layout
 
 document.addEventListener('DOMContentLoaded', async function() {
     await loadBlogPosts();
@@ -77,6 +77,8 @@ function initializeSearchAndFilters() {
     // Click on post category to filter
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('post-category')) {
+            e.preventDefault();
+            e.stopPropagation();
             const category = e.target.textContent.trim();
             currentCategory = category;
             
@@ -97,6 +99,8 @@ function initializeSearchAndFilters() {
     // Click on tag to search
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('post-tag')) {
+            e.preventDefault();
+            e.stopPropagation();
             const tag = e.target.textContent.replace('#', '').trim();
             searchInput.value = tag;
             currentSearchTerm = tag.toLowerCase();
@@ -193,26 +197,26 @@ function displayPosts(posts, page) {
 
 function createPostCard(post) {
     const featuredBadge = post.featured ? '<div class="featured-badge">⭐ FEATURED</div>' : '';
-    const tagsHTML = post.tags ? post.tags.slice(0, 4).map(tag => 
+    const tagsHTML = post.tags ? post.tags.slice(0, 3).map(tag => 
         `<span class="post-tag">#${tag}</span>`
     ).join('') : '';
     
+    // Use the url from posts.json if available, otherwise construct it
+    // Remove leading slash if present to make it relative
+    let postUrl = post.url || `blog/${post.id}.html`;
+    if (postUrl.startsWith('/')) {
+        postUrl = postUrl.substring(1);
+    }
+    
     return `
-        <article class="blog-post">
+        <a href="${postUrl}" class="blog-post">
             ${featuredBadge}
-            ${post.featuredImage ? `
-                <div class="post-image-container">
-                    <img src="${post.featuredImage}" alt="${post.title}" class="post-image" loading="lazy" decoding="async">
-                </div>
-            ` : ''}
             <div class="post-content-wrapper">
                 <div class="post-header">
                     <span class="post-category">${post.category}</span>
                     <span class="post-date">${formatDate(post.date)}</span>
                 </div>
-                <h2 class="post-title">
-                    <a href="blog/${post.id}.html">${post.title}</a>
-                </h2>
+                <h2 class="post-title">${post.title}</h2>
                 <p class="post-excerpt">${post.excerpt}</p>
                 ${tagsHTML ? `<div class="post-tags">${tagsHTML}</div>` : ''}
                 <div class="post-footer">
@@ -220,12 +224,9 @@ function createPostCard(post) {
                         <span class="post-author">${post.author}</span>
                         <span class="post-read-time">${post.readTime}</span>
                     </div>
-                    <a href="blog/${post.id}.html" class="read-more-btn">
-                        Read More →
-                    </a>
                 </div>
             </div>
-        </article>
+        </a>
     `;
 }
 
