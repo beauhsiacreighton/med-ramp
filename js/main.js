@@ -14,11 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
     DOM.navbar = document.querySelector('.navbar');
     
     // Mobile Navigation Toggle
-    if (DOM.mobileToggle) {
+    if (DOM.mobileToggle && DOM.navLinks) {
         DOM.mobileToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            DOM.navLinks.classList.toggle('active');
-            this.classList.toggle('active');
+            const isActive = DOM.navLinks.classList.contains('active');
+            if (isActive) {
+                DOM.navLinks.classList.remove('active');
+                this.classList.remove('active');
+            } else {
+                DOM.navLinks.classList.add('active');
+                this.classList.add('active');
+            }
         });
     }
 

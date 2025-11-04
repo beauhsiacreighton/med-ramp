@@ -241,6 +241,8 @@ a {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    z-index: 100000 !important;
+    position: relative;
 }
 
 .mobile-toggle span {
@@ -249,6 +251,19 @@ a {
     background: var(--white);
     transition: var(--transition);
     border-radius: 3px;
+    display: block;
+}
+
+.mobile-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
 }
 
 /* Hero Section */
@@ -619,7 +634,7 @@ a {
 @media (max-width: 768px) {
     .mobile-toggle { 
         display: flex; 
-        z-index: 99999 !important; 
+        z-index: 100000 !important; 
         position: relative; 
     }
     .nav-links {
@@ -636,17 +651,22 @@ a {
         padding: 2rem; 
         gap: 1.5rem;
         transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         border-bottom-left-radius: var(--radius-lg);
         border-bottom-right-radius: var(--radius-lg);
         max-height: calc(100vh - 70px);
         overflow-y: auto;
         z-index: 99998 !important;
+        pointer-events: none !important;
+        visibility: hidden;
+        opacity: 0;
     }
     .nav-links.active { 
         transform: translateX(0); 
         pointer-events: auto !important;
+        visibility: visible;
+        opacity: 1;
     }
     .nav-links li {
         z-index: 99999 !important;
