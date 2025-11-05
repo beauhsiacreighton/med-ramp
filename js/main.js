@@ -13,41 +13,87 @@ document.addEventListener('DOMContentLoaded', function() {
     DOM.navLinks = document.querySelector('.nav-links');
     DOM.navbar = document.querySelector('.navbar');
     
-    // Mobile Navigation Toggle
+    // Mobile Navigation Toggle - Completely rewritten for reliability
+    function toggleMobileMenu() {
+        if (!DOM.navLinks || !DOM.mobileToggle) return;
+        
+        const isActive = DOM.navLinks.classList.contains('active');
+        
+        if (isActive) {
+            // Close menu
+            DOM.navLinks.classList.remove('active');
+            DOM.mobileToggle.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        } else {
+            // Open menu
+            DOM.navLinks.classList.add('active');
+            DOM.mobileToggle.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+    }
+    
+    function closeMobileMenu() {
+        if (!DOM.navLinks || !DOM.mobileToggle) return;
+        
+        DOM.navLinks.classList.remove('active');
+        DOM.mobileToggle.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    // Toggle button click handler
     if (DOM.mobileToggle && DOM.navLinks) {
         DOM.mobileToggle.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            const isActive = DOM.navLinks.classList.contains('active');
-            if (isActive) {
-                DOM.navLinks.classList.remove('active');
-                this.classList.remove('active');
-            } else {
-                DOM.navLinks.classList.add('active');
-                this.classList.add('active');
-            }
+            toggleMobileMenu();
         });
     }
 
-    // Close mobile menu when clicking a link (use event delegation for better performance)
+    // Close menu when clicking a navigation link
     if (DOM.navLinks) {
-        DOM.navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' && DOM.navLinks.classList.contains('active')) {
-                DOM.navLinks.classList.remove('active');
-                if (DOM.mobileToggle) {
-                    DOM.mobileToggle.classList.remove('active');
-                }
+        DOM.navLinks.addEventListener('click', function(e) {
+            // Check if clicked element is a link or inside a link
+            const link = e.target.closest('a');
+            if (link && DOM.navLinks.classList.contains('active')) {
+                // Small delay to allow navigation to happen
+                setTimeout(() => {
+                    closeMobileMenu();
+                }, 100);
             }
         });
     }
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (DOM.navLinks && DOM.mobileToggle && DOM.navLinks.classList.contains('active')) {
-            if (!DOM.navLinks.contains(e.target) && !DOM.mobileToggle.contains(e.target)) {
-                DOM.navLinks.classList.remove('active');
-                DOM.mobileToggle.classList.remove('active');
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!DOM.navLinks || !DOM.mobileToggle) return;
+        
+        if (DOM.navLinks.classList.contains('active')) {
+            // Check if click is outside both menu and toggle button
+            const clickedInsideMenu = DOM.navLinks.contains(e.target);
+            const clickedToggle = DOM.mobileToggle.contains(e.target);
+            
+            if (!clickedInsideMenu && !clickedToggle) {
+                closeMobileMenu();
             }
         }
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && DOM.navLinks && DOM.navLinks.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Close menu on window resize (if resizing to desktop)
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 768 && DOM.navLinks && DOM.navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        }, 250);
     });
 
     // Navbar scroll effect with throttling for better performance
