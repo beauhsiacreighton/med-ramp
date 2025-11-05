@@ -657,7 +657,7 @@ a {
         border-bottom-right-radius: var(--radius-lg);
         max-height: calc(100vh - 70px);
         overflow-y: auto;
-        z-index: 99998 !important;
+        z-index: 100001 !important;
         pointer-events: none !important;
         visibility: hidden;
         opacity: 0;
