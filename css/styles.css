@@ -155,11 +155,10 @@ a {
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: var(--glass-border);
     box-shadow: none;
-    z-index: 99999 !important;
+    z-index: 9999 !important;
     transition: var(--transition);
     pointer-events: auto !important;
     transform: translateZ(0); /* Enable hardware acceleration */
-    contain: layout style; /* Removed 'paint' to prevent stacking context issues with mobile menu */
 }
 
 .navbar.scrolled {
