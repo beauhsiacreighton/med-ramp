@@ -129,7 +129,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.5rem;
             position: relative;
             z-index: 1;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -138,9 +138,14 @@
         .benefit-icon svg {
             width: 32px;
             height: 32px;
-            stroke: #fff;
+            stroke: #fff !important;
             stroke-width: 2.5;
             filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+        }
+        
+        /* Ensure value cards in benefits section have centered icons */
+        .benefits-section .value-card .benefit-icon {
+            margin: 0 auto 1.5rem;
         }
 
         .benefit-card h3 {
