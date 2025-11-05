@@ -159,7 +159,7 @@ a {
     transition: var(--transition);
     pointer-events: auto !important;
     transform: translateZ(0); /* Enable hardware acceleration */
-    contain: layout style paint; /* CSS containment for better performance */
+    contain: layout style; /* Removed 'paint' to prevent stacking context issues with mobile menu */
 }
 
 .navbar.scrolled {
@@ -656,7 +656,7 @@ a {
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         max-height: calc(100vh - 70px);
         overflow-y: auto;
-        z-index: 1000;
+        z-index: 100000 !important; /* Higher than navbar to ensure visibility */
         
         /* Initial state - hidden */
         opacity: 0;
