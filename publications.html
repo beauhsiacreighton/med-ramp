@@ -286,6 +286,41 @@
             gap: 0.8rem;
         }
 
+        .publications-pagination {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--white);
+        }
+
+        .pagination-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .pagination-info {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .filter-buttons {
                 flex-direction: column;
@@ -298,6 +333,10 @@
 
             .featured-pub {
                 padding: 2rem;
+            }
+
+            .publications-pagination {
+                flex-direction: column;
             }
         }
     </style>
@@ -410,7 +449,7 @@
                 </div>
             </div>
         <!-- Publications Grid -->
-        <h2 class="section-title" data-scroll-animate>Publications</h2>
+        <h2 id="publicationsResultsTitle" class="section-title" data-scroll-animate>Publications</h2>
         <div class="publications-grid">
           
             <div class="publication-item" data-category="abstract" data-scroll-animate>
@@ -1436,6 +1475,7 @@
             </div>
                 
             </div>
+            <div id="publicationsPagination" class="publications-pagination" aria-label="Publications pagination"></div>
         </div>
     </section>
 
