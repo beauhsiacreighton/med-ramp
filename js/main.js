@@ -7,6 +7,13 @@ const DOM = {
     navbar: null
 };
 
+const PUBLICATIONS_PAGE_SIZE = 20;
+const publicationsPaginationState = {
+    currentPage: 1,
+    lastCategory: '',
+    lastSearchTerm: ''
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements once
     DOM.mobileToggle = document.querySelector('.mobile-toggle');
@@ -203,15 +210,17 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', (event) => {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 event.currentTarget.classList.add('active');
-                updatePublicationsView();
+                updatePublicationsView({ resetPage: true });
             });
         });
 
         if (searchInput) {
-            searchInput.addEventListener('input', updatePublicationsView);
+            searchInput.addEventListener('input', () => {
+                updatePublicationsView({ resetPage: true });
+            });
         }
 
-        updatePublicationsView();
+        updatePublicationsView({ resetPage: true });
     }
 
     // Featured Research Carousel (Publications page)
@@ -243,16 +252,30 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * Updates the publications display based on filter category and search term
  */
-function updatePublicationsView() {
+function updatePublicationsView(options = {}) {
     const searchInput = document.getElementById('publicationSearch');
     if (!searchInput) return;
     
+    const { resetPage = false } = options;
     const searchTerm = searchInput.value.toLowerCase().trim();
     const activeFilterButton = document.querySelector('.filter-btn.active');
     if (!activeFilterButton) return;
     
     const activeCategory = activeFilterButton.dataset.category;
-    const items = document.querySelectorAll('.publication-item');
+    const items = Array.from(document.querySelectorAll('.publication-item'));
+
+    updatePublicationsHeading(activeFilterButton.textContent.trim());
+
+    if (
+        resetPage ||
+        activeCategory !== publicationsPaginationState.lastCategory ||
+        searchTerm !== publicationsPaginationState.lastSearchTerm
+    ) {
+        publicationsPaginationState.currentPage = 1;
+    }
+
+    publicationsPaginationState.lastCategory = activeCategory;
+    publicationsPaginationState.lastSearchTerm = searchTerm;
 
     // Show/hide stats banner and featured section
     const showExtraSections = (activeCategory === 'all' && searchTerm === '');
@@ -268,7 +291,7 @@ function updatePublicationsView() {
         featuredSection.style.display = showExtraSections ? 'block' : 'none';
     }
 
-    let visibleCount = 0;
+    const matchingItems = [];
 
     items.forEach(item => {
         const itemCategory = item.dataset.category;
@@ -278,18 +301,31 @@ function updatePublicationsView() {
         const searchMatch = searchTerm === '' || itemText.includes(searchTerm);
 
         if (categoryMatch && searchMatch) {
-            item.style.display = 'block';
-            item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-            visibleCount++;
-        } else {
-            item.style.display = 'none';
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
+            matchingItems.push(item);
         }
     });
 
-    showNoResultsMessage(visibleCount);
+    const shouldPaginate = activeCategory === 'all';
+    let visibleItems = matchingItems;
+
+    if (shouldPaginate && matchingItems.length > 0) {
+        const totalPages = Math.ceil(matchingItems.length / PUBLICATIONS_PAGE_SIZE);
+        if (publicationsPaginationState.currentPage > totalPages) {
+            publicationsPaginationState.currentPage = totalPages;
+        }
+
+        const start = (publicationsPaginationState.currentPage - 1) * PUBLICATIONS_PAGE_SIZE;
+        const end = start + PUBLICATIONS_PAGE_SIZE;
+        visibleItems = matchingItems.slice(start, end);
+    } else if (!shouldPaginate) {
+        publicationsPaginationState.currentPage = 1;
+    }
+
+    items.forEach(item => setPublicationVisibility(item, false));
+    visibleItems.forEach(item => setPublicationVisibility(item, true));
+
+    showNoResultsMessage(matchingItems.length);
+    renderPublicationsPagination(matchingItems.length, shouldPaginate);
 }
 
 /**
@@ -311,6 +347,78 @@ function showNoResultsMessage(visibleCount) {
         message.innerHTML = '📭 No publications match your search criteria. Try adjusting your filters or search terms.';
         grid.appendChild(message);
     }
+}
+
+/**
+ * Updates the publications section heading to match selected filter.
+ */
+function updatePublicationsHeading(title) {
+    const heading = document.getElementById('publicationsResultsTitle');
+    if (!heading) return;
+
+    heading.textContent = title || 'Publications';
+}
+
+/**
+ * Updates a publication card visibility with consistent transition styles.
+ */
+function setPublicationVisibility(item, isVisible) {
+    item.style.display = isVisible ? 'block' : 'none';
+    item.style.opacity = isVisible ? '1' : '0';
+    item.style.transform = isVisible ? 'translateY(0)' : 'translateY(20px)';
+}
+
+/**
+ * Render previous/next pagination controls for "All Publications" filter.
+ */
+function renderPublicationsPagination(totalMatches, shouldPaginate) {
+    const paginationContainer = document.getElementById('publicationsPagination');
+    if (!paginationContainer) return;
+
+    paginationContainer.innerHTML = '';
+
+    if (!shouldPaginate) {
+        paginationContainer.style.display = 'none';
+        return;
+    }
+
+    const totalPages = Math.ceil(totalMatches / PUBLICATIONS_PAGE_SIZE);
+    if (totalPages <= 1) {
+        paginationContainer.style.display = 'none';
+        return;
+    }
+
+    paginationContainer.style.display = 'flex';
+
+    const prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.className = 'pagination-btn';
+    prevButton.textContent = 'Previous';
+    prevButton.disabled = publicationsPaginationState.currentPage === 1;
+    prevButton.addEventListener('click', () => {
+        if (publicationsPaginationState.currentPage === 1) return;
+        publicationsPaginationState.currentPage -= 1;
+        updatePublicationsView();
+    });
+
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'pagination-info';
+    pageInfo.textContent = `Page ${publicationsPaginationState.currentPage} of ${totalPages}`;
+
+    const nextButton = document.createElement('button');
+    nextButton.type = 'button';
+    nextButton.className = 'pagination-btn';
+    nextButton.textContent = 'Next';
+    nextButton.disabled = publicationsPaginationState.currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+        if (publicationsPaginationState.currentPage === totalPages) return;
+        publicationsPaginationState.currentPage += 1;
+        updatePublicationsView();
+    });
+
+    paginationContainer.appendChild(prevButton);
+    paginationContainer.appendChild(pageInfo);
+    paginationContainer.appendChild(nextButton);
 }
 
 /**
