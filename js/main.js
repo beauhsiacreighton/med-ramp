@@ -204,22 +204,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
         const searchInput = document.getElementById('publicationSearch');
+        const searchClearButton = document.getElementById('publicationSearchClear');
         const filterButtons = document.querySelectorAll('.filter-btn');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', (event) => {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 event.currentTarget.classList.add('active');
-                updatePublicationsView({ resetPage: true });
+                updatePublicationsView({ resetPage: true, scrollToTop: true });
             });
         });
 
+        const updateSearchClearButton = () => {
+            if (!searchInput || !searchClearButton) return;
+            const hasValue = searchInput.value.trim().length > 0;
+            searchClearButton.classList.toggle('visible', hasValue);
+        };
+
         if (searchInput) {
             searchInput.addEventListener('input', () => {
+                updateSearchClearButton();
                 updatePublicationsView({ resetPage: true });
             });
         }
 
+        if (searchInput && searchClearButton) {
+            searchClearButton.addEventListener('click', () => {
+                if (!searchInput.value) return;
+                searchInput.value = '';
+                updateSearchClearButton();
+                updatePublicationsView({ resetPage: true });
+                searchInput.focus();
+            });
+        }
+
+        updateSearchClearButton();
         updatePublicationsView({ resetPage: true });
     }
 
@@ -256,7 +275,7 @@ function updatePublicationsView(options = {}) {
     const searchInput = document.getElementById('publicationSearch');
     if (!searchInput) return;
     
-    const { resetPage = false } = options;
+    const { resetPage = false, scrollToTop = false } = options;
     const searchTerm = searchInput.value.toLowerCase().trim();
     const activeFilterButton = document.querySelector('.filter-btn.active');
     if (!activeFilterButton) return;
@@ -305,27 +324,33 @@ function updatePublicationsView(options = {}) {
         }
     });
 
-    const shouldPaginate = activeCategory === 'all';
-    let visibleItems = matchingItems;
-
-    if (shouldPaginate && matchingItems.length > 0) {
-        const totalPages = Math.ceil(matchingItems.length / PUBLICATIONS_PAGE_SIZE);
-        if (publicationsPaginationState.currentPage > totalPages) {
-            publicationsPaginationState.currentPage = totalPages;
-        }
-
-        const start = (publicationsPaginationState.currentPage - 1) * PUBLICATIONS_PAGE_SIZE;
-        const end = start + PUBLICATIONS_PAGE_SIZE;
-        visibleItems = matchingItems.slice(start, end);
-    } else if (!shouldPaginate) {
+    const totalPages = Math.max(1, Math.ceil(matchingItems.length / PUBLICATIONS_PAGE_SIZE));
+    if (matchingItems.length === 0) {
         publicationsPaginationState.currentPage = 1;
+    } else if (publicationsPaginationState.currentPage > totalPages) {
+        publicationsPaginationState.currentPage = totalPages;
     }
+
+    const start = (publicationsPaginationState.currentPage - 1) * PUBLICATIONS_PAGE_SIZE;
+    const end = start + PUBLICATIONS_PAGE_SIZE;
+    const visibleItems = matchingItems.slice(start, end);
 
     items.forEach(item => setPublicationVisibility(item, false));
     visibleItems.forEach(item => setPublicationVisibility(item, true));
 
     showNoResultsMessage(matchingItems.length);
-    renderPublicationsPagination(matchingItems.length, shouldPaginate);
+    renderPublicationsPagination(matchingItems.length);
+
+    if (scrollToTop) {
+        scrollPageToTop();
+    }
+}
+
+function scrollPageToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 /**
@@ -369,26 +394,32 @@ function setPublicationVisibility(item, isVisible) {
 }
 
 /**
- * Render previous/next pagination controls for "All Publications" filter.
+ * Render pagination controls and viewing range details.
  */
-function renderPublicationsPagination(totalMatches, shouldPaginate) {
+function renderPublicationsPagination(totalMatches) {
     const paginationContainer = document.getElementById('publicationsPagination');
     if (!paginationContainer) return;
 
     paginationContainer.innerHTML = '';
 
-    if (!shouldPaginate) {
+    if (totalMatches === 0) {
         paginationContainer.style.display = 'none';
         return;
     }
 
     const totalPages = Math.ceil(totalMatches / PUBLICATIONS_PAGE_SIZE);
+    paginationContainer.style.display = 'flex';
+    const startItem = ((publicationsPaginationState.currentPage - 1) * PUBLICATIONS_PAGE_SIZE) + 1;
+    const endItem = Math.min(publicationsPaginationState.currentPage * PUBLICATIONS_PAGE_SIZE, totalMatches);
+
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'pagination-info';
+    pageInfo.textContent = `Viewing ${startItem}-${endItem} of ${totalMatches} (Page ${publicationsPaginationState.currentPage} of ${Math.max(totalPages, 1)})`;
+
     if (totalPages <= 1) {
-        paginationContainer.style.display = 'none';
+        paginationContainer.appendChild(pageInfo);
         return;
     }
-
-    paginationContainer.style.display = 'flex';
 
     const prevButton = document.createElement('button');
     prevButton.type = 'button';
@@ -398,12 +429,8 @@ function renderPublicationsPagination(totalMatches, shouldPaginate) {
     prevButton.addEventListener('click', () => {
         if (publicationsPaginationState.currentPage === 1) return;
         publicationsPaginationState.currentPage -= 1;
-        updatePublicationsView();
+        updatePublicationsView({ scrollToTop: true });
     });
-
-    const pageInfo = document.createElement('span');
-    pageInfo.className = 'pagination-info';
-    pageInfo.textContent = `Page ${publicationsPaginationState.currentPage} of ${totalPages}`;
 
     const nextButton = document.createElement('button');
     nextButton.type = 'button';
@@ -413,7 +440,7 @@ function renderPublicationsPagination(totalMatches, shouldPaginate) {
     nextButton.addEventListener('click', () => {
         if (publicationsPaginationState.currentPage === totalPages) return;
         publicationsPaginationState.currentPage += 1;
-        updatePublicationsView();
+        updatePublicationsView({ scrollToTop: true });
     });
 
     paginationContainer.appendChild(prevButton);
