@@ -14,7 +14,22 @@ const publicationsPaginationState = {
     lastSearchTerm: ''
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+const PUBLICATION_CATEGORY_META = {
+    journal: {
+        badgeClass: 'badge-journal',
+        badgeLabel: 'Journal Article'
+    },
+    abstract: {
+        badgeClass: 'badge-abstract',
+        badgeLabel: 'Abstract'
+    },
+    poster: {
+        badgeClass: 'badge-poster',
+        badgeLabel: 'Poster'
+    }
+};
+
+document.addEventListener('DOMContentLoaded', async function() {
     // Cache DOM elements once
     DOM.mobileToggle = document.querySelector('.mobile-toggle');
     DOM.navLinks = document.querySelector('.nav-links');
@@ -203,47 +218,56 @@ document.addEventListener('DOMContentLoaded', function() {
     // Publications page: Filter and search functionality
     const publicationsGrid = document.querySelector('.publications-grid');
     if (publicationsGrid) {
-        const searchInput = document.getElementById('publicationSearch');
-        const searchClearButton = document.getElementById('publicationSearchClear');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+        const publicationsLoaded = await loadAndRenderPublications();
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                event.currentTarget.classList.add('active');
-                updatePublicationsView({ resetPage: true, scrollToTop: true });
+        if (publicationsLoaded) {
+            document.querySelectorAll('.publication-item[data-scroll-animate], .featured-pub[data-scroll-animate]').forEach(element => {
+                observer.observe(element);
             });
-        });
 
-        const updateSearchClearButton = () => {
-            if (!searchInput || !searchClearButton) return;
-            const hasValue = searchInput.value.trim().length > 0;
-            searchClearButton.classList.toggle('visible', hasValue);
-        };
+            const searchInput = document.getElementById('publicationSearch');
+            const searchClearButton = document.getElementById('publicationSearchClear');
+            const filterButtons = document.querySelectorAll('.filter-btn');
 
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                updateSearchClearButton();
-                updatePublicationsView({ resetPage: true });
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    event.currentTarget.classList.add('active');
+                    updatePublicationsView({ resetPage: true, scrollToTop: true });
+                });
             });
+
+            const updateSearchClearButton = () => {
+                if (!searchInput || !searchClearButton) return;
+                const hasValue = searchInput.value.trim().length > 0;
+                searchClearButton.classList.toggle('visible', hasValue);
+            };
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    updateSearchClearButton();
+                    updatePublicationsView({ resetPage: true });
+                });
+            }
+
+            if (searchInput && searchClearButton) {
+                searchClearButton.addEventListener('click', () => {
+                    if (!searchInput.value) return;
+                    searchInput.value = '';
+                    updateSearchClearButton();
+                    updatePublicationsView({ resetPage: true });
+                    searchInput.focus();
+                });
+            }
+
+            updateSearchClearButton();
+            updatePublicationsView({ resetPage: true });
+            initFeaturedCarousel();
         }
-
-        if (searchInput && searchClearButton) {
-            searchClearButton.addEventListener('click', () => {
-                if (!searchInput.value) return;
-                searchInput.value = '';
-                updateSearchClearButton();
-                updatePublicationsView({ resetPage: true });
-                searchInput.focus();
-            });
-        }
-
-        updateSearchClearButton();
-        updatePublicationsView({ resetPage: true });
+    } else {
+        // Featured Research Carousel (Publications page)
+        initFeaturedCarousel();
     }
-
-    // Featured Research Carousel (Publications page)
-    initFeaturedCarousel();
 
     // FAQ page: Category filtering
     const faqCategories = document.querySelectorAll('.category-card');
@@ -267,6 +291,121 @@ document.addEventListener('DOMContentLoaded', function() {
         loadBlogPosts();
     }
 });
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function getPublicationCategoryMeta(category) {
+    return PUBLICATION_CATEGORY_META[category] || PUBLICATION_CATEGORY_META.journal;
+}
+
+function getPublicationLink(url) {
+    if (typeof url !== 'string') return '#';
+    const trimmed = url.trim();
+    return trimmed.length > 0 ? trimmed : '#';
+}
+
+function createPublicationCard(publication) {
+    const category = publication?.category || 'journal';
+    const categoryMeta = getPublicationCategoryMeta(category);
+    const link = getPublicationLink(publication?.url);
+    const year = Number.parseInt(publication?.year, 10);
+    const yearText = Number.isNaN(year) ? 'N/A' : String(year);
+
+    return `
+        <div class="publication-item" data-category="${escapeHtml(category)}" data-scroll-animate>
+            <span class="pub-badge ${categoryMeta.badgeClass}">${categoryMeta.badgeLabel}</span>
+            <h3>${escapeHtml(publication?.title)}</h3>
+            <p class="authors">${escapeHtml(publication?.authors)}</p>
+            <div class="pub-details">
+                <span>📅 ${yearText}</span>
+                <span>📚 ${escapeHtml(publication?.journal)}</span>
+            </div>
+            <p class="pub-abstract">${escapeHtml(publication?.abstract)}</p>
+            <a href="${escapeHtml(link)}" target="_blank" class="pub-link">
+                View Publication →
+            </a>
+        </div>
+    `;
+}
+
+function createFeaturedCarouselItem(publication, index) {
+    const category = publication?.category || 'journal';
+    const categoryMeta = getPublicationCategoryMeta(category);
+    const link = getPublicationLink(publication?.url);
+    const summary = publication?.featuredAbstract || publication?.abstract || '';
+    const activeClass = index === 0 ? ' active' : '';
+
+    return `
+        <div class="carousel-item${activeClass}">
+            <div class="featured-pub" data-scroll-animate>
+                <span class="pub-badge ${categoryMeta.badgeClass}">${categoryMeta.badgeLabel}</span>
+                <h3>${escapeHtml(publication?.title)}</h3>
+                <p class="authors">${escapeHtml(publication?.authors)}</p>
+                <p class="pub-abstract">${escapeHtml(summary)}</p>
+                <a href="${escapeHtml(link)}" target="_blank" class="pub-link">
+                    Read Full Article →
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+function updateCarouselNavigationVisibility(featuredCount) {
+    const carouselNav = document.querySelector('.carousel-nav');
+    if (!carouselNav) return;
+
+    carouselNav.style.display = featuredCount > 1 ? 'flex' : 'none';
+}
+
+async function loadAndRenderPublications() {
+    const publicationsGrid = document.querySelector('.publications-grid');
+    if (!publicationsGrid) return false;
+
+    const featuredCarousel = document.querySelector('.featured-carousel');
+
+    try {
+        const response = await fetch('publications.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load publications.json (${response.status})`);
+        }
+
+        const publications = await response.json();
+        if (!Array.isArray(publications)) {
+            throw new Error('publications.json must contain an array');
+        }
+
+        publicationsGrid.innerHTML = publications.map(createPublicationCard).join('');
+
+        if (featuredCarousel) {
+            const featuredPublications = publications.filter(publication => publication?.featured);
+            featuredCarousel.innerHTML = featuredPublications.map(createFeaturedCarouselItem).join('');
+            updateCarouselNavigationVisibility(featuredPublications.length);
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error loading publications:', error);
+        publicationsGrid.innerHTML = `
+            <div class="no-posts">
+                <p>Unable to load publications at this time. Please try again later.</p>
+            </div>
+        `;
+
+        if (featuredCarousel) {
+            featuredCarousel.innerHTML = '';
+            updateCarouselNavigationVisibility(0);
+        }
+
+        return false;
+    }
+}
 
 /**
  * Updates the publications display based on filter category and search term
@@ -504,13 +643,24 @@ function initFeaturedCarousel() {
         });
     }
 
-    if (items.length > 0) {
-        showSlide(0);
-        startAutoSlide();
-
-        carousel.addEventListener('mouseenter', stopAutoSlide);
-        carousel.addEventListener('mouseleave', startAutoSlide);
+    if (items.length === 0) {
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
+        return;
     }
+
+    showSlide(0);
+
+    if (items.length === 1) {
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
+        return;
+    }
+
+    startAutoSlide();
+
+    carousel.addEventListener('mouseenter', stopAutoSlide);
+    carousel.addEventListener('mouseleave', startAutoSlide);
 }
 
 /**
