@@ -13,7 +13,7 @@ tags:
   - MCAT timeline
   - study strategy
   - pre-med advice
-featured: true
+featured: false
 featuredImage: https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80
 ---
 
