@@ -140,7 +140,7 @@ The students who grew up without those advantages — first-generation college s
 Strong applicants should not be priced out of strong mentorship. That premise is so obvious it barely needs to be said. And yet the market prices as though it disagrees.
 </div>
 
-This is exactly why programs like [Med-RAMP Application Support](/application-support) exist — to provide the same caliber of structured, expert feedback at a price that doesn't require a second mortgage.
+This is exactly why programs like [Med-RAMP Application Support](/application-support.html) exist — to provide the same caliber of structured, expert feedback at a price that doesn't require a second mortgage.
 
 ---
 
@@ -179,7 +179,7 @@ Don't be that applicant.
 
 ## Our Honest Take
 
-[Med-RAMP Application Support](/application-support) offers three full rounds of editing — structural narrative feedback, line-by-line clarity refinement, and clinical depth coaching — with a 72-hour turnaround per round.
+[Med-RAMP Application Support](/application-support.html) offers three full rounds of editing — structural narrative feedback, line-by-line clarity refinement, and clinical depth coaching — with a 72-hour turnaround per round.
 
 Public price: **$199.** Med-RAMP members: **$99.**
 
@@ -187,7 +187,7 @@ We built it this way deliberately. Our research mentorship program has always be
 
 We're not the right fit for everyone. If you want the credentialing and brand prestige of a large admissions consulting firm, those services exist for a reason.
 
-But if you want expert, structured feedback at a price that doesn't require you to choose between application support and a month of rent — [we built that for you](/application-support).
+But if you want expert, structured feedback at a price that doesn't require you to choose between application support and a month of rent — [we built that for you](/application-support.html).
 
 ---
 
@@ -211,6 +211,6 @@ Your personal statement matters. It's worth investing in real feedback. But "rea
 
 ---
 
-**Ready to strengthen your personal statement?** [Med-RAMP Application Support](/application-support) offers three full rounds of expert editing with 72-hour turnaround. Public price $199, members $99. [Learn more →](/application-support)
+**Ready to strengthen your personal statement?** [Med-RAMP Application Support](/application-support.html) offers three full rounds of expert editing with 72-hour turnaround. Public price $199, members $99. [Learn more →](/application-support.html)
 
 **Want more application strategy?** Read our companion post on how to structure your personal statement narrative before you start editing — because the best editing in the world can't fix a story that was built on the wrong foundation.
