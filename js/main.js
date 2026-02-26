@@ -59,9 +59,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             <div class="container">
                 <a class="site-banner-message" href="/application-support.html">
                     <span class="site-banner-kicker">Application Support</span>
-                    <span class="site-banner-copy">Personal statement editing: 3 rounds, 72-hour turnaround. Starting at $99 for members.</span>
+                    <span class="site-banner-copy">Personal statement editing for this cycle: 3 rounds, 72-hour turnaround.</span>
                 </a>
-                <a class="site-banner-cta" href="/application-support.html">Get Started</a>
+                <div class="site-banner-actions">
+                    <a class="site-banner-secondary-link" href="/blog/medical-school-personal-statement-editing-cost.html">Why services cost $800-$1,000</a>
+                    <a class="site-banner-cta" href="/application-support.html#apply-now">Get Started</a>
+                </div>
             </div>
         `;
 
