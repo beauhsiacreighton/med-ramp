@@ -298,7 +298,10 @@ function updateSitemap(posts) {
   let sitemap = fs.readFileSync(CONFIG.sitemapPath, 'utf-8');
   
   // Remove existing blog post entries
-  sitemap = sitemap.replace(/<url>[\s\S]*?<loc>.*?\/blog\/.*?<\/loc>[\s\S]*?<\/url>/g, '');
+  sitemap = sitemap.replace(
+    /<url>\s*<loc>[^<]*\/blog\/[^<]*<\/loc>[\s\S]*?<\/url>\s*/g,
+    ''
+  );
   
   // Generate new blog post entries
   const blogEntries = posts.map(post => `
