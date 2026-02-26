@@ -46,31 +46,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     DOM.navLinks = document.querySelector('.nav-links');
     DOM.navbar = document.querySelector('.navbar');
 
-    function injectApplicationSupportBanner() {
-        if (!document.body) return;
-        if (document.querySelector('.site-banner')) return;
-
-        const banner = document.createElement('div');
-        banner.className = 'site-banner';
-        banner.setAttribute('role', 'region');
-        banner.setAttribute('aria-label', 'Application Support');
-
-        banner.innerHTML = `
-            <div class="container">
-                <a class="site-banner-message" href="/application-support.html">
-                    <span class="site-banner-kicker">Application Support</span>
-                    <span class="site-banner-copy">Personal statement editing: 3 rounds, 72-hour turnaround. Starting at $99 for members.</span>
-                </a>
-                <a class="site-banner-cta" href="/application-support.html">Get Started</a>
-            </div>
-        `;
-
-        document.body.prepend(banner);
-        document.body.classList.add('has-site-banner');
-    }
-
-    injectApplicationSupportBanner();
-    
     // Mobile Navigation Toggle - Completely rewritten for reliability
     function toggleMobileMenu() {
         if (!DOM.navLinks || !DOM.mobileToggle) return;
