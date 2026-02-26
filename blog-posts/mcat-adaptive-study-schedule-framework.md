@@ -13,7 +13,7 @@ tags:
   - MCAT strategy
   - adaptive learning
   - pre-med advice
-featured: true
+featured: false
 featuredImage: https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80
 ---
 
