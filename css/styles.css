@@ -808,7 +808,7 @@ article a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
 .site-banner a {
@@ -819,7 +819,6 @@ article a:hover {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    flex: 1;
     min-width: 0;
     font-size: 0.95rem;
     line-height: 1.2;
@@ -836,26 +835,6 @@ article a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.site-banner-actions {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    flex-shrink: 0;
-}
-
-.site-banner-secondary-link {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: rgba(15, 23, 42, 0.74);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.25);
-    white-space: nowrap;
-}
-
-.site-banner-secondary-link:hover {
-    color: rgba(15, 23, 42, 0.94);
-    border-bottom-color: rgba(15, 23, 42, 0.45);
 }
 
 .site-banner-cta {
@@ -889,34 +868,7 @@ body.has-site-banner {
 }
 
 @media (max-width: 640px) {
-    :root {
-        --site-banner-height: 40px;
-    }
-
-    .site-banner {
-        height: 40px;
-    }
-
     .site-banner-copy {
-        display: none;
-    }
-
-    .site-banner-secondary-link {
-        display: none;
-    }
-
-    .site-banner-kicker {
-        font-size: 0.88rem;
-    }
-
-    .site-banner-cta {
-        font-size: 0.82rem;
-        padding: 0.35rem 0.7rem;
-    }
-}
-
-@media (max-width: 960px) {
-    .site-banner-secondary-link {
         display: none;
     }
 }
