@@ -78,24 +78,5 @@
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
     "url": "/blog/navy-seal-mcat-keep-world-small.html"
-  },
-  {
-    "id": "med-ramp-transformed-application",
-    "title": "How Med-RAMP Transformed My Medical School Application",
-    "excerpt": "Learn how one student leveraged Med-RAMP research experience to stand out in a competitive application cycle and earned acceptances to top medical schools.",
-    "category": "Success Stories",
-    "date": "2025-01-15",
-    "author": "Sarah Johnson",
-    "authorRole": "Current Medical Student",
-    "readTime": "8 min read",
-    "tags": [
-      "medical school",
-      "application",
-      "success story",
-      "research experience"
-    ],
-    "featured": true,
-    "featuredImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-    "url": "/blog/med-ramp-transformed-application.html"
   }
 ]
