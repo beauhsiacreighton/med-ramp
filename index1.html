@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med-RAMP - Research Mentorship for Future Physicians</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --bg: #fafaf8;
+            --bg-white: #ffffff;
+            --bg-warm: #f5f0e8;
+            --accent: #015da9;
+            --accent-light: #e0eef8;
+            --accent-dark: #014a87;
+            --text: #111111;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --border-warm: #e8e3d5;
+            --navy: #0a1628;
+            --red-urgency: rgba(239, 68, 68, 0.15);
+            --red-text: #fca5a5;
+            --gold: #fef3c7;
+            --gold-text: #92400e;
+            --star: #fbbf24;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            font-family: 'Zilla Slab', serif;
+            color: var(--text);
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(100%, 1200px);
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex: 0 0 auto;
+        }
+
+        .section-tag {
+            margin-bottom: 18px;
+            color: var(--accent);
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            max-width: 700px;
+            margin-bottom: 18px;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .section-description {
+            max-width: 500px;
+            margin-bottom: 42px;
+            color: var(--muted);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100%;
+            height: 68px;
+            background: rgba(250, 250, 248, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .site-nav .container {
+            height: 100%;
+        }
+
+        .nav-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .wordmark {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.32rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        .wordmark .accent {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a.active {
+            color: var(--text);
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 22px;
+            border-radius: 6px;
+            border: none;
+            background: var(--accent);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .nav-cta:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            padding: 13px 28px;
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            padding: 13px 28px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-link:hover {
+            color: var(--text);
+        }
+
+        .btn-dark {
+            padding: 14px 36px;
+            border-radius: 6px;
+            background: #ffffff;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .btn-dark:hover {
+            background: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            background: var(--bg);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 460px;
+            gap: 72px;
+            align-items: center;
+        }
+
+        .hero-title {
+            margin: 20px 0 20px;
+            font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-title em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            max-width: 580px;
+            margin-bottom: 34px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .hero-note {
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .hero-note .star {
+            color: var(--star);
+        }
+
+        .hero-card-wrap {
+            position: relative;
+        }
+
+        .hero-feature-card {
+            position: relative;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.07);
+        }
+
+        .hero-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .avatar-large {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #015da9, #2d78c8);
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .author-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .author-role {
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .published-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--gold);
+            color: var(--gold-text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .journal-line {
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .journal-line strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .hero-feature-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .hero-feature-card p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .floating-stat {
+            position: absolute;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-white);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 16px 20px;
+        }
+
+        .floating-stat.one {
+            left: -34px;
+            bottom: 52px;
+        }
+
+        .floating-stat.two {
+            right: -30px;
+            top: -26px;
+        }
+
+        .floating-value {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .floating-label {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        /* Stats bar */
+        .stats-band {
+            background: var(--bg-warm);
+            border-top: 1px solid var(--border-warm);
+            border-bottom: 1px solid var(--border-warm);
+        }
+
+        .stats-band .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Zilla Slab', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Process grid */
+        .process-shell {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--border);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+        }
+
+        .process-step {
+            background: var(--bg-white);
+            padding: 40px 32px;
+            transition: background 0.3s ease;
+        }
+
+        .process-step:hover {
+            background: var(--accent-light);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .process-step h3 {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .quote-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-white);
+            padding: 28px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .quote-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .quote-stars {
+            margin-bottom: 12px;
+            color: var(--star);
+            letter-spacing: 0.08em;
+            font-size: 0.9rem;
+        }
+
+        .quote-card p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .quote-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-small {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .quote-name {
+            font-size: 0.86rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .quote-role {
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        /* CTA banner */
+        .cta-banner {
+            padding: 100px 0;
+            background: var(--navy);
+            text-align: center;
+        }
+
+        .urgency-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            background: var(--red-urgency);
+            color: var(--red-text);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 22px;
+        }
+
+        .cta-title {
+            margin: 0 auto 20px;
+            max-width: 760px;
+            color: #ffffff;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-title em {
+            color: #93c5fd;
+            font-style: italic;
+        }
+
+        .cta-subtext {
+            max-width: 620px;
+            margin: 0 auto 40px;
+            color: #9ca3af;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .cta-banner .btn-dark {
+            font-weight: 700;
+        }
+
+        .cta-reassurance {
+            margin-top: 14px;
+            color: #3d5070;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+            padding: 32px 0;
+        }
+
+        .footer-row {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        /* Reveal animations */
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition-delay: var(--stagger, 0s);
+        }
+
+        [data-animate].is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            .hero-grid {
+                gap: 48px;
+                grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 60px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .site-nav {
+                height: 68px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .stats-row {
+                gap: 40px;
+            }
+
+            .process-shell,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-banner {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a class="wordmark" href="index1.html">Med<span class="accent">-RAMP</span></a>
+                <ul class="nav-links">
+                    <li><a href="program.html" class="active">Program</a></li>
+                    <li><a href="publications.html">Research</a></li>
+                    <li><a href="about.html">Mentors</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+                <a class="nav-cta" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <div class="eyebrow" data-animate>Medical Research Mentorship</div>
+                        <h1 class="hero-title" data-animate style="--stagger: 0.1s;">Real research. Real mentors. Real <em>results</em>.</h1>
+                        <p class="hero-subtitle" data-animate style="--stagger: 0.2s;">
+                            Join hundreds of pre-med students contributing to rare cancer studies, earning authorships, and building applications that stand out at top medical schools.
+                        </p>
+                        <div class="hero-actions" data-animate style="--stagger: 0.3s;">
+                            <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                            <a class="btn btn-secondary" href="about.html">Learn More</a>
+                        </div>
+                        <div class="hero-note" data-animate style="--stagger: 0.4s;">
+                            <span class="star">★★★★★</span> Trusted by students accepted to Mayo Clinic, Stanford, and other top programs.
+                        </div>
+                    </div>
+
+                    <div class="hero-visual hero-card-wrap" data-animate>
+                        <article class="hero-feature-card">
+                            <div class="hero-card-top">
+                                <div class="author-meta">
+                                    <span class="avatar-large">MM</span>
+                                    <div>
+                                        <div class="author-name">Mark M.</div>
+                                        <div class="author-role">Accepted to Mayo Clinic Alix SOM</div>
+                                    </div>
+                                </div>
+                                <span class="published-badge">Published ✓</span>
+                            </div>
+                            <div class="journal-line">Featured in <strong>Journal of Clinical Oncology</strong></div>
+                            <h3>Rare cancer outcomes analysis with Med-RAMP team mentorship</h3>
+                            <p>
+                                "Med-RAMP gave me the research experience I needed to stand out. The mentorship was practical, the writing support was rigorous, and my authorships became a core strength in my application."
+                            </p>
+                            <a class="btn-link" href="publications.html">View recent authorships →</a>
+                        </article>
+                        <div class="floating-stat one">
+                            <div class="floating-value">120+</div>
+                            <div class="floating-label">Student authorships</div>
+                        </div>
+                        <div class="floating-stat two">
+                            <div class="floating-value">94%</div>
+                            <div class="floating-label">Report stronger apps</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-band" data-animate>
+            <div class="container">
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">application confidence increase</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">200+</div>
+                        <div class="stat-label">active pre-med researchers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3 mo</div>
+                        <div class="stat-label">average path to first submission</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">1:1</div>
+                        <div class="stat-label">mentor support and review</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>Program Process</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">
+                    How ambitious students <em>publish</em> with Med-RAMP
+                </h2>
+                <p class="section-description" data-animate style="--stagger: 0.2s;">
+                    No prior research experience is required. We provide structured guidance from your first application to manuscript submission, with clear milestones and rigorous mentorship at every step.
+                </p>
+
+                <div class="process-shell">
+                    <article class="process-step" data-animate>
+                        <div class="icon-box">📝</div>
+                        <h3>Apply</h3>
+                        <p>Submit your application and academic goals. We match you to a project based on fit, interests, and readiness.</p>
+                    </article>
+                    <article class="process-step" data-animate style="--stagger: 0.1s;">
+                        <div class="icon-box">🔬</div>
+                        <h3>Contribute</h3>
+                        <p>Analyze data, review literature, and draft sections with direct mentor feedback designed to improve your scientific writing.</p>
+                    </article>
+                    <article class="process-step" data-animate style="--stagger: 0.2s;">
+                        <div class="icon-box">📚</div>
+                        <h3>Publish</h3>
+                        <p>Earn authorship on abstracts, posters, and journal submissions that strengthen your medical school application.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>Outcomes</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">
+                    What our participants say about their <em>results</em>
+                </h2>
+                <p class="section-description" data-animate style="--stagger: 0.2s;">
+                    Students consistently describe Med-RAMP as the bridge between motivation and measurable outcomes: credible mentorship, real research impact, and stronger admissions narratives.
+                </p>
+
+                <div class="testimonials-grid">
+                    <article class="quote-card" data-animate>
+                        <div class="quote-stars">★★★★★</div>
+                        <p>"I gained meaningful research experience, earned authorship credit, and finally felt confident presenting my work in interviews."</p>
+                        <div class="quote-author">
+                            <span class="avatar-small">MM</span>
+                            <div>
+                                <div class="quote-name">Mark M.</div>
+                                <div class="quote-role">Accepted to Mayo Clinic Alix SOM</div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="quote-card" data-animate style="--stagger: 0.1s;">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>"The mentorship was structured and personal. I learned how to think like a researcher and write clearly under real deadlines."</p>
+                        <div class="quote-author">
+                            <span class="avatar-small">AR</span>
+                            <div>
+                                <div class="quote-name">Ariana R.</div>
+                                <div class="quote-role">Pre-med participant, Class of 2026</div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="quote-card" data-animate style="--stagger: 0.2s;">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>"Med-RAMP gave me clarity. I moved from 'interested in research' to submitting polished work with a mentor who challenged me."</p>
+                        <div class="quote-author">
+                            <span class="avatar-small">JL</span>
+                            <div>
+                                <div class="quote-name">Jordan L.</div>
+                                <div class="quote-role">Incoming medical student</div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container">
+                <div class="urgency-badge" data-animate>⚡ Limited cohort capacity this cycle</div>
+                <h2 class="cta-title" data-animate style="--stagger: 0.1s;">Applications are open for students ready to <em>deliver</em> real research outcomes</h2>
+                <p class="cta-subtext" data-animate style="--stagger: 0.2s;">Join a focused community of pre-med students building publication-ready work with mentor support and structured accountability.</p>
+                <a class="btn btn-dark" data-animate style="--stagger: 0.3s;" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                <div class="cta-reassurance" data-animate style="--stagger: 0.4s;">Applications reviewed within 48 hours</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-row">© 2026 Med-RAMP. Empowering future physician-scientists through mentorship and meaningful research.</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        document.querySelectorAll('[data-animate]').forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
