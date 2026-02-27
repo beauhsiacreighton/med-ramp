@@ -10,16 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/css/styles.css?v=20260226">
-    <link rel="icon" type="image/png" href="/images/Circle%20logo.png">
+    <link rel="stylesheet" href="css/styles.css?v=20260227">
+    <link rel="icon" type="image/png" href="images/Circle logo.png">
     <link rel="canonical" href="https://med-ramp.com/application-support.html">
 </head>
 <body class="app-support-page">
     <nav class="navbar">
         <div class="container">
-            <div class="nav-content as-nav-content">
-                <a href="/index.html" class="logo">Med-RAMP</a>
-                <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener" class="as-btn-ghost">Get Started</a>
+            <div class="nav-content">
+                <a href="index.html" class="logo">Med-RAMP</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="application-support.html" class="active">Application Support</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener" class="apply-btn glass-card">Apply Now</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -53,7 +66,7 @@
                 <div class="as-split">
                     <div>
                         <h2 class="as-h2">Why Application Support exists</h2>
-                        <p class="as-body">Most applicants are forced to choose between low-quality generic feedback and premium editing that is often <a class="as-inline-link" href="/blog/medical-school-personal-statement-editing-cost.html">$800-$1,000</a> for a single round.</p>
+                        <p class="as-body">Most applicants are forced to choose between low-quality generic feedback and premium editing that is often <a class="as-inline-link" href="blog/medical-school-personal-statement-editing-cost.html">$800-$1,000</a> for a single round.</p>
                         <p class="as-body as-body-spaced">Med-RAMP was built around a different standard: rigorous, human mentorship should be accessible to strong applicants, not just applicants with large consulting budgets.</p>
                     </div>
                     <aside class="as-callout" aria-label="What this means for you">
@@ -124,7 +137,7 @@
                     <div>
                         <h2 class="as-h2">Mission-driven pricing</h2>
                         <p class="as-body">Our mentorship and research programming is free. Paid editing helps sustain that mission while compensating medical student editors fairly.</p>
-                        <p class="as-note">For context, many personal statement services still charge <a class="as-inline-link" href="/blog/medical-school-personal-statement-editing-cost.html">$800-$1,000 for one round</a>.</p>
+                        <p class="as-note">For context, many personal statement services still charge <a class="as-inline-link" href="blog/medical-school-personal-statement-editing-cost.html">$800-$1,000 for one round</a>.</p>
                     </div>
                     <table class="as-pricing" role="table" aria-label="Application Support pricing">
                         <thead>
@@ -183,20 +196,44 @@
                     <p class="as-body">If you are ready for expert feedback that is rigorous, clear, and mission-driven, start now and use all three rounds strategically.</p>
                     <div class="as-actions">
                         <a class="as-btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener">Get Started with Application Support</a>
-                        <a class="as-btn-ghost" href="/blog/medical-school-personal-statement-editing-cost.html">Read the Cost Breakdown</a>
+                        <a class="as-btn-ghost" href="blog/medical-school-personal-statement-editing-cost.html">Read the Cost Breakdown</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="as-footer">
+    <footer class="footer">
         <div class="container">
-            <p><strong>Med-RAMP</strong> empowers the next generation of physician-scientists through mentorship, research, and accessible high-quality support.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Med-RAMP</h3>
+                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener">Apply Now</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+                <p class="security-badge">🔒 Secure Site</p>
+            </div>
         </div>
     </footer>
 
-    <script src="/js/main.js?v=20260226" defer></script>
+    <script src="js/main.js?v=20260227" defer></script>
 </body>
 </html>
 
