@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://med-ramp.com/</loc>
-<lastmod>2026-02-26T12:24:20-07:00</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/about.html</loc>
-<lastmod>2025-11-05T00:12:37-07:00</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/application-support.html</loc>
@@ -14,23 +14,23 @@
 </url>
 <url>
 <loc>https://med-ramp.com/blog-post-1.html</loc>
-<lastmod>2025-10-30T04:20:16Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/blog-post-template.html</loc>
-<lastmod>2025-10-30T05:06:29Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/blog-post.html</loc>
-<lastmod>2025-10-30T04:20:16Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/blog.html</loc>
-<lastmod>2025-11-02T20:36:34-07:00</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/faq.html</loc>
-<lastmod>2025-10-30T04:20:16Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/googlea5d0fbea8fe195d9.html</loc>
@@ -38,49 +38,46 @@
 </url>
 <url>
 <loc>https://med-ramp.com/header-footer.html</loc>
-<lastmod>2025-10-18T19:54:19-07:00</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/index1.html</loc>
+<lastmod>2026-02-26T17:56:36-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/publications.html</loc>
-<lastmod>2026-02-18T22:31:58Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/success-stories.html</loc>
-<lastmod>2025-10-30T04:20:16Z</lastmod>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/admin/</loc>
 <lastmod>2025-10-18T13:34:40-07:00</lastmod>
 </url>
-
-  <url>
-    <loc>https://med-ramp.com/blog/medical-school-personal-statement-editing-cost.html</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://med-ramp.com/blog/mcat-adaptive-study-schedule-framework.html</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://med-ramp.com/blog/mcat-study-guide-day-1-no-content.html</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://med-ramp.com/blog/mcat-study-with-no-regrets-philosophy.html</loc>
-    <lastmod>2025-10-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://med-ramp.com/blog/navy-seal-mcat-keep-world-small.html</loc>
-    <lastmod>2025-10-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+<url>
+<loc>https://med-ramp.com/blog/mcat-adaptive-study-schedule-framework.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/blog/mcat-study-guide-day-1-no-content.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/blog/mcat-study-with-no-regrets-philosophy.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/blog/med-ramp-transformed-application.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/blog/medical-school-personal-statement-editing-cost.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/blog/navy-seal-mcat-keep-world-small.html</loc>
+<lastmod>2026-02-26T14:26:23-07:00</lastmod>
+</url>
 </urlset>
