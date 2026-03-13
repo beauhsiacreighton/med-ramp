@@ -16,7 +16,9 @@
                 observer.unobserve(entry.target);
             });
         }, {
-            threshold: 0.15
+            // Keep this low so very tall sections (e.g., long-form blog articles)
+            // can still satisfy intersection and reveal.
+            threshold: 0.01
         });
 
         return revealObserver;
