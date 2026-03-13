@@ -7,158 +7,185 @@
     <link rel="stylesheet" href="css/styles-1.css">
     <style>
         .faq-section {
-            padding: 4rem 0 6rem;
+            padding: 0 0 6rem;
         }
 
         .faq-categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 16px;
-            margin-bottom: 3rem;
         }
 
         .category-card {
-            padding: 20px;
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            padding: 18px;
             text-align: center;
-            cursor: default;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
         }
 
-        .category-card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            border-color: var(--accent-light);
+        .category-card.is-active {
+            border-color: var(--accent);
+            background: var(--accent-light);
         }
 
         .category-icon {
-            font-size: 2rem;
-            margin-bottom: 8px;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
         }
 
         .category-name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .faq-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: -28px;
+            margin-bottom: 32px;
         }
 
-        .faq-category-section {
-            margin-bottom: 3rem;
+        .faq-stat-card {
+            padding: 22px 24px;
         }
 
-        .category-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .faq-item {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .faq-item:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            border-color: var(--accent-light);
-        }
-
-        .faq-question {
-            padding: 20px 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            background: transparent;
-            transition: background 0.2s ease;
-        }
-
-        .faq-question:hover {
-            background: var(--bg);
-        }
-
-        .faq-question h3 {
-            margin: 0;
-            font-size: 1.05rem;
-            font-weight: 600;
-            flex: 1;
-        }
-
-        .faq-icon {
-            font-size: 1.5rem;
-            color: var(--accent);
-            font-weight: 300;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-
-        .faq-answer-content {
-            padding: 0 24px 20px 24px;
+        .faq-stat-label {
+            margin-bottom: 8px;
             color: var(--muted);
-            line-height: 1.8;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
-        .faq-answer-content p {
-            margin-bottom: 1rem;
+        .faq-stat-value {
+            font-family: 'Zilla Slab', serif;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            line-height: 1;
         }
 
-        .faq-answer-content p:last-child {
+        .faq-stat-note {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .faq-sidebar {
+            position: sticky;
+            top: 96px;
+        }
+
+        .faq-sidebar-card {
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .faq-sidebar-card:last-child {
             margin-bottom: 0;
         }
 
-        .faq-answer-content ul {
-            margin: 0 0 1rem 1.5rem;
+        .faq-sidebar-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+        }
+
+        .faq-sidebar-card p,
+        .faq-sidebar-card li {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .faq-sidebar-card ul {
+            margin: 14px 0 0 18px;
             padding: 0;
         }
 
-        .faq-answer-content li {
-            margin-bottom: 0.5rem;
+        .quick-question-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quick-question {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--bg-white);
+            color: var(--text);
+            font: inherit;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-question:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .faq-results-shell {
+            display: grid;
+            gap: 28px;
+        }
+
+        .faq-category-section {
+            margin-bottom: 32px;
+        }
+
+        .faq-category-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            font-size: 1.45rem;
+            margin-bottom: 14px;
+        }
+
+        .category-description {
+            margin-bottom: 18px;
+            color: var(--muted);
+            font-size: 0.96rem;
         }
 
         .still-questions {
-            background: var(--bg-warm);
-            border: 1px solid var(--border-warm);
-            padding: 48px 32px;
-            border-radius: 16px;
+            padding: 36px 32px;
             text-align: center;
-            margin-top: 3rem;
         }
 
         .still-questions h2 {
-            font-size: 1.75rem;
+            font-size: 1.7rem;
             margin-bottom: 12px;
         }
 
         .still-questions p {
             color: var(--muted);
-            font-size: 1.05rem;
             margin-bottom: 24px;
         }
 
-        @media (max-width: 768px) {
-            .faq-question {
-                padding: 16px 20px;
+        @media (max-width: 980px) {
+            .faq-layout {
+                grid-template-columns: 1fr;
             }
 
-            .faq-answer-content {
-                padding: 0 20px 16px 20px;
+            .faq-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .faq-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -167,58 +194,159 @@
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="page-hero">
+        <section class="page-hero page-hero--rich">
             <div class="container">
-                <h1 data-animate>Frequently Asked Questions</h1>
-                <p data-animate>Everything you need to know about Med-RAMP</p>
+                <div class="page-hero-grid">
+                    <div class="page-hero-copy">
+                        <div class="eyebrow" data-animate>Answers before you apply</div>
+                        <h1 data-animate style="--stagger: 0.08s;">A help center designed to remove friction and build confidence.</h1>
+                        <p data-animate style="--stagger: 0.16s;">Browse the most common questions about Med-RAMP, from eligibility and time commitment to authorship, mentorship, and what the experience can add to your medical school application.</p>
+                        <div class="hero-badges" data-animate style="--stagger: 0.24s;">
+                            <div class="hero-badge"><strong>100% free</strong> to participate</div>
+                            <div class="hero-badge"><strong>Rolling admissions</strong> so you can apply when ready</div>
+                            <div class="hero-badge"><strong>Flexible commitment</strong> that works around classes</div>
+                        </div>
+                        <div class="trust-banner" data-animate style="--stagger: 0.3s;">
+                            Students most often ask about <strong>authorship</strong>, <strong>time flexibility</strong>, <strong>mentor support</strong>, and <strong>how Med-RAMP helps them stand out</strong>.
+                        </div>
+                    </div>
+
+                    <aside class="page-hero-card" data-animate style="--stagger: 0.2s;">
+                        <div class="panel-kicker">Fast facts</div>
+                        <h2>What most applicants want to know right away</h2>
+                        <ul style="margin: 16px 0 0; padding-left: 18px; color: var(--muted); display: grid; gap: 10px;">
+                            <li>No prior research experience is required to start.</li>
+                            <li>Many students contribute around 5-10 hours per week when their schedule allows.</li>
+                            <li>The program is fully virtual, so you can participate from anywhere.</li>
+                            <li>Authorship is tied to meaningful contribution and follows academic standards.</li>
+                        </ul>
+                    </aside>
+                </div>
             </div>
         </section>
 
         <section class="faq-section">
             <div class="container">
-                <div class="faq-categories" data-animate>
-                    <div class="category-card">
-                        <div class="category-icon">📋</div>
-                        <div class="category-name">Application Process</div>
+                <div class="faq-stats">
+                    <div class="faq-stat-card surface-card" data-animate>
+                        <div class="faq-stat-label">Entry barrier</div>
+                        <div class="faq-stat-value">Low</div>
+                        <div class="faq-stat-note">No prior research experience required</div>
                     </div>
-                    <div class="category-card">
-                        <div class="category-icon">⏰</div>
-                        <div class="category-name">Time Commitment</div>
+                    <div class="faq-stat-card surface-card" data-animate style="--stagger: 0.06s;">
+                        <div class="faq-stat-label">Format</div>
+                        <div class="faq-stat-value">Virtual</div>
+                        <div class="faq-stat-note">Accessible from anywhere</div>
                     </div>
-                    <div class="category-card">
-                        <div class="category-icon">🔬</div>
-                        <div class="category-name">Research Experience</div>
-                    </div>
-                    <div class="category-card">
-                        <div class="category-icon">📚</div>
-                        <div class="category-name">Publications</div>
+                    <div class="faq-stat-card surface-card" data-animate style="--stagger: 0.12s;">
+                        <div class="faq-stat-label">Admissions model</div>
+                        <div class="faq-stat-value">Rolling</div>
+                        <div class="faq-stat-note">Apply when the timing makes sense for you</div>
                     </div>
                 </div>
 
-                <div class="faq-container">
-                    <div class="faq-category-section" data-animate>
-                        <h2 class="category-title">General Questions</h2>
+                <div class="control-panel" data-animate>
+                    <div class="control-header">
+                        <div>
+                            <div class="section-tag">Find your answer</div>
+                            <h2 class="section-title">Search by question or topic</h2>
+                        </div>
+                        <button class="btn btn-secondary" id="faqResetButton" type="button">Show all questions</button>
+                    </div>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What is Med-RAMP, and what is the focus of the research?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <p>Med-RAMP (Medical Research Assistance and Mentorship Program) is a virtual program that connects pre-medical students with medical student mentors for collaborative research in rare cancers.</p>
-                                    <p>Our research primarily focuses on analyzing demographic and genomic patterns in rare cancer types using large databases like the National Cancer Database (NCDB). Participants contribute to meaningful research that advances understanding of understudied malignancies.</p>
-                                </div>
+                    <div class="field-shell" style="margin-bottom: 18px;">
+                        <span class="field-icon">&#128269;</span>
+                        <input type="text" id="faqSearch" placeholder="Search questions about time commitment, authorship, mentorship, applications, and more...">
+                        <button class="field-clear" id="faqSearchClear" type="button">Clear</button>
+                    </div>
+
+                    <div class="faq-categories">
+                        <button class="category-card surface-card is-active" type="button" data-category-filter="all">
+                            <div class="category-icon">&#10024;</div>
+                            <div class="category-name">All Questions</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="application">
+                            <div class="category-icon">&#128221;</div>
+                            <div class="category-name">Application</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="time">
+                            <div class="category-icon">&#9200;</div>
+                            <div class="category-name">Time & Flexibility</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="research">
+                            <div class="category-icon">&#128300;</div>
+                            <div class="category-name">Research Training</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="publications">
+                            <div class="category-icon">&#128218;</div>
+                            <div class="category-name">Authorship</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="benefits">
+                            <div class="category-icon">&#127919;</div>
+                            <div class="category-name">Application Value</div>
+                        </button>
+                        <button class="category-card surface-card" type="button" data-category-filter="technical">
+                            <div class="category-icon">&#128187;</div>
+                            <div class="category-name">Technical Setup</div>
+                        </button>
+                    </div>
+                    <div class="results-info" id="faqResultsInfo" style="margin-top: 18px;">Loading questions...</div>
+                </div>
+
+                <div class="faq-layout" style="margin-top: 28px;">
+                    <aside class="faq-sidebar">
+                        <div class="faq-sidebar-card surface-card" data-animate>
+                            <h3>Most common questions</h3>
+                            <div class="quick-question-list">
+                                <button class="quick-question" type="button" data-faq-target="faq-general-what-is">What is Med-RAMP?</button>
+                                <button class="quick-question" type="button" data-faq-target="faq-general-free">Is the program really free?</button>
+                                <button class="quick-question" type="button" data-faq-target="faq-time-commitment">How much time should I expect to spend?</button>
+                                <button class="quick-question" type="button" data-faq-target="faq-research-training">Will I receive training?</button>
+                                <button class="quick-question" type="button" data-faq-target="faq-authorship-earn">How do I earn authorship?</button>
                             </div>
                         </div>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Who can apply to Med-RAMP?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <div class="faq-sidebar-card surface-card" data-animate style="--stagger: 0.08s;">
+                            <h3>Application confidence checklist</h3>
+                            <ul>
+                                <li>Understand exactly what mentorship looks like</li>
+                                <li>Know how flexible the schedule can be</li>
+                                <li>See how contribution translates to authorship</li>
+                                <li>Clarify whether the program fits your current stage</li>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <div class="faq-results-shell" id="faqResults">
+                        <div id="faqEmptyState" class="empty-state" style="display: none;">
+                            <h3>No questions matched your search</h3>
+                            <p>Try a broader keyword or reset your filters to browse every topic.</p>
+                        </div>
+
+                        <section class="faq-category-section" data-category="general" data-animate>
+                        <h2 class="category-title">General Questions</h2>
+                        <p class="category-description">The big-picture questions students ask before deciding whether Med-RAMP is worth pursuing.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-general-what-is">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What is Med-RAMP, and what is the focus of the research?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
+                                    <p>Med-RAMP (Medical Research Assistance and Mentorship Program) is a virtual program that connects pre-medical students with medical student mentors for collaborative research in rare cancers.</p>
+                                    <p>Our research primarily focuses on analyzing demographic and genomic patterns in rare cancer types using large databases like the National Cancer Database (NCDB). Participants contribute to meaningful research that advances understanding of understudied malignancies.</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="faq-item" id="faq-general-who-can-apply">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Who can apply to Med-RAMP?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Med-RAMP is designed for motivated pre-medical students at any stage of their undergraduate education. We welcome:</p>
                                     <ul>
                                         <li>Current undergraduate students (all years)</li>
@@ -226,35 +354,37 @@
                                         <li>Gap year students</li>
                                         <li>Students from any college or university</li>
                                     </ul>
-                                    <p>No prior research experience is required—just enthusiasm, dedication, and a willingness to learn!</p>
+                                    <p>No prior research experience is required - just enthusiasm, dedication, and a willingness to learn!</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Is the program really free?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-general-free">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Is the program really free?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Yes! Med-RAMP is completely free for all participants. We believe that quality research experience should be accessible to all motivated students, regardless of their financial situation.</p>
                                     <p>Additionally, we may provide funding support for manuscript submission fees and conference registration for qualifying projects.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="application" data-animate>
                         <h2 class="category-title">Application Process</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What qualifications are required to join?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">What it takes to apply, how selection works, and what timing to expect.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-application-qualifications">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What qualifications are required to join?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>No specific qualifications or prior research experience are necessary. We're looking for students who are:</p>
                                     <ul>
                                         <li>Motivated and eager to learn</li>
@@ -263,17 +393,17 @@
                                         <li>Able to work independently with guidance</li>
                                         <li>Strong communicators and team players</li>
                                     </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>How do I apply?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-application-how">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    How do I apply?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>The application process is simple and straightforward:</p>
                                     <ul>
                                         <li>Complete our online application form</li>
@@ -282,77 +412,81 @@
                                         <li>Submit your application for review</li>
                                     </ul>
                                     <p>Applications are reviewed on a rolling basis, and accepted students are typically notified within 2-3 weeks.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>When is the application deadline?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-application-deadline">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    When is the application deadline?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>We operate on a rolling admissions basis, meaning applications are reviewed throughout the year as they are received. This allows you to apply and start when it's most convenient for you.</p>
                                     <p>However, we recommend applying early as spots may fill up during peak application periods.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="time" data-animate>
                         <h2 class="category-title">Time Commitment & Flexibility</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What is the time commitment?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">How Med-RAMP fits around classes, work, exams, and other commitments.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-time-commitment">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What is the time commitment?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Med-RAMP is designed to be flexible! There are no minimum or maximum hour requirements. Your involvement can scale based on your availability and other commitments.</p>
                                     <p>That said, students who dedicate consistent time (5-10 hours per week) tend to earn more authorships and gain deeper research experience. The program rewards quality contributions rather than just time spent.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Can I participate while taking classes?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-time-classes">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Can I participate while taking classes?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Absolutely! Most of our participants are full-time students who balance Med-RAMP with their coursework. The virtual format and flexible schedule make it easy to fit research into your existing commitments.</p>
                                     <p>Many students find that working on research projects complements their academic studies and provides practical application of concepts learned in class.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What if I need to take a break?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-time-break">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What if I need to take a break?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>We understand that life happens! You can take breaks as needed for exams, family obligations, or other commitments. Just communicate with your mentor about your timeline.</p>
                                     <p>The program is designed to accommodate the realities of student life while still producing quality research.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="research" data-animate>
                         <h2 class="category-title">Research Experience</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What kind of research will I be doing?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">What you will actually do, learn, and build inside the program.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-research-kind">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What kind of research will I be doing?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>You'll be contributing to real research projects focusing on rare cancers. Common tasks include:</p>
                                     <ul>
                                         <li>Analyzing pre-processed data from cancer databases</li>
@@ -363,17 +497,17 @@
                                         <li>Preparing abstracts for conferences</li>
                                     </ul>
                                     <p>You'll receive training and templates to help you succeed in each task.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Will I receive training?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-research-training">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Will I receive training?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Yes! Your medical student mentor will provide guidance and training on:</p>
                                     <ul>
                                         <li>Research methodology and study design</li>
@@ -383,34 +517,36 @@
                                         <li>Conference abstract preparation</li>
                                     </ul>
                                     <p>We also provide templates, resources, and ongoing support throughout your research journey.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Do I need to know statistics or coding?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-research-skills">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Do I need to know statistics or coding?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>No prior knowledge of statistics or coding is required! We work with pre-analyzed data, and you'll learn any necessary statistical concepts as you go.</p>
                                     <p>If you do have statistics or coding experience, that's great and can allow you to take on more advanced projects, but it's certainly not a requirement to get started.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="publications" data-animate>
                         <h2 class="category-title">Publications & Authorship</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>How do I earn authorship?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">The questions students ask most when they want to understand what "output" really looks like.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-authorship-earn">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    How do I earn authorship?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Authorship is earned through meaningful contributions to research projects. This typically includes:</p>
                                     <ul>
                                         <li>Conducting data analysis</li>
@@ -420,17 +556,17 @@
                                         <li>Reviewing and editing drafts</li>
                                     </ul>
                                     <p>We follow standard academic authorship guidelines. The more you contribute, the more authorships you can earn!</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>How long does it take to get published?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-authorship-timeline">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    How long does it take to get published?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Timelines vary depending on the project type:</p>
                                     <ul>
                                         <li>Conference abstracts: 2-4 months from start to submission</li>
@@ -438,34 +574,36 @@
                                         <li>Journal publications: 6-12 months or longer</li>
                                     </ul>
                                     <p>Many students earn their first authorship within their first few months of participation through conference abstracts, with journal publications following later.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Can I be first author?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-authorship-first">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Can I be first author?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Yes! Students who make substantial contributions to a project can earn first authorship. This typically requires leading the data analysis, writing the manuscript, and coordinating revisions.</p>
                                     <p>First authorship opportunities increase as you gain experience and demonstrate strong research skills.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="benefits" data-animate>
                         <h2 class="category-title">Program Benefits</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>How will this program help my medical school application?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">How the program can strengthen an application when you engage thoughtfully and consistently.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-benefits-application">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    How will this program help my medical school application?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Med-RAMP strengthens your application in multiple ways:</p>
                                     <ul>
                                         <li>Demonstrates sustained commitment to research</li>
@@ -476,30 +614,30 @@
                                         <li>Provides mentorship from current medical students</li>
                                     </ul>
                                     <p>Many of our participants credit Med-RAMP as a key differentiator in their successful medical school applications.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>Will I receive a letter of recommendation?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-benefits-lor">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    Will I receive a letter of recommendation?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Students who make significant contributions and develop strong relationships with their mentors may request letters of recommendation. These letters can speak to your research abilities, work ethic, professionalism, and growth over time.</p>
                                     <p>The strength of the letter will depend on the depth of your involvement and the relationship you build with your mentor.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What makes Med-RAMP different from other research programs?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-benefits-different">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What makes Med-RAMP different from other research programs?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Med-RAMP stands out because:</p>
                                     <ul>
                                         <li>Completely virtual and accessible from anywhere</li>
@@ -510,21 +648,23 @@
                                         <li>Multiple opportunities for authorship and presentations</li>
                                         <li>Supportive community of pre-med peers</li>
                                     </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="faq-category-section" data-animate>
+                    <section class="faq-category-section" data-category="technical" data-animate>
                         <h2 class="category-title">Technical Questions</h2>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>What technology do I need?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                        <p class="category-description">Practical setup questions about tools, communication, and how the virtual format works.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item" id="faq-technical-tools">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    What technology do I need?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>You'll need:</p>
                                     <ul>
                                         <li>A computer with internet access</li>
@@ -533,17 +673,17 @@
                                         <li>Video conferencing capability (for meetings with your mentor)</li>
                                     </ul>
                                     <p>All necessary software and tools are either free or will be provided by the program.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
 
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFAQ(this)">
-                                <h3>How do I communicate with my mentor?</h3>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
+                            <li class="faq-item" id="faq-technical-mentor-communication">
+                                <button class="faq-trigger" type="button" aria-expanded="false">
+                                    How do I communicate with my mentor?
+                                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                                </button>
+                                <div class="faq-content">
+                                    <div class="faq-content-inner">
                                     <p>Communication with your mentor typically happens through:</p>
                                     <ul>
                                         <li>Email for ongoing updates and questions</li>
@@ -552,15 +692,17 @@
                                         <li>Messaging platforms as needed</li>
                                     </ul>
                                     <p>Your mentor will establish a communication schedule that works for both of you.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <div class="still-questions" data-animate>
+                        <div class="still-questions surface-card" data-animate>
                         <h2>Still Have Questions?</h2>
-                        <p>We're here to help! Apply now and we'll answer any additional questions during the onboarding process.</p>
+                        <p>If you are motivated but unsure whether Med-RAMP is the right fit, apply anyway. We can clarify expectations, answer program questions, and help you understand where the opportunity fits in your long-term plan.</p>
                         <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply to Med-RAMP</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -570,17 +712,7 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/load-header-footer-1.js"></script>
-    <script src="js/main.js" defer></script>
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
-    </script>
+    <script src="js/page-effects-1.js" defer></script>
+    <script src="js/faqs1.js" defer></script>
 </body>
 </html>

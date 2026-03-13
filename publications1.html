@@ -6,76 +6,204 @@
     <title>Publications - Med-RAMP</title>
     <link rel="stylesheet" href="css/styles-1.css">
     <style>
-        .search-filter-section {
-            padding: 2rem 0 3rem;
+        .publications-section {
+            padding: 0 0 6rem;
         }
 
-        .search-box {
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
+        .research-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: -28px;
+            margin-bottom: 32px;
+        }
+
+        .research-stat-card {
+            padding: 22px 24px;
+        }
+
+        .research-stat-label {
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .research-stat-value {
+            font-family: 'Zilla Slab', serif;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            line-height: 1;
+        }
+
+        .research-stat-note {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .featured-section {
+            margin-bottom: 32px;
+        }
+
+        .featured-carousel-shell {
+            padding: 28px;
+        }
+
+        .featured-carousel {
             position: relative;
+            min-height: 340px;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 14px 48px 14px 20px;
-            border-radius: 8px;
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(12px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .featured-pub {
+            height: 100%;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .featured-topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .featured-year {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .featured-pub h3 {
+            margin-bottom: 12px;
+            font-size: 1.55rem;
+            line-height: 1.25;
+        }
+
+        .featured-pub .authors {
+            margin-bottom: 14px;
+            color: var(--muted);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .featured-pub .pub-abstract {
+            color: var(--muted);
+            font-size: 0.97rem;
+            margin-bottom: 22px;
+        }
+
+        .featured-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .featured-venue {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .carousel-nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-btn {
+            width: 44px;
+            height: 44px;
             border: 1px solid var(--border);
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            border-radius: 50%;
             background: var(--bg-white);
             color: var(--text);
-        }
-
-        .search-box input::placeholder {
-            color: var(--muted);
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-light);
-        }
-
-        .search-clear-btn {
-            position: absolute;
-            top: 50%;
-            right: 12px;
-            transform: translateY(-50%);
-            width: 28px;
-            height: 28px;
-            border: none;
-            border-radius: 50%;
-            background: var(--border);
-            color: var(--muted);
-            font-size: 1.2rem;
-            line-height: 1;
+            font-size: 1.35rem;
             cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
+            transition: all 0.2s ease;
         }
 
-        .search-clear-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .search-clear-btn:hover {
+        .carousel-btn:hover {
+            border-color: var(--accent);
             background: var(--accent-light);
             color: var(--accent);
         }
 
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(1, 93, 169, 0.18);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            transform: scale(1.15);
+            background: var(--accent);
+        }
+
+        .search-filter-section {
+            margin-bottom: 28px;
+        }
+
+        .publication-controls-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(180px, 0.4fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
         .filter-buttons {
             display: flex;
-            justify-content: center;
             gap: 12px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
             border: 1px solid var(--border);
             background: var(--bg-white);
             color: var(--muted);
@@ -88,160 +216,27 @@
 
         .filter-btn:hover,
         .filter-btn.active {
-            background: var(--accent-light);
             border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .stats-banner {
-            background: var(--bg-warm);
-            border: 1px solid var(--border-warm);
-            padding: 32px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .stats-banner h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .stats-banner p {
-            color: var(--muted);
-            font-size: 1rem;
-        }
-
-        .featured-section {
-            margin-bottom: 3rem;
-        }
-
-        .featured-carousel {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            overflow: hidden;
-        }
-
-        .carousel-item {
-            grid-area: 1 / 1;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
-            pointer-events: none;
-        }
-
-        .carousel-item.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .featured-pub {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 36px 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            min-height: 320px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .featured-pub h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-        }
-
-        .featured-pub .authors {
-            color: var(--muted);
-            font-style: italic;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-        }
-
-        .featured-pub .pub-abstract {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
-        .featured-pub .pub-link {
-            color: var(--accent);
-            font-weight: 600;
-            align-self: flex-start;
-        }
-
-        .featured-pub .pub-link:hover {
-            color: var(--accent-dark);
-        }
-
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 1.5rem;
-        }
-
-        .carousel-btn {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            color: var(--text);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.5rem;
-        }
-
-        .carousel-btn:hover {
             background: var(--accent-light);
-            border-color: var(--accent);
             color: var(--accent);
         }
 
         .publications-grid {
             display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 24px;
         }
 
-        .publications-loading {
-            text-align: center;
-            color: var(--muted);
-            padding: 3rem;
-            font-size: 1rem;
-        }
-
         .publication-item {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
             padding: 28px 24px;
-            border-radius: 16px;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .publication-item:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
-            border-color: var(--accent-light);
         }
 
         .pub-badge {
             display: inline-block;
-            padding: 6px 14px;
-            border-radius: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 12px;
         }
 
         .badge-journal {
@@ -259,9 +254,36 @@
             color: #047857;
         }
 
+        .publication-topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .publication-meta-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .publication-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--bg-warm);
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
         .publication-item h3 {
-            font-size: 1.15rem;
-            margin-bottom: 10px;
+            font-size: 1.22rem;
+            margin-bottom: 12px;
             line-height: 1.4;
         }
 
@@ -272,34 +294,81 @@
             font-style: italic;
         }
 
-        .pub-details {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
         .pub-abstract {
             color: var(--muted);
-            line-height: 1.7;
-            margin-bottom: 16px;
+            line-height: 1.75;
+            margin-bottom: 18px;
             font-size: 0.95rem;
         }
 
+        .publication-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .pub-link {
-            color: var(--accent);
-            font-weight: 600;
-            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            min-width: 150px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-white);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
 
         .pub-link:hover {
-            color: var(--accent-dark);
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .pub-link.is-muted {
+            border-color: transparent;
+            background: transparent;
+            color: var(--muted);
+            padding-left: 0;
+            padding-right: 0;
+            min-width: 0;
+        }
+
+        .copy-doi-btn {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: var(--bg-white);
+            color: var(--muted);
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-doi-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .results-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .publications-pagination {
-            display: none;
             justify-content: center;
             align-items: center;
             gap: 1rem;
@@ -336,10 +405,23 @@
             font-size: 0.9rem;
         }
 
+        @media (max-width: 980px) {
+            .publication-controls-grid,
+            .research-stats,
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
+            .featured-carousel-shell,
             .featured-pub {
                 padding: 24px 20px;
-                min-height: 380px;
+            }
+
+            .carousel-nav {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
@@ -348,47 +430,137 @@
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="page-hero">
+        <section class="page-hero page-hero--rich">
             <div class="container">
-                <h1 data-animate>Our Publications</h1>
-                <p data-animate>Showcasing impactful research from Med-RAMP participants</p>
+                <div class="page-hero-grid">
+                    <div class="page-hero-copy">
+                        <div class="eyebrow" data-animate>Research output with real credibility</div>
+                        <h1 data-animate style="--stagger: 0.08s;">A publication archive that shows what Med-RAMP participants can build.</h1>
+                        <p data-animate style="--stagger: 0.16s;">Explore journal articles, conference abstracts, and poster presentations produced through Med-RAMP's rare-cancer research ecosystem. This is where mentorship turns into visible scholarly work.</p>
+                        <div class="hero-actions" data-animate style="--stagger: 0.24s;">
+                            <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Join the program</a>
+                            <a class="btn btn-secondary" href="#featuredResearch">View featured research</a>
+                        </div>
+                        <div class="trust-banner" data-animate style="--stagger: 0.3s;">
+                            Research outputs include work associated with <strong>JCO</strong>, <strong>Cancers</strong>, <strong>Frontiers in Oncology</strong>, and academic research symposia.
+                        </div>
+                    </div>
+
+                    <aside class="page-hero-card" data-animate style="--stagger: 0.2s;">
+                        <div class="panel-kicker">Archive snapshot</div>
+                        <h2>The proof is in the output.</h2>
+                        <div class="hero-metrics" style="margin-top: 18px;">
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroTotal">0</span>
+                                <div class="hero-metric-label">Total research outputs in the archive</div>
+                            </div>
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroFeatured">0</span>
+                                <div class="hero-metric-label">Featured studies highlighted for depth and impact</div>
+                            </div>
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroRecentYear">N/A</span>
+                                <div class="hero-metric-label">Most recent publication year represented</div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="publications-section">
             <div class="container">
-                <div class="stats-banner" data-animate>
-                    <h3>120+ Authorships Earned by Our Participants</h3>
-                    <p>Med-RAMP students have contributed to groundbreaking research in rare cancer studies</p>
+                <div class="research-stats">
+                    <div class="research-stat-card surface-card" data-animate>
+                        <div class="research-stat-label">Outputs</div>
+                        <div class="research-stat-value" id="pubStatTotal">0</div>
+                        <div class="research-stat-note">Journal articles, abstracts, and posters in one archive</div>
+                    </div>
+                    <div class="research-stat-card surface-card" data-animate style="--stagger: 0.06s;">
+                        <div class="research-stat-label">Venues</div>
+                        <div class="research-stat-value" id="pubStatVenues">0</div>
+                        <div class="research-stat-note">Distinct journals and presentation venues represented</div>
+                    </div>
+                    <div class="research-stat-card surface-card" data-animate style="--stagger: 0.12s;">
+                        <div class="research-stat-label">Spotlight studies</div>
+                        <div class="research-stat-value" id="pubStatFeatured">0</div>
+                        <div class="research-stat-note">Highlighted examples of Med-RAMP's research quality</div>
+                    </div>
                 </div>
 
-                <div class="featured-section" data-animate>
-                    <h2 class="section-title">Featured Research</h2>
-                    <div class="featured-carousel">
-                        <div class="publications-loading" id="featuredPublicationsLoading">Loading featured research...</div>
-                    </div>
-                    <div class="carousel-nav">
-                        <button class="carousel-btn carousel-prev" aria-label="Previous">‹</button>
-                        <button class="carousel-btn carousel-next" aria-label="Next">›</button>
+                <div class="featured-section" id="featuredResearch" data-animate>
+                    <div class="featured-carousel-shell surface-card">
+                        <div class="control-header" style="margin-bottom: 18px;">
+                            <div>
+                                <div class="section-tag">Featured studies</div>
+                                <h2 class="section-title">Research worth exploring first</h2>
+                            </div>
+                        </div>
+                        <div class="featured-carousel" id="featuredCarousel">
+                            <div class="empty-state">
+                                <h3>Loading featured research</h3>
+                                <p>Please wait while we build the carousel from the archive.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-nav" id="featuredCarouselNav">
+                            <div class="carousel-dots" id="featuredCarouselDots"></div>
+                            <div class="carousel-nav-buttons">
+                                <button class="carousel-btn" type="button" aria-label="Previous featured publication" data-carousel-action="prev">&lsaquo;</button>
+                                <button class="carousel-btn" type="button" aria-label="Next featured publication" data-carousel-action="next">&rsaquo;</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="search-filter-section" data-animate>
-                    <div class="search-box">
-                        <input type="text" id="publicationSearch" placeholder="Search by title, authors, or keywords..." aria-label="Search publications">
-                        <button type="button" id="publicationSearchClear" class="search-clear-btn" aria-label="Clear search">&times;</button>
+                <div class="search-filter-section control-panel" data-animate>
+                    <div class="control-header">
+                        <div>
+                            <div class="section-tag">Research archive</div>
+                            <h2 class="section-title">Search, sort, and explore by year</h2>
+                        </div>
+                        <div class="results-info" id="publicationsResultsMeta">Loading archive...</div>
                     </div>
+
+                    <div class="publication-controls-grid">
+                        <div class="field-shell">
+                            <span class="field-icon">&#128269;</span>
+                            <input type="text" id="publicationSearch" placeholder="Search by title, author, journal, or topic..." aria-label="Search publications">
+                            <button type="button" id="publicationSearchClear" class="field-clear" aria-label="Clear search">Clear</button>
+                        </div>
+
+                        <div class="field-shell">
+                            <select id="publicationYearFilter" aria-label="Filter publications by year">
+                                <option value="all">All years</option>
+                            </select>
+                        </div>
+
+                        <div class="field-shell">
+                            <select id="publicationSort" aria-label="Sort publications">
+                                <option value="newest">Newest first</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="title">Title A-Z</option>
+                                <option value="venue">Venue A-Z</option>
+                                <option value="featured">Featured first</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="filter-buttons">
-                        <button class="filter-btn active" data-category="all">Publications</button>
-                        <button class="filter-btn" data-category="journal">Journal Articles</button>
-                        <button class="filter-btn" data-category="abstract">Conference Abstracts</button>
-                        <button class="filter-btn" data-category="poster">Posters</button>
+                        <button class="filter-btn active" data-category="all" data-label="Research archive">All Outputs <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="journal" data-label="Journal Articles">Journal Articles <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="abstract" data-label="Conference Abstracts">Conference Abstracts <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="poster" data-label="Posters">Posters <span class="pill-count">0</span></button>
                     </div>
                 </div>
 
-                <h2 id="publicationsResultsTitle" class="section-title" data-animate>Publications</h2>
-                <div class="publications-grid">
-                    <div class="publications-loading" id="publicationsLoading">Loading publications...</div>
+                <div class="results-heading">
+                    <h2 id="publicationsResultsTitle" class="section-title" data-animate>Research archive</h2>
+                </div>
+                <div class="publications-grid" id="publicationsGrid">
+                    <div class="empty-state">
+                        <h3>Loading publications</h3>
+                        <p>Please wait while we fetch the research archive.</p>
+                    </div>
                 </div>
                 <div id="publicationsPagination" class="publications-pagination" aria-label="Publications pagination"></div>
             </div>
@@ -396,9 +568,10 @@
 
         <section class="cta-banner">
             <div class="container">
-                <h2 class="cta-title" data-animate>Contribute to Groundbreaking Research</h2>
-                <p class="cta-subtext" data-animate>Join Med-RAMP and add your name to impactful publications</p>
+                <h2 class="cta-title" data-animate>Ready to see your name in a serious research archive?</h2>
+                <p class="cta-subtext" data-animate>Join Med-RAMP to contribute to meaningful projects, learn from mentors who understand the path, and build output that strengthens your future application.</p>
                 <a class="btn btn-dark" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                <div class="cta-reassurance" data-animate style="--stagger: 0.08s;">Real mentorship &middot; real output &middot; real rare-cancer research</div>
             </div>
         </section>
     </main>
@@ -406,17 +579,7 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/load-header-footer-1.js"></script>
-    <script src="js/main.js" defer></script>
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
-    </script>
+    <script src="js/page-effects-1.js" defer></script>
+    <script src="js/publications1.js" defer></script>
 </body>
 </html>
