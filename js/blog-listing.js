@@ -94,8 +94,8 @@ async function discoverBlogPosts() {
         }
         
         // Also check for the specific file mentioned by user
-        if (!knownBlogFiles.has('mcat-study-guide-day-1-no-content.html')) {
-            potentialFiles.push('mcat-study-guide-day-1-no-content.html');
+        if (!knownBlogFiles.has('mcat-study-guide-day-1-no-content1.html')) {
+            potentialFiles.push('mcat-study-guide-day-1-no-content1.html');
         }
         
         const discoveredPosts = [];

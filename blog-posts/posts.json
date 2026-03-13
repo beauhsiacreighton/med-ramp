@@ -17,7 +17,7 @@
     ],
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
-    "url": "/blog/medical-school-personal-statement-editing-cost.html"
+    "url": "/blog/medical-school-personal-statement-editing-cost1.html"
   },
   {
     "id": "mcat-adaptive-study-schedule-framework",
@@ -37,7 +37,7 @@
     ],
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80",
-    "url": "/blog/mcat-adaptive-study-schedule-framework.html"
+    "url": "/blog/mcat-adaptive-study-schedule-framework1.html"
   },
   {
     "id": "mcat-study-guide-day-1-no-content",
@@ -57,7 +57,7 @@
     ],
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
-    "url": "/blog/mcat-study-guide-day-1-no-content.html"
+    "url": "/blog/mcat-study-guide-day-1-no-content1.html"
   },
   {
     "id": "mcat-study-with-no-regrets-philosophy",
@@ -77,7 +77,7 @@
     ],
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
-    "url": "/blog/mcat-study-with-no-regrets-philosophy.html"
+    "url": "/blog/mcat-study-with-no-regrets-philosophy1.html"
   },
   {
     "id": "navy-seal-mcat-keep-world-small",
@@ -97,6 +97,25 @@
     ],
     "featured": false,
     "featuredImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
-    "url": "/blog/navy-seal-mcat-keep-world-small.html"
+    "url": "/blog/navy-seal-mcat-keep-world-small1.html"
+  },
+  {
+    "id": "med-ramp-transformed-application",
+    "title": "How Med-RAMP Transformed My Medical School Application",
+    "excerpt": "Learn how one student leveraged Med-RAMP research experience to stand out in a competitive application cycle and earned acceptances to top medical schools.",
+    "category": "Success Stories",
+    "date": "2025-01-15",
+    "author": "Sarah Johnson",
+    "authorRole": "Current Medical Student",
+    "readTime": "8 min read",
+    "tags": [
+      "medical school",
+      "application",
+      "success story",
+      "research experience"
+    ],
+    "featured": false,
+    "featuredImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
+    "url": "/blog/med-ramp-transformed-application1.html"
   }
 ]

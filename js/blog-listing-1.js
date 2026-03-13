@@ -13,6 +13,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadBlogPosts();
 });
 
+function readInitialFilters() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    const search = params.get('search');
+
+    if (category) {
+        blogState.currentCategory = category;
+    }
+
+    if (search) {
+        blogState.currentSearch = search.trim().toLowerCase();
+    }
+}
+
+function applyInitialFiltersToUi() {
+    const searchInput = document.getElementById('blogSearch');
+    const clearButton = document.getElementById('clearSearch');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    if (searchInput && blogState.currentSearch) {
+        searchInput.value = blogState.currentSearch;
+    }
+
+    if (clearButton) {
+        clearButton.classList.toggle('visible', blogState.currentSearch.length > 0);
+    }
+
+    filterButtons.forEach((button) => {
+        button.classList.toggle('active', (button.dataset.category || 'all') === blogState.currentCategory);
+    });
+}
+
 function escapeHtml(value) {
     return String(value ?? '')
         .replace(/&/g, '&amp;')
@@ -187,6 +219,8 @@ function initializeBlogControls() {
     }
 
     let debounceTimer = null;
+    readInitialFilters();
+    applyInitialFiltersToUi();
 
     searchInput.addEventListener('input', (event) => {
         blogState.currentSearch = event.target.value.trim().toLowerCase();
@@ -318,6 +352,8 @@ function updateBlogStats(posts) {
 }
 
 function updateFilterCounts(posts) {
+    const visibleCategories = new Set(['all', ...posts.map((post) => post.category)]);
+
     document.querySelectorAll('.filter-btn').forEach((button) => {
         const category = button.dataset.category || 'all';
         const count = category === 'all'
@@ -327,7 +363,7 @@ function updateFilterCounts(posts) {
         if (countElement) {
             countElement.textContent = String(count);
         }
-        button.style.display = category !== 'all' && count === 0 ? 'none' : 'inline-flex';
+        button.style.display = visibleCategories.has(category) ? 'inline-flex' : 'none';
     });
 }
 

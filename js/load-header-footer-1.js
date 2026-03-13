@@ -11,23 +11,62 @@
         'faqs1.html': 'faqs'
     };
 
+    function isNestedPage() {
+        const path = window.location.pathname;
+        const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path;
+        return normalizedPath.includes('/blog/');
+    }
+
+    function getBasePrefix() {
+        return isNestedPage() ? '../' : '';
+    }
+
     function getCurrentPage() {
         const path = window.location.pathname;
+        if (path.includes('/blog/')) {
+            return 'blog';
+        }
+
         const filename = path.split('/').pop() || 'index1.html';
         return pageMap[filename] || null;
     }
 
+    function normalizeLinkPath(element) {
+        const basePrefix = getBasePrefix();
+
+        element.querySelectorAll('a[href]').forEach((link) => {
+            const href = link.getAttribute('href');
+            if (!href) {
+                return;
+            }
+
+            const isAbsolute = /^(?:[a-z]+:)?\/\//i.test(href) || href.startsWith('#');
+            const isSpecialProtocol = href.startsWith('mailto:') || href.startsWith('tel:');
+            const isRootRelative = href.startsWith('/');
+            const alreadyNestedRelative = href.startsWith('../');
+
+            if (isAbsolute || isSpecialProtocol || isRootRelative || alreadyNestedRelative) {
+                return;
+            }
+
+            link.setAttribute('href', `${basePrefix}${href}`);
+        });
+    }
+
     function setActiveNav(headerEl) {
         const current = getCurrentPage();
-        if (!current) return;
+        if (!current) {
+            return;
+        }
+
         const link = headerEl.querySelector(`[data-nav="${current}"]`);
-        if (link) link.classList.add('active');
+        if (link) {
+            link.classList.add('active');
+        }
     }
 
     function getComponentPath() {
-        const path = window.location.pathname;
-        const depth = (path.match(/\//g) || []).length;
-        return depth > 1 ? '../components/header-footer-1.html' : 'components/header-footer-1.html';
+        return `${getBasePrefix()}components/header-footer-1.html`;
     }
 
     fetch(getComponentPath())
@@ -42,10 +81,13 @@
             const footerPlaceholder = document.getElementById('footer-placeholder');
 
             if (headerPart && headerPlaceholder) {
+                normalizeLinkPath(headerPart);
                 headerPlaceholder.innerHTML = headerPart.innerHTML;
                 setActiveNav(headerPlaceholder);
             }
+
             if (footerPart && footerPlaceholder) {
+                normalizeLinkPath(footerPart);
                 footerPlaceholder.innerHTML = footerPart.innerHTML;
             }
         })
