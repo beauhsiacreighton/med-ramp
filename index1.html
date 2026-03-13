@@ -308,15 +308,12 @@
         /* Hero */
         .hero {
             padding-top: 160px;
-            padding-bottom: 100px;
+            padding-bottom: 80px;
             background: var(--bg);
         }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 460px;
-            gap: 72px;
-            align-items: center;
+        .hero-content {
+            max-width: 720px;
         }
 
         .hero-title {
@@ -345,145 +342,53 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            margin-bottom: 28px;
+            margin-bottom: 48px;
         }
 
-        .hero-note {
-            color: var(--muted);
-            font-size: 0.85rem;
-            font-weight: 400;
-        }
-
-        .hero-note .star {
-            color: var(--star);
-        }
-
-        .hero-card-wrap {
-            position: relative;
-        }
-
-        .hero-feature-card {
-            position: relative;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            background: var(--bg-white);
-            padding: 32px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.07);
-        }
-
-        .hero-card-top {
+        /* Hero Stats */
+        .hero-stats {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 18px;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
         }
 
-        .avatar-large {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #015da9, #2d78c8);
-            color: #ffffff;
-            font-size: 0.9rem;
-            font-weight: 700;
+        .hero-stat {
+            text-align: left;
         }
 
-        .author-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .author-role {
-            color: var(--muted);
-            font-size: 0.8rem;
-            font-weight: 400;
-            line-height: 1.4;
-        }
-
-        .published-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: var(--gold);
-            color: var(--gold-text);
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .journal-line {
-            margin-bottom: 6px;
-            color: var(--muted);
-            font-size: 0.8rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-
-        .journal-line strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .hero-feature-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.08rem;
-            font-weight: 600;
-            line-height: 1.45;
-        }
-
-        .hero-feature-card p {
-            margin-bottom: 20px;
-            color: var(--muted);
-            font-size: 0.9rem;
-            font-weight: 400;
-            line-height: 1.7;
-        }
-
-        .floating-stat {
-            position: absolute;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-white);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 16px 20px;
-        }
-
-        .floating-stat.one {
-            left: -34px;
-            bottom: 52px;
-        }
-
-        .floating-stat.two {
-            right: -30px;
-            top: -26px;
-        }
-
-        .floating-value {
+        .hero-stat-value {
             font-family: 'Zilla Slab', serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
             line-height: 1.1;
+            color: var(--accent);
         }
 
-        .floating-label {
+        .hero-stat-label {
             margin-top: 4px;
             color: var(--muted);
-            font-size: 0.78rem;
+            font-size: 0.9rem;
             font-weight: 400;
             line-height: 1.4;
+        }
+
+        /* Trust Banner */
+        .trust-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: var(--bg-warm);
+            border: 1px solid var(--border-warm);
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .trust-banner strong {
+            color: var(--text);
         }
 
         /* Stats bar */
@@ -522,6 +427,53 @@
             font-size: 0.85rem;
             font-weight: 400;
             line-height: 1.5;
+        }
+
+        /* Why Choose Grid */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .why-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 36px 28px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .why-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .why-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .why-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.12rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .why-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            font-weight: 400;
+            line-height: 1.7;
         }
 
         /* Process grid */
@@ -591,6 +543,11 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
         }
 
+        .quote-card.featured {
+            border-color: var(--accent-light);
+            background: linear-gradient(to bottom, var(--accent-light) 0%, var(--bg-white) 80px);
+        }
+
         .quote-stars {
             margin-bottom: 12px;
             color: var(--star);
@@ -638,26 +595,99 @@
             line-height: 1.4;
         }
 
+        .placeholder-badge {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--border);
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* FAQ Accordion */
+        .faq-list {
+            max-width: 720px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: var(--bg-white);
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 24px;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .faq-trigger:hover {
+            background: var(--bg);
+        }
+
+        .faq-trigger:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
+        }
+
+        .faq-trigger svg {
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.is-open .faq-trigger svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.is-open .faq-content {
+            max-height: 500px;
+        }
+
+        .faq-content-inner {
+            padding: 0 24px 20px;
+        }
+
+        .faq-content-inner p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
         /* CTA banner */
         .cta-banner {
             padding: 100px 0;
             background: var(--navy);
             text-align: center;
-        }
-
-        .urgency-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 6px 16px;
-            border-radius: 4px;
-            background: var(--red-urgency);
-            color: var(--red-text);
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            margin-bottom: 22px;
         }
 
         .cta-title {
@@ -690,9 +720,9 @@
 
         .cta-reassurance {
             margin-top: 14px;
-            color: #3d5070;
-            font-size: 0.8rem;
-            font-weight: 400;
+            color: #6b7a99;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         /* Footer */
@@ -724,9 +754,8 @@
 
         /* Responsive */
         @media (max-width: 980px) {
-            .hero-grid {
-                gap: 48px;
-                grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -742,15 +771,6 @@
             .hero {
                 padding-top: 120px;
                 padding-bottom: 60px;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .hero-visual {
-                display: none;
             }
 
             .site-nav {
@@ -775,8 +795,16 @@
                 width: 100%;
             }
 
+            .hero-stats {
+                gap: 32px;
+            }
+
             .stats-row {
                 gap: 40px;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
             }
 
             .process-shell,
@@ -808,79 +836,107 @@
     </nav>
 
     <main>
+        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
-                <div class="hero-grid">
-                    <div>
-                        <div class="eyebrow" data-animate>Medical Research Mentorship</div>
-                        <h1 class="hero-title" data-animate style="--stagger: 0.1s;">Real research. Real mentors. Real <em>results</em>.</h1>
-                        <p class="hero-subtitle" data-animate style="--stagger: 0.2s;">
-                            Join hundreds of pre-med students contributing to rare cancer studies, earning authorships, and building applications that stand out at top medical schools.
-                        </p>
-                        <div class="hero-actions" data-animate style="--stagger: 0.3s;">
-                            <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
-                            <a class="btn btn-secondary" href="about.html">Learn More</a>
+                <div class="hero-content">
+                    <div class="eyebrow" data-animate>Pre-Med Research Mentorship</div>
+                    <h1 class="hero-title" data-animate style="--stagger: 0.1s;">Real research. Real mentors. Real <em>results</em>.</h1>
+                    <p class="hero-subtitle" data-animate style="--stagger: 0.2s;">
+                        Join hundreds of pre-med students contributing to rare cancer studies, earning authorships on abstracts and journal publications, and building applications that stand out at top medical schools—100% free.
+                    </p>
+                    <div class="hero-actions" data-animate style="--stagger: 0.3s;">
+                        <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                        <a class="btn btn-secondary" href="about.html">Learn More</a>
+                    </div>
+                    <div class="hero-stats" data-animate style="--stagger: 0.35s;">
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">300+</div>
+                            <div class="hero-stat-label">Pre-med Participants</div>
                         </div>
-                        <div class="hero-note" data-animate style="--stagger: 0.4s;">
-                            <span class="star">★★★★★</span> Trusted by students accepted to Mayo Clinic, Stanford, and other top programs.
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">150+</div>
+                            <div class="hero-stat-label">Pre-med Authorships Earned</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">70+</div>
+                            <div class="hero-stat-label">Medical School Acceptances</div>
                         </div>
                     </div>
-
-                    <div class="hero-visual hero-card-wrap" data-animate>
-                        <article class="hero-feature-card">
-                            <div class="hero-card-top">
-                                <div class="author-meta">
-                                    <span class="avatar-large">MM</span>
-                                    <div>
-                                        <div class="author-name">Mark M.</div>
-                                        <div class="author-role">Accepted to Mayo Clinic Alix SOM</div>
-                                    </div>
-                                </div>
-                                <span class="published-badge">Published ✓</span>
-                            </div>
-                            <div class="journal-line">Featured in <strong>Journal of Clinical Oncology</strong></div>
-                            <h3>Rare cancer outcomes analysis with Med-RAMP team mentorship</h3>
-                            <p>
-                                "Med-RAMP gave me the research experience I needed to stand out. The mentorship was practical, the writing support was rigorous, and my authorships became a core strength in my application."
-                            </p>
-                            <a class="btn-link" href="publications.html">View recent authorships →</a>
-                        </article>
-                        <div class="floating-stat one">
-                            <div class="floating-value">120+</div>
-                            <div class="floating-label">Student authorships</div>
-                        </div>
-                        <div class="floating-stat two">
-                            <div class="floating-value">94%</div>
-                            <div class="floating-label">Report stronger apps</div>
-                        </div>
+                    <div class="trust-banner" data-animate style="--stagger: 0.4s;">
+                        Students accepted to <strong>Mayo Clinic</strong>, <strong>Univ of Colorado</strong>, <strong>Univ of Arizona</strong>, & <strong>USF</strong>.
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Stats Band (reinforces hero stats) -->
         <section class="stats-band" data-animate>
             <div class="container">
                 <div class="stats-row">
                     <div class="stat">
-                        <div class="stat-value">94%</div>
-                        <div class="stat-label">application confidence increase</div>
+                        <div class="stat-value">300+</div>
+                        <div class="stat-label">Pre-med Participants</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">200+</div>
-                        <div class="stat-label">active pre-med researchers</div>
+                        <div class="stat-value">150+</div>
+                        <div class="stat-label">Pre-med Authorships Earned</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">3 mo</div>
-                        <div class="stat-label">average path to first submission</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">1:1</div>
-                        <div class="stat-label">mentor support and review</div>
+                        <div class="stat-value">70+</div>
+                        <div class="stat-label">Medical School Acceptances</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Why Choose Med-RAMP -->
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>Why Choose Med-RAMP</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">
+                    Everything you need to <em>publish</em>—without the grunt work
+                </h2>
+                <p class="section-description" data-animate style="--stagger: 0.2s;">
+                    We provide the research data and templates. You focus on analyzing data, conducting literature reviews, and writing manuscripts—the work that matters for your application.
+                </p>
+
+                <div class="why-grid">
+                    <article class="why-card" data-animate>
+                        <div class="why-icon">✓</div>
+                        <h3>100% Free</h3>
+                        <p>This program is completely free for all participants. No fees, no hidden costs—focus on your research and learning.</p>
+                    </article>
+                    <article class="why-card" data-animate style="--stagger: 0.05s;">
+                        <div class="why-icon">🌐</div>
+                        <h3>Fully Virtual & Flexible</h3>
+                        <p>Participate from anywhere. Project launches are cohort-based, but you work at your own pace. The only hard deadlines are real-world medical conference submissions.</p>
+                    </article>
+                    <article class="why-card" data-animate style="--stagger: 0.1s;">
+                        <div class="why-icon">📊</div>
+                        <h3>Pre-Gathered Data</h3>
+                        <p>We provide the research data and templates. Skip the grunt work—focus on analyzing data, literature reviews, and writing manuscripts.</p>
+                    </article>
+                    <article class="why-card" data-animate style="--stagger: 0.15s;">
+                        <div class="why-icon">🎓</div>
+                        <h3>Med Student Mentorship</h3>
+                        <p>Mentored by current medical students. Reach out to your assigned project lead anytime for research questions or pre-med journey advice.</p>
+                    </article>
+                    <article class="why-card" data-animate style="--stagger: 0.2s;">
+                        <div class="why-icon">🔬</div>
+                        <h3>Real Rare Cancer Impact</h3>
+                        <p>Contribute to meaningful rare cancer research that advances medical knowledge and patient care.</p>
+                    </article>
+                    <article class="why-card" data-animate style="--stagger: 0.25s;">
+                        <div class="why-icon">📚</div>
+                        <h3>Publication Opportunities</h3>
+                        <p>Earn authorship on abstracts, posters, and journal publications in spaces like Journal of Clinical Oncology, Cancers (Basel), and Frontiers in Oncology.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
         <section class="section">
             <div class="container">
                 <div class="section-tag" data-animate>Program Process</div>
@@ -888,29 +944,30 @@
                     How ambitious students <em>publish</em> with Med-RAMP
                 </h2>
                 <p class="section-description" data-animate style="--stagger: 0.2s;">
-                    No prior research experience is required. We provide structured guidance from your first application to manuscript submission, with clear milestones and rigorous mentorship at every step.
+                    No prior research experience required. Choose a project, receive exact instructions, and work flexibly with mentor support every step of the way.
                 </p>
 
                 <div class="process-shell">
                     <article class="process-step" data-animate>
-                        <div class="icon-box">📝</div>
-                        <h3>Apply</h3>
-                        <p>Submit your application and academic goals. We match you to a project based on fit, interests, and readiness.</p>
+                        <div class="icon-box">1</div>
+                        <h3>Select & Start</h3>
+                        <p>Join a project cohort and receive exact instructions on how to complete the project. We provide pre-gathered data so you can dive in immediately.</p>
                     </article>
                     <article class="process-step" data-animate style="--stagger: 0.1s;">
-                        <div class="icon-box">🔬</div>
-                        <h3>Contribute</h3>
-                        <p>Analyze data, review literature, and draft sections with direct mentor feedback designed to improve your scientific writing.</p>
+                        <div class="icon-box">2</div>
+                        <h3>Research & Connect</h3>
+                        <p>Work flexibly at your own pace. Reach out to your medical student mentor anytime for project help or pre-med advice.</p>
                     </article>
                     <article class="process-step" data-animate style="--stagger: 0.2s;">
-                        <div class="icon-box">📚</div>
-                        <h3>Publish</h3>
-                        <p>Earn authorship on abstracts, posters, and journal submissions that strengthen your medical school application.</p>
+                        <div class="icon-box">3</div>
+                        <h3>Publish & Present</h3>
+                        <p>Meet conference deadlines and earn authorship in prestigious spaces like the Journal of Clinical Oncology, Cancers (Basel), or Frontiers in Oncology.</p>
                     </article>
                 </div>
             </div>
         </section>
 
+        <!-- Testimonials -->
         <section class="section">
             <div class="container">
                 <div class="section-tag" data-animate>Outcomes</div>
@@ -922,36 +979,38 @@
                 </p>
 
                 <div class="testimonials-grid">
-                    <article class="quote-card" data-animate>
+                    <article class="quote-card featured" data-animate>
                         <div class="quote-stars">★★★★★</div>
-                        <p>"I gained meaningful research experience, earned authorship credit, and finally felt confident presenting my work in interviews."</p>
+                        <p>"Med-RAMP gave me the research experience I needed to stand out. The mentorship was practical, the writing support was rigorous, and my authorships became a core strength in my application."</p>
                         <div class="quote-author">
                             <span class="avatar-small">MM</span>
                             <div>
                                 <div class="quote-name">Mark M.</div>
-                                <div class="quote-role">Accepted to Mayo Clinic Alix SOM</div>
+                                <div class="quote-role">Accepted to Mayo Clinic Alix School of Medicine</div>
                             </div>
                         </div>
                     </article>
                     <article class="quote-card" data-animate style="--stagger: 0.1s;">
+                        <span class="placeholder-badge">[Placeholder Review]</span>
                         <div class="quote-stars">★★★★★</div>
-                        <p>"The mentorship was structured and personal. I learned how to think like a researcher and write clearly under real deadlines."</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                         <div class="quote-author">
-                            <span class="avatar-small">AR</span>
+                            <span class="avatar-small">—</span>
                             <div>
-                                <div class="quote-name">Ariana R.</div>
-                                <div class="quote-role">Pre-med participant, Class of 2026</div>
+                                <div class="quote-name">Placeholder</div>
+                                <div class="quote-role">Pre-med participant</div>
                             </div>
                         </div>
                     </article>
                     <article class="quote-card" data-animate style="--stagger: 0.2s;">
+                        <span class="placeholder-badge">[Placeholder Review]</span>
                         <div class="quote-stars">★★★★★</div>
-                        <p>"Med-RAMP gave me clarity. I moved from 'interested in research' to submitting polished work with a mentor who challenged me."</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                         <div class="quote-author">
-                            <span class="avatar-small">JL</span>
+                            <span class="avatar-small">—</span>
                             <div>
-                                <div class="quote-name">Jordan L.</div>
-                                <div class="quote-role">Incoming medical student</div>
+                                <div class="quote-name">Placeholder</div>
+                                <div class="quote-role">Pre-med participant</div>
                             </div>
                         </div>
                     </article>
@@ -959,13 +1018,73 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>FAQ</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">
+                    Frequently asked questions
+                </h2>
+                <p class="section-description" data-animate style="--stagger: 0.2s;">
+                    Common questions from pre-med students about research mentorship and the Med-RAMP program.
+                </p>
+
+                <ul class="faq-list">
+                    <li class="faq-item" data-animate>
+                        <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-1" id="faq-trigger-1">
+                            Do I need prior research experience to join Med-RAMP?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="faq-content" id="faq-1" role="region" aria-labelledby="faq-trigger-1">
+                            <div class="faq-content-inner">
+                                <p>[Placeholder answer]</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="faq-item" data-animate style="--stagger: 0.05s;">
+                        <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-2" id="faq-trigger-2">
+                            How much time do I need to commit each week?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="faq-content" id="faq-2" role="region" aria-labelledby="faq-trigger-2">
+                            <div class="faq-content-inner">
+                                <p>[Placeholder answer]</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="faq-item" data-animate style="--stagger: 0.1s;">
+                        <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-3" id="faq-trigger-3">
+                            What types of authorship can I earn through Med-RAMP?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="faq-content" id="faq-3" role="region" aria-labelledby="faq-trigger-3">
+                            <div class="faq-content-inner">
+                                <p>[Placeholder answer]</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="faq-item" data-animate style="--stagger: 0.15s;">
+                        <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-4" id="faq-trigger-4">
+                            How does mentorship work? Who will I be working with?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="faq-content" id="faq-4" role="region" aria-labelledby="faq-trigger-4">
+                            <div class="faq-content-inner">
+                                <p>[Placeholder answer]</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
         <section class="cta-banner">
             <div class="container">
-                <div class="urgency-badge" data-animate>⚡ Limited cohort capacity this cycle</div>
-                <h2 class="cta-title" data-animate style="--stagger: 0.1s;">Applications are open for students ready to <em>deliver</em> real research outcomes</h2>
-                <p class="cta-subtext" data-animate style="--stagger: 0.2s;">Join a focused community of pre-med students building publication-ready work with mentor support and structured accountability.</p>
+                <h2 class="cta-title" data-animate style="--stagger: 0.1s;">Ready to earn real research experience? <em>Apply today—100% free.</em></h2>
+                <p class="cta-subtext" data-animate style="--stagger: 0.2s;">Join 300+ pre-med students who have earned authorships and strengthened their medical school applications. No cost, no catch—just real mentorship and real results.</p>
                 <a class="btn btn-dark" data-animate style="--stagger: 0.3s;" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
-                <div class="cta-reassurance" data-animate style="--stagger: 0.4s;">Applications reviewed within 48 hours</div>
+                <div class="cta-reassurance" data-animate style="--stagger: 0.4s;">100% free • No prior research experience required</div>
             </div>
         </section>
     </main>
@@ -990,6 +1109,22 @@
 
         document.querySelectorAll('[data-animate]').forEach((element) => {
             observer.observe(element);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.closest('.faq-item');
+                const isOpen = item.classList.contains('is-open');
+                document.querySelectorAll('.faq-item').forEach((i) => {
+                    i.classList.remove('is-open');
+                    i.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+                });
+                if (!isOpen) {
+                    item.classList.add('is-open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+            });
         });
     </script>
 </body>
