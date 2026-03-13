@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Med-RAMP</title>
+    <link rel="stylesheet" href="css/styles-1.css">
+    <style>
+        .faq-section {
+            padding: 4rem 0 6rem;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            padding: 20px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: default;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .category-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .faq-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border-color: var(--accent-light);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            background: transparent;
+            transition: background 0.2s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--bg);
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 300;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 24px 20px 24px;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .faq-answer-content p {
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer-content ul {
+            margin: 0 0 1rem 1.5rem;
+            padding: 0;
+        }
+
+        .faq-answer-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .still-questions {
+            background: var(--bg-warm);
+            border: 1px solid var(--border-warm);
+            padding: 48px 32px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .still-questions h2 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+
+        .still-questions p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 16px 20px;
+            }
+
+            .faq-answer-content {
+                padding: 0 20px 16px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 data-animate>Frequently Asked Questions</h1>
+                <p data-animate>Everything you need to know about Med-RAMP</p>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <div class="faq-categories" data-animate>
+                    <div class="category-card">
+                        <div class="category-icon">📋</div>
+                        <div class="category-name">Application Process</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">⏰</div>
+                        <div class="category-name">Time Commitment</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🔬</div>
+                        <div class="category-name">Research Experience</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">📚</div>
+                        <div class="category-name">Publications</div>
+                    </div>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">General Questions</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What is Med-RAMP, and what is the focus of the research?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Med-RAMP (Medical Research Assistance and Mentorship Program) is a virtual program that connects pre-medical students with medical student mentors for collaborative research in rare cancers.</p>
+                                    <p>Our research primarily focuses on analyzing demographic and genomic patterns in rare cancer types using large databases like the National Cancer Database (NCDB). Participants contribute to meaningful research that advances understanding of understudied malignancies.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Who can apply to Med-RAMP?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Med-RAMP is designed for motivated pre-medical students at any stage of their undergraduate education. We welcome:</p>
+                                    <ul>
+                                        <li>Current undergraduate students (all years)</li>
+                                        <li>Post-baccalaureate students</li>
+                                        <li>Gap year students</li>
+                                        <li>Students from any college or university</li>
+                                    </ul>
+                                    <p>No prior research experience is required—just enthusiasm, dedication, and a willingness to learn!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Is the program really free?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes! Med-RAMP is completely free for all participants. We believe that quality research experience should be accessible to all motivated students, regardless of their financial situation.</p>
+                                    <p>Additionally, we may provide funding support for manuscript submission fees and conference registration for qualifying projects.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Application Process</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What qualifications are required to join?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>No specific qualifications or prior research experience are necessary. We're looking for students who are:</p>
+                                    <ul>
+                                        <li>Motivated and eager to learn</li>
+                                        <li>Committed to contributing to meaningful research</li>
+                                        <li>Interested in rare cancer epidemiology and oncology</li>
+                                        <li>Able to work independently with guidance</li>
+                                        <li>Strong communicators and team players</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I apply?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>The application process is simple and straightforward:</p>
+                                    <ul>
+                                        <li>Complete our online application form</li>
+                                        <li>Tell us about your interests and goals</li>
+                                        <li>Explain why you're interested in Med-RAMP</li>
+                                        <li>Submit your application for review</li>
+                                    </ul>
+                                    <p>Applications are reviewed on a rolling basis, and accepted students are typically notified within 2-3 weeks.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>When is the application deadline?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We operate on a rolling admissions basis, meaning applications are reviewed throughout the year as they are received. This allows you to apply and start when it's most convenient for you.</p>
+                                    <p>However, we recommend applying early as spots may fill up during peak application periods.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Time Commitment & Flexibility</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What is the time commitment?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Med-RAMP is designed to be flexible! There are no minimum or maximum hour requirements. Your involvement can scale based on your availability and other commitments.</p>
+                                    <p>That said, students who dedicate consistent time (5-10 hours per week) tend to earn more authorships and gain deeper research experience. The program rewards quality contributions rather than just time spent.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Can I participate while taking classes?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Absolutely! Most of our participants are full-time students who balance Med-RAMP with their coursework. The virtual format and flexible schedule make it easy to fit research into your existing commitments.</p>
+                                    <p>Many students find that working on research projects complements their academic studies and provides practical application of concepts learned in class.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What if I need to take a break?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We understand that life happens! You can take breaks as needed for exams, family obligations, or other commitments. Just communicate with your mentor about your timeline.</p>
+                                    <p>The program is designed to accommodate the realities of student life while still producing quality research.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Research Experience</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What kind of research will I be doing?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>You'll be contributing to real research projects focusing on rare cancers. Common tasks include:</p>
+                                    <ul>
+                                        <li>Analyzing pre-processed data from cancer databases</li>
+                                        <li>Conducting literature reviews</li>
+                                        <li>Performing statistical analyses</li>
+                                        <li>Writing manuscript sections</li>
+                                        <li>Creating tables and figures</li>
+                                        <li>Preparing abstracts for conferences</li>
+                                    </ul>
+                                    <p>You'll receive training and templates to help you succeed in each task.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Will I receive training?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes! Your medical student mentor will provide guidance and training on:</p>
+                                    <ul>
+                                        <li>Research methodology and study design</li>
+                                        <li>Statistical analysis techniques</li>
+                                        <li>Scientific writing and manuscript preparation</li>
+                                        <li>Database navigation and data interpretation</li>
+                                        <li>Conference abstract preparation</li>
+                                    </ul>
+                                    <p>We also provide templates, resources, and ongoing support throughout your research journey.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Do I need to know statistics or coding?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>No prior knowledge of statistics or coding is required! We work with pre-analyzed data, and you'll learn any necessary statistical concepts as you go.</p>
+                                    <p>If you do have statistics or coding experience, that's great and can allow you to take on more advanced projects, but it's certainly not a requirement to get started.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Publications & Authorship</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I earn authorship?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Authorship is earned through meaningful contributions to research projects. This typically includes:</p>
+                                    <ul>
+                                        <li>Conducting data analysis</li>
+                                        <li>Writing manuscript sections</li>
+                                        <li>Performing literature reviews</li>
+                                        <li>Creating figures and tables</li>
+                                        <li>Reviewing and editing drafts</li>
+                                    </ul>
+                                    <p>We follow standard academic authorship guidelines. The more you contribute, the more authorships you can earn!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How long does it take to get published?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Timelines vary depending on the project type:</p>
+                                    <ul>
+                                        <li>Conference abstracts: 2-4 months from start to submission</li>
+                                        <li>Poster presentations: 3-6 months</li>
+                                        <li>Journal publications: 6-12 months or longer</li>
+                                    </ul>
+                                    <p>Many students earn their first authorship within their first few months of participation through conference abstracts, with journal publications following later.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Can I be first author?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes! Students who make substantial contributions to a project can earn first authorship. This typically requires leading the data analysis, writing the manuscript, and coordinating revisions.</p>
+                                    <p>First authorship opportunities increase as you gain experience and demonstrate strong research skills.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Program Benefits</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How will this program help my medical school application?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Med-RAMP strengthens your application in multiple ways:</p>
+                                    <ul>
+                                        <li>Demonstrates sustained commitment to research</li>
+                                        <li>Provides concrete evidence of scholarly activity (publications)</li>
+                                        <li>Develops critical thinking and analytical skills</li>
+                                        <li>Gives you substantive research experience to discuss in interviews</li>
+                                        <li>Shows initiative in seeking opportunities</li>
+                                        <li>Provides mentorship from current medical students</li>
+                                    </ul>
+                                    <p>Many of our participants credit Med-RAMP as a key differentiator in their successful medical school applications.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>Will I receive a letter of recommendation?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Students who make significant contributions and develop strong relationships with their mentors may request letters of recommendation. These letters can speak to your research abilities, work ethic, professionalism, and growth over time.</p>
+                                    <p>The strength of the letter will depend on the depth of your involvement and the relationship you build with your mentor.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What makes Med-RAMP different from other research programs?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Med-RAMP stands out because:</p>
+                                    <ul>
+                                        <li>Completely virtual and accessible from anywhere</li>
+                                        <li>No cost to participants</li>
+                                        <li>Flexible scheduling with no minimum hours</li>
+                                        <li>Direct mentorship from medical students who recently went through the application process</li>
+                                        <li>Focus on meaningful research with real-world impact</li>
+                                        <li>Multiple opportunities for authorship and presentations</li>
+                                        <li>Supportive community of pre-med peers</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category-section" data-animate>
+                        <h2 class="category-title">Technical Questions</h2>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>What technology do I need?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>You'll need:</p>
+                                    <ul>
+                                        <li>A computer with internet access</li>
+                                        <li>Email for communication</li>
+                                        <li>Ability to use Google Docs/Sheets or Microsoft Office</li>
+                                        <li>Video conferencing capability (for meetings with your mentor)</li>
+                                    </ul>
+                                    <p>All necessary software and tools are either free or will be provided by the program.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h3>How do I communicate with my mentor?</h3>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Communication with your mentor typically happens through:</p>
+                                    <ul>
+                                        <li>Email for ongoing updates and questions</li>
+                                        <li>Video calls for training and check-ins</li>
+                                        <li>Shared documents for collaborative work</li>
+                                        <li>Messaging platforms as needed</li>
+                                    </ul>
+                                    <p>Your mentor will establish a communication schedule that works for both of you.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="still-questions" data-animate>
+                        <h2>Still Have Questions?</h2>
+                        <p>We're here to help! Apply now and we'll answer any additional questions during the onboarding process.</p>
+                        <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply to Med-RAMP</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/load-header-footer-1.js"></script>
+    <script src="js/main.js" defer></script>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>

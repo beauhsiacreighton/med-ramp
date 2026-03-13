@@ -732,6 +732,35 @@
             padding: 32px 0;
         }
 
+        .site-footer .footer-content {
+            padding-bottom: 0;
+        }
+
+        .site-footer .footer-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 16px;
+            margin-bottom: 12px;
+        }
+
+        .site-footer .footer-links-row a {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .site-footer .footer-links-row a:hover {
+            color: var(--accent);
+        }
+
+        .site-footer .footer-sep {
+            color: var(--border);
+            font-weight: 300;
+        }
+
         .footer-row {
             text-align: center;
             color: var(--muted);
@@ -815,25 +844,20 @@
             .cta-banner {
                 padding: 60px 0;
             }
+
+            .site-footer .footer-links-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .site-footer .footer-sep {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="site-nav">
-        <div class="container">
-            <div class="nav-inner">
-                <a class="wordmark" href="index1.html">Med<span class="accent">-RAMP</span></a>
-                <ul class="nav-links">
-                    <li><a href="program.html" class="active">Program</a></li>
-                    <li><a href="publications.html">Research</a></li>
-                    <li><a href="about.html">Mentors</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                </ul>
-                <a class="nav-cta" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
-            </div>
-        </div>
-    </nav>
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
@@ -847,7 +871,7 @@
                     </p>
                     <div class="hero-actions" data-animate style="--stagger: 0.3s;">
                         <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
-                        <a class="btn btn-secondary" href="about.html">Learn More</a>
+                        <a class="btn btn-secondary" href="about1.html">Learn More</a>
                     </div>
                     <div class="hero-stats" data-animate style="--stagger: 0.35s;">
                         <div class="hero-stat">
@@ -1089,12 +1113,9 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-row">© 2026 Med-RAMP. Empowering future physician-scientists through mentorship and meaningful research.</div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="js/load-header-footer-1.js"></script>
     <script>
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {

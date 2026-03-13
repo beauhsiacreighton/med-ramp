@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Med-RAMP</title>
+    <link rel="stylesheet" href="css/styles-1.css">
+    <style>
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .story-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 36px 32px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .story-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .story-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .story-card p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .story-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .benefit-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 32px 28px;
+            text-align: center;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .benefit-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            font-size: 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.12rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .mission-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            text-align: center;
+        }
+
+        .mission-box h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .mission-box p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .mission-box strong {
+            color: var(--accent);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .value-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 32px 28px;
+            text-align: center;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .value-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .value-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .research-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg-white);
+            padding: 32px 28px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .research-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: var(--accent-light);
+        }
+
+        .research-card h3 {
+            font-size: 1.12rem;
+            margin-bottom: 10px;
+        }
+
+        .research-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 980px) {
+            .story-grid,
+            .benefits-grid,
+            .values-grid,
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 data-animate>About Med-RAMP</h1>
+                <p data-animate>Empowering the Next Generation of Physicians and Researchers</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>The Challenge & Our Solution</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Our Story</h2>
+                <div class="story-grid">
+                    <div class="story-card" data-animate>
+                        <h2>The Challenge</h2>
+                        <p>Looking for meaningful clinical research experience and mentorship?</p>
+                        <p>We've been there. Navigating the path to medical school is incredibly difficult, and finding productive research is a major hurdle.</p>
+                        <p class="highlight-text">That's why we created a solution.</p>
+                    </div>
+                    <div class="story-card" data-animate style="--stagger: 0.1s;">
+                        <h2>Our Solution</h2>
+                        <p>The Medical Research Assistance and Mentorship Program (Med-RAMP) is a fully virtual program designed to connect ambitious pre-medical students with experienced medical student mentors.</p>
+                        <p>When you join us, you'll contribute to vital research projects focusing on rare cancers—analyzing data, writing, and pushing the boundaries of medical knowledge.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--bg-warm); border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm);">
+            <div class="container">
+                <div class="section-tag" data-animate>What You Will Gain</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Benefits of Joining</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-animate>
+                        <div class="benefit-icon">📄</div>
+                        <h3>Authorship Opportunities</h3>
+                        <p>Earn your name on abstracts, poster presentations, and publications to strengthen your medical school application.</p>
+                    </div>
+                    <div class="benefit-card" data-animate style="--stagger: 0.05s;">
+                        <div class="benefit-icon">👥</div>
+                        <h3>Direct Mentorship</h3>
+                        <p>Develop meaningful connections with medical students who have successfully navigated the application process.</p>
+                    </div>
+                    <div class="benefit-card" data-animate style="--stagger: 0.1s;">
+                        <div class="benefit-icon">⭐</div>
+                        <h3>Proven Success</h3>
+                        <p>Join a community whose members have received numerous acceptances to top medical schools across the country.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="mission-box" data-animate>
+                    <h2>Our Mission</h2>
+                    <p>To empower aspiring physicians and researchers by providing accessible research opportunities and mentorship, guided by the core values of <strong>Character, Competence, and Care.</strong></p>
+                    <p>We are dedicated to helping you develop as a candidate and a future healthcare professional.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--bg-warm); border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm);">
+            <div class="container">
+                <div class="section-tag" data-animate>Our Values</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-card" data-animate>
+                        <div class="value-icon">👤</div>
+                        <h3>Character</h3>
+                        <p>We uphold the highest ethical standards, fostering integrity, honesty, and professionalism in all our interactions and research endeavors.</p>
+                    </div>
+                    <div class="value-card" data-animate style="--stagger: 0.05s;">
+                        <div class="value-icon">💡</div>
+                        <h3>Competence</h3>
+                        <p>We are committed to excellence, ensuring every participant develops the skills and knowledge needed for impactful medical research.</p>
+                    </div>
+                    <div class="value-card" data-animate style="--stagger: 0.1s;">
+                        <div class="value-icon">❤️</div>
+                        <h3>Care</h3>
+                        <p>We cultivate a supportive and collaborative community, prioritizing mentorship and the well-being of every aspiring physician.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-tag" data-animate>Research Focus</div>
+                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Our Research Focus</h2>
+                <p class="section-description" data-animate style="--stagger: 0.2s;">Med-RAMP specializes in rare cancer research, utilizing large databases to uncover demographic and genomic patterns that can inform treatment strategies and improve patient outcomes.</p>
+                <div class="research-grid">
+                    <div class="research-card" data-animate>
+                        <h3>Rare Cancer Demographics</h3>
+                        <p>We analyze population-based cancer databases like the National Cancer Database (NCDB) to identify demographic patterns, incidence rates, and disparities in rare cancer types.</p>
+                    </div>
+                    <div class="research-card" data-animate style="--stagger: 0.05s;">
+                        <h3>Genomic Analysis</h3>
+                        <p>Our research explores the molecular and genetic characteristics of rare malignancies, contributing to personalized medicine approaches.</p>
+                    </div>
+                    <div class="research-card" data-animate style="--stagger: 0.1s;">
+                        <h3>Treatment Outcomes</h3>
+                        <p>We investigate prognostic factors and treatment responses in understudied cancer variants to guide clinical decision-making.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container">
+                <h2 class="cta-title" data-animate>Ready to Kickstart Your Research Career?</h2>
+                <p class="cta-subtext" data-animate>Join a program that's transforming the pre-med experience and making a real difference.</p>
+                <a class="btn btn-dark" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/load-header-footer-1.js"></script>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
