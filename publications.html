@@ -4,338 +4,371 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publications - Med-RAMP</title>
-    
-    <!-- Resource Hints for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://forms.gle">
-    
-    <!-- Optimized Font Loading -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/png" href="images/Circle logo.png">
     <style>
-        .search-filter-section {
-            padding: 3rem 0;
-            background: transparent;
-        }
-
-        .search-box {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 1rem 3.25rem 1rem 1.5rem;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            font-size: 1rem;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: var(--white);
-        }
-
-        .search-clear-btn {
-            position: absolute;
-            top: 50%;
-            right: 0.75rem;
-            transform: translateY(-50%);
-            width: 2rem;
-            height: 2rem;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--white);
-            font-size: 1.25rem;
-            line-height: 1;
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
-        }
-
-        .search-clear-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .search-clear-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--white);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
-        }
-
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            background: transparent;
-            color: var(--white);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--white);
-        }
-
         .publications-section {
-            padding: 4rem 0;
+            padding: 0 0 6rem;
         }
 
-        .stats-banner {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 3rem;
-            border-radius: 20px;
-            color: var(--white);
-            text-align: center;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+        .research-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: -28px;
+            margin-bottom: 32px;
         }
 
-        .stats-banner h3 {
-            color: var(--white);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .research-stat-card {
+            padding: 22px 24px;
         }
 
-        /* Featured Carousel */
+        .research-stat-label {
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .research-stat-value {
+            font-family: 'Zilla Slab', serif;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            line-height: 1;
+        }
+
+        .research-stat-note {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
         .featured-section {
-            margin-bottom: 4rem;
+            margin-bottom: 32px;
+        }
+
+        .featured-carousel-shell {
+            padding: 28px;
         }
 
         .featured-carousel {
             position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            overflow: hidden;
+            min-height: 340px;
         }
 
-        .carousel-item {
-            grid-area: 1 / 1;
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
-            transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
-            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
         }
 
-        .carousel-item.active {
+        .carousel-slide.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-            pointer-events: auto;
         }
 
         .featured-pub {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            color: var(--white);
-            padding: 3rem;
-            border-radius: 30px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            min-height: 430px;
             height: 100%;
+            padding: 32px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .featured-topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .featured-year {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 600;
         }
 
         .featured-pub h3 {
-            color: var(--white);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
+            font-size: 1.55rem;
+            line-height: 1.25;
         }
 
         .featured-pub .authors {
-            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 14px;
+            color: var(--muted);
             font-style: italic;
-            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .featured-pub .pub-abstract {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
+            color: var(--muted);
+            font-size: 0.97rem;
+            margin-bottom: 22px;
         }
 
-        .featured-pub .pub-link {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            display: inline-block;
-            text-decoration: none;
-            transition: var(--transition);
+        .featured-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
             margin-top: auto;
-            align-self: flex-start;
         }
 
-        .featured-pub .pub-link:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .featured-venue {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         .carousel-nav {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .carousel-nav-buttons {
+            display: flex;
+            gap: 10px;
         }
 
         .carousel-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            color: var(--white);
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--bg-white);
+            color: var(--text);
+            font-size: 1.35rem;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 1.5rem;
+            transition: all 0.2s ease;
         }
 
         .carousel-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: var(--white);
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(1, 93, 169, 0.18);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            transform: scale(1.15);
+            background: var(--accent);
+        }
+
+        .search-filter-section {
+            margin-bottom: 28px;
+        }
+
+        .publication-controls-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(180px, 0.4fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-white);
+            color: var(--muted);
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         .publications-grid {
             display: grid;
-            gap: 2rem;
-        }
-
-        .publications-loading {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.85);
-            padding: 2rem;
-            font-size: 1.05rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
         }
 
         .publication-item {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .publication-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            background: rgba(255, 255, 255, 0.2);
+            padding: 28px 24px;
         }
 
         .pub-badge {
             display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .badge-journal {
-            background: rgba(25, 118, 210, 0.3);
-            color: #90caf9;
-            border: 1px solid rgba(25, 118, 210, 0.5);
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         .badge-abstract {
-            background: rgba(123, 31, 162, 0.3);
-            color: #ce93d8;
-            border: 1px solid rgba(123, 31, 162, 0.5);
+            background: #ede9fe;
+            color: #6d28d9;
         }
 
         .badge-poster {
-            background: rgba(56, 142, 60, 0.3);
-            color: #a5d6a7;
-            border: 1px solid rgba(56, 142, 60, 0.5);
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .publication-topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .publication-meta-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .publication-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--bg-warm);
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .publication-item h3 {
-            color: var(--white);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
+            font-size: 1.22rem;
+            margin-bottom: 12px;
             line-height: 1.4;
         }
 
-        .authors {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
+        .publication-item .authors {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
             font-style: italic;
         }
 
-        .pub-details {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .pub-details span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         .pub-abstract {
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .publication-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .pub-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--white);
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            min-width: 150px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-white);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
 
         .pub-link:hover {
-            gap: 0.8rem;
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .pub-link.is-muted {
+            border-color: transparent;
+            background: transparent;
+            color: var(--muted);
+            padding-left: 0;
+            padding-right: 0;
+            min-width: 0;
+        }
+
+        .copy-doi-btn {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: var(--bg-white);
+            color: var(--muted);
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-doi-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .results-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .publications-pagination {
-            display: none;
             justify-content: center;
             align-items: center;
             gap: 1rem;
@@ -344,19 +377,21 @@
         }
 
         .pagination-btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            background: transparent;
-            color: var(--white);
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-white);
+            color: var(--text);
             font-weight: 600;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.2s ease;
         }
 
         .pagination-btn:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--white);
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .pagination-btn:disabled {
@@ -365,157 +400,186 @@
         }
 
         .pagination-info {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--muted);
             font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 980px) {
+            .publication-controls-grid,
+            .research-stats,
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            .filter-buttons {
+            .featured-carousel-shell,
+            .featured-pub {
+                padding: 24px 20px;
+            }
+
+            .carousel-nav {
                 flex-direction: column;
                 align-items: stretch;
-            }
-
-            .filter-btn {
-                width: 100%;
-            }
-
-            .featured-pub {
-                padding: 2rem;
-                min-height: 520px;
-            }
-
-            .publications-pagination {
-                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
+    <div id="header-placeholder"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.html" class="logo">Med-RAMP</a>
-                <button class="mobile-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="publications.html" class="active">Publications</a></li>
-                    
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="application-support.html">Application Support</a></li>
-                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn glass-card">Apply Now</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <main>
+        <section class="page-hero page-hero--rich">
+            <div class="container">
+                <div class="page-hero-grid">
+                    <div class="page-hero-copy">
+                        <div class="eyebrow" data-animate>Research output with real credibility</div>
+                        <h1 data-animate style="--stagger: 0.08s;">A publication archive that shows what Med-RAMP participants can build.</h1>
+                        <p data-animate style="--stagger: 0.16s;">Explore journal articles, conference abstracts, and poster presentations produced through Med-RAMP's rare-cancer research ecosystem. This is where mentorship turns into visible scholarly work.</p>
+                        <div class="hero-actions" data-animate style="--stagger: 0.24s;">
+                            <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Join the program</a>
+                            <a class="btn btn-secondary" href="#featuredResearch">View featured research</a>
+                        </div>
+                        <div class="trust-banner" data-animate style="--stagger: 0.3s;">
+                            Research outputs include work associated with <strong>JCO</strong>, <strong>Cancers</strong>, <strong>Frontiers in Oncology</strong>, and academic research symposia.
+                        </div>
+                    </div>
 
-    <!-- Page Hero -->
-    <section class="page-hero">
-        <div class="container">
-            <h1 data-scroll-animate>Our Publications</h1>
-            <p data-scroll-animate>Showcasing impactful research from Med-RAMP participants</p>
-        </div>
-    </section>
-
-    <!-- Publications Section -->
-    <section class="publications-section">
-        <div class="container">
-            <!-- Stats Banner -->
-            <div class="stats-banner" data-scroll-animate>
-                <h3>120+ Authorships Earned by Our Participants</h3>
-                <p>Med-RAMP students have contributed to groundbreaking research in rare cancer studies</p>
-            </div>
-
-
-        <!-- Featured Publication Carousel -->
-        <div class="featured-section" data-scroll-animate>
-            <h2 class="section-title">Featured Research</h2>
-
-            <div class="featured-carousel">
-                <div class="publications-loading" id="featuredPublicationsLoading">Loading featured research...</div>
-            </div>
-
-            <!-- Carousel Navigation -->
-                <div class="carousel-nav">
-                    <button class="carousel-btn carousel-prev">‹</button>
-                    <button class="carousel-btn carousel-next">›</button>
+                    <aside class="page-hero-card" data-animate style="--stagger: 0.2s;">
+                        <div class="panel-kicker">Archive snapshot</div>
+                        <h2>The proof is in the output.</h2>
+                        <div class="hero-metrics" style="margin-top: 18px;">
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroTotal">0</span>
+                                <div class="hero-metric-label">Total research outputs in the archive</div>
+                            </div>
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroFeatured">0</span>
+                                <div class="hero-metric-label">Featured studies highlighted for depth and impact</div>
+                            </div>
+                            <div class="hero-metric">
+                                <span class="hero-metric-value" id="pubHeroRecentYear">N/A</span>
+                                <div class="hero-metric-label">Most recent publication year represented</div>
+                            </div>
+                        </div>
+                    </aside>
                 </div>
             </div>
-            <div class="search-filter-section">
-                <div class="container">
-                    <div class="search-box" data-scroll-animate>
-                        <input type="text" id="publicationSearch" placeholder="Search by title, authors, or keywords...">
-                        <button type="button" id="publicationSearchClear" class="search-clear-btn" aria-label="Clear publication search">&times;</button>
+        </section>
+
+        <section class="publications-section">
+            <div class="container">
+                <div class="research-stats">
+                    <div class="research-stat-card surface-card" data-animate>
+                        <div class="research-stat-label">Outputs</div>
+                        <div class="research-stat-value" id="pubStatTotal">0</div>
+                        <div class="research-stat-note">Journal articles, abstracts, and posters in one archive</div>
                     </div>
-                    <div class="filter-buttons" data-scroll-animate>
-                        <button class="filter-btn active" data-category="all">Publications</button>
-                        <button class="filter-btn" data-category="journal">Journal Articles</button>
-                        <button class="filter-btn" data-category="abstract">Conference Abstracts</button>
-                        <button class="filter-btn" data-category="poster">Posters</button>
+                    <div class="research-stat-card surface-card" data-animate style="--stagger: 0.06s;">
+                        <div class="research-stat-label">Venues</div>
+                        <div class="research-stat-value" id="pubStatVenues">0</div>
+                        <div class="research-stat-note">Distinct journals and presentation venues represented</div>
+                    </div>
+                    <div class="research-stat-card surface-card" data-animate style="--stagger: 0.12s;">
+                        <div class="research-stat-label">Spotlight studies</div>
+                        <div class="research-stat-value" id="pubStatFeatured">0</div>
+                        <div class="research-stat-note">Highlighted examples of Med-RAMP's research quality</div>
                     </div>
                 </div>
-            </div>
-        <!-- Publications Grid -->
-        <h2 id="publicationsResultsTitle" class="section-title" data-scroll-animate>Publications</h2>
 
-        <div class="publications-grid">
-            <div class="publications-loading" id="publicationsLoading">Loading publications...</div>
-        </div>
-            
-            <div id="publicationsPagination" class="publications-pagination" aria-label="Publications pagination"></div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section parallax-section">
-        <div class="container">
-            <div class="cta-content" data-scroll-animate>
-                <h2>Contribute to Groundbreaking Research</h2>
-                <p>Join Med-RAMP and add your name to impactful publications</p>
-                <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large">Apply Now</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Med-RAMP</h3>
-                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                <div class="featured-section" id="featuredResearch" data-animate>
+                    <div class="featured-carousel-shell surface-card">
+                        <div class="control-header" style="margin-bottom: 18px;">
+                            <div>
+                                <div class="section-tag">Featured studies</div>
+                                <h2 class="section-title">Research worth exploring first</h2>
+                            </div>
+                        </div>
+                        <div class="featured-carousel" id="featuredCarousel">
+                            <div class="empty-state">
+                                <h3>Loading featured research</h3>
+                                <p>Please wait while we build the carousel from the archive.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-nav" id="featuredCarouselNav">
+                            <div class="carousel-dots" id="featuredCarouselDots"></div>
+                            <div class="carousel-nav-buttons">
+                                <button class="carousel-btn" type="button" aria-label="Previous featured publication" data-carousel-action="prev">&lsaquo;</button>
+                                <button class="carousel-btn" type="button" aria-label="Next featured publication" data-carousel-action="next">&rsaquo;</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="publications.html">Publications</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
-                        
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
-                <p class="security-badge">🔒 Secure Site</p>
-            </div>
-        </div>
-    </footer>
 
-    <script src="js/main.js" defer onerror="this.onerror=null;this.src='/js/main.js';"></script>
+                <div class="search-filter-section control-panel" data-animate>
+                    <div class="control-header">
+                        <div>
+                            <div class="section-tag">Research archive</div>
+                            <h2 class="section-title">Search, sort, and explore by year</h2>
+                        </div>
+                        <div class="results-info" id="publicationsResultsMeta">Loading archive...</div>
+                    </div>
+
+                    <div class="publication-controls-grid">
+                        <div class="field-shell">
+                            <span class="field-icon">&#128269;</span>
+                            <input type="text" id="publicationSearch" placeholder="Search by title, author, journal, or topic..." aria-label="Search publications">
+                            <button type="button" id="publicationSearchClear" class="field-clear" aria-label="Clear search">Clear</button>
+                        </div>
+
+                        <div class="field-shell">
+                            <select id="publicationYearFilter" aria-label="Filter publications by year">
+                                <option value="all">All years</option>
+                            </select>
+                        </div>
+
+                        <div class="field-shell">
+                            <select id="publicationSort" aria-label="Sort publications">
+                                <option value="newest">Newest first</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="title">Title A-Z</option>
+                                <option value="venue">Venue A-Z</option>
+                                <option value="featured">Featured first</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all" data-label="Research archive">All Outputs <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="journal" data-label="Journal Articles">Journal Articles <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="abstract" data-label="Conference Abstracts">Conference Abstracts <span class="pill-count">0</span></button>
+                        <button class="filter-btn" data-category="poster" data-label="Posters">Posters <span class="pill-count">0</span></button>
+                    </div>
+                </div>
+
+                <div class="results-heading">
+                    <h2 id="publicationsResultsTitle" class="section-title" data-animate>Research archive</h2>
+                </div>
+                <div class="publications-grid" id="publicationsGrid">
+                    <div class="empty-state">
+                        <h3>Loading publications</h3>
+                        <p>Please wait while we fetch the research archive.</p>
+                    </div>
+                </div>
+                <div id="publicationsPagination" class="publications-pagination" aria-label="Publications pagination"></div>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container">
+                <h2 class="cta-title" data-animate>Ready to see your name in a serious research archive?</h2>
+                <p class="cta-subtext" data-animate>Join Med-RAMP to contribute to meaningful projects, learn from mentors who understand the path, and build output that strengthens your future application.</p>
+                <a class="btn btn-dark" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                <div class="cta-reassurance" data-animate style="--stagger: 0.08s;">Real mentorship &middot; real output &middot; real rare-cancer research</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/load-header-footer.js"></script>
+    <script src="js/page-effects-1.js" defer></script>
+    <script src="js/publications1.js" defer></script>
 </body>
 </html>

@@ -4,404 +4,636 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Med-RAMP</title>
+    
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://forms.gle">
+    
+    <!-- Optimized Font Loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/styles-1.css">
+    <link rel="icon" type="image/png" href="images/Circle logo.png">
+
     <style>
-        .about-story-grid {
+        /* Story Section - Split Design */
+        .story-section {
+            padding: 6rem 0;
+            background: transparent;
+        }
+
+        .story-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 32px;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
         }
 
         .story-card {
-            padding: 36px 32px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .story-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 16px;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .story-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--white);
         }
 
         .story-card p {
-            color: var(--muted);
-            margin-bottom: 16px;
-        }
-
-        .story-card p:last-child {
-            margin-bottom: 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
         }
 
         .highlight-text {
-            color: var(--accent);
+            color: var(--white);
             font-weight: 600;
-        }
-
-        .story-list {
-            margin: 18px 0 0;
-            padding: 0;
-            list-style: none;
-            display: grid;
-            gap: 12px;
-        }
-
-        .story-list li {
-            position: relative;
-            padding-left: 20px;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .story-list li::before {
-            content: "";
-            position: absolute;
-            top: 0.75rem;
-            left: 0;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
-        }
-
-        .about-hero-card-list {
-            margin: 18px 0 0;
-            padding-left: 18px;
-            color: var(--muted);
-            display: grid;
-            gap: 10px;
-        }
-
-        .about-hero-card-list li {
-            font-size: 0.95rem;
-        }
-
-        .hero-program-note {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(1, 93, 169, 0.12);
-        }
-
-        .mission-box {
-            padding: 48px;
-            text-align: left;
-        }
-
-        .mission-box h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .mission-box p {
-            color: var(--muted);
-            margin-bottom: 16px;
-        }
-
-        .mission-box strong {
-            color: var(--accent);
-        }
-
-        .proof-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .proof-card {
-            padding: 28px;
-        }
-
-        .proof-card ul {
-            margin: 16px 0 0;
-            padding-left: 18px;
-            color: var(--muted);
-        }
-
-        .proof-card li {
-            margin-bottom: 10px;
-        }
-
-        .focus-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .focus-card {
-            padding: 28px;
-        }
-
-        .focus-card h3 {
-            margin-bottom: 10px;
             font-size: 1.15rem;
         }
 
-        .focus-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
+        /* Benefits Grid */
+        .benefits-section {
+            padding: 6rem 0;
+            background: rgba(10, 10, 30, 0.2);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        .mentorship-cta {
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 30px 32px;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        .mentorship-cta p {
-            max-width: 700px;
-            color: var(--muted);
+        .benefit-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff !important;
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+        }
+        
+        /* Ensure value cards in benefits section have centered icons */
+        .benefits-section .value-card .benefit-icon {
+            margin: 0 auto 1.5rem;
         }
 
-        @media (max-width: 980px) {
-            .about-story-grid,
-            .proof-grid,
-            .focus-grid {
+        .benefit-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mission Statement */
+        .mission-statement {
+            padding: 5rem 0;
+            background: transparent;
+        }
+
+        .mission-box {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem;
+            background: linear-gradient(135deg, rgba(114, 11, 187, 0.2) 0%, rgba(21, 25, 60, 0.2) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5%, 5%); }
+        }
+
+        .mission-box h2 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mission-box p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            position: relative;
+            z-index: 1;
+        }
+
+        .mission-box strong {
+            color: var(--white);
+            font-size: 1.3rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 6rem 0;
+            background: transparent;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .value-card {
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .value-icon {
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+        
+        .value-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .value-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .value-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        /* Research Focus Section */
+        .research-focus-section {
+            padding: 6rem 0;
+            background: transparent;
+        }
+
+        .research-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .research-card {
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--white);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .research-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            position: relative;
+            font-size: 1.4rem;
+        }
+
+        .research-card p {
+            line-height: 1.7;
+            opacity: 0.95;
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            padding: 5rem 0;
+            background: rgba(10, 10, 30, 0.3);
+            backdrop-filter: blur(12px);
+            text-align: center;
+            color: var(--white);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .cta-banner h2 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 968px) {
+            .story-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .mission-box {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .story-card {
+                padding: 2rem;
+            }
+
+            .mission-box {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .mission-box h2 {
+                font-size: 2rem;
+            }
+
+            .mission-box p {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div id="header-placeholder"></div>
 
-    <main>
-        <section class="page-hero page-hero--rich">
-            <div class="container">
-                <div class="page-hero-grid">
-                    <div class="page-hero-copy">
-                        <div class="eyebrow" data-animate>Mentor-guided research training</div>
-                        <h1 data-animate style="--stagger: 0.08s;">A mentorship model built to turn ambition into measurable outcomes.</h1>
-                        <p data-animate style="--stagger: 0.16s;">Med-RAMP pairs motivated pre-med students with medical student mentors so you can contribute to real rare-cancer research, build authorship, and develop the confidence to navigate medical school applications with clarity.</p>
-                        <div class="hero-actions" data-animate style="--stagger: 0.24s;">
-                            <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply now</a>
-                            <a class="btn btn-secondary" href="publications1.html">Explore research</a>
-                        </div>
-                        <div class="hero-metrics">
-                            <div class="hero-metric" data-animate style="--stagger: 0.3s;">
-                                <span class="hero-metric-value" data-countup="300" data-countup-suffix="+">0+</span>
-                                <div class="hero-metric-label">Pre-med participants who have used Med-RAMP to strengthen their trajectory</div>
-                            </div>
-                            <div class="hero-metric" data-animate style="--stagger: 0.35s;">
-                                <span class="hero-metric-value" data-countup="150" data-countup-suffix="+">0+</span>
-                                <div class="hero-metric-label">Authorships earned across abstracts, posters, and journal publications</div>
-                            </div>
-                            <div class="hero-metric" data-animate style="--stagger: 0.4s;">
-                                <span class="hero-metric-value" data-countup="70" data-countup-suffix="+">0+</span>
-                                <div class="hero-metric-label">Medical school acceptances supported by stronger research narratives</div>
-                            </div>
-                        </div>
-                        <div class="trust-banner" data-animate style="--stagger: 0.45s;">
-                            Students have gone on to schools including <strong>Mayo Clinic</strong>, <strong>University of Colorado</strong>, <strong>University of Arizona</strong>, and <strong>USF</strong>.
-                        </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index1.html" class="logo">Med-RAMP</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index1.html">Home</a></li>
+                    <li><a href="about1.html" class="active">About</a></li>
+                    <li><a href="publications1.html">Publications</a></li>
+                    
+                    <li><a href="blog1.html">Blog</a></li>
+                    <li><a href="faqs1.html">FAQ</a></li>
+                    <li><a href="application-support.html">Application Support</a></li>
+                    <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="apply-btn glass-card">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 data-scroll-animate>About Med-RAMP</h1>
+            <p data-scroll-animate>Empowering the Next Generation of Physicians and Researchers</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-card" data-scroll-animate>
+                    <h2>The Challenge</h2>
+                    <p>Looking for meaningful clinical research experience and mentorship?</p>
+                    <p>We've been there. Navigating the path to medical school is incredibly difficult, and finding productive research is a major hurdle.</p>
+                    <p class="highlight-text">That's why we created a solution.</p>
+                </div>
+                <div class="story-card" data-scroll-animate>
+                    <h2>Our Solution</h2>
+                    <p>The Medical Research Assistance and Mentorship Program (Med-RAMP) is a fully virtual program designed to connect ambitious pre-medical students with experienced medical student mentors.</p>
+                    <p>When you join us, you'll contribute to vital research projects focusing on rare cancers?analyzing data, writing, and pushing the boundaries of medical knowledge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title" data-scroll-animate>What You Will Gain</h2>
+            <div class="benefits-grid">
+                <div class="value-card" data-scroll-animate>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-
-                    <aside class="page-hero-card" data-animate style="--stagger: 0.18s;">
-                        <div class="panel-kicker">Program at a glance</div>
-                        <h2>What makes this mentorship different</h2>
-                        <p>You are not left to "figure research out" on your own. The structure is designed to remove busywork and concentrate your effort where admissions committees notice it most.</p>
-                        <ul class="about-hero-card-list">
-                            <li>Exact project instructions and pre-gathered datasets so you can begin contributing quickly</li>
-                            <li>Direct guidance from medical student mentors who recently navigated the same path</li>
-                            <li>Flexible, fully virtual work that fits around classes, jobs, and exams</li>
-                            <li>Clear opportunities to earn authorship through meaningful, standards-based contribution</li>
-                        </ul>
-                        <div class="hero-program-note">
-                            <div class="proof-label">Built for conversion</div>
-                            <p>Every part of the experience is designed to help you leave with stronger research skill, stronger writing, and a stronger application story.</p>
-                        </div>
-                    </aside>
+                    <h3>Authorship Opportunities</h3>
+                    <p>Earn your name on abstracts, poster presentations, and publications to strengthen your medical school application.</p>
                 </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <div class="section-tag" data-animate>The Challenge & Our Solution</div>
-                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Our Story</h2>
-                <p class="section-description" data-animate style="--stagger: 0.16s;">Med-RAMP was built by people who understand how difficult it is to find credible research experience, meaningful mentorship, and a path that actually fits student life.</p>
-                <div class="about-story-grid">
-                    <div class="story-card surface-card" data-animate>
-                        <h2>The Challenge</h2>
-                        <p>Pre-med students are often told that research and mentorship matter, but the reality is fragmented: unpaid positions are hard to access, timelines are unclear, and many opportunities offer little direct teaching.</p>
-                        <p class="highlight-text">That's why we created a solution.</p>
-                        <ul class="story-list">
-                            <li>Limited access to meaningful research roles</li>
-                            <li>Unclear expectations for authorship and advancement</li>
-                            <li>Little direct support from mentors who understand the modern admissions process</li>
-                        </ul>
+                <div class="value-card" data-scroll-animate>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <div class="story-card surface-card" data-animate style="--stagger: 0.1s;">
-                        <h2>Our Solution</h2>
-                        <p>The Medical Research Assistance and Mentorship Program (Med-RAMP) is a fully virtual research mentorship program that turns that uncertainty into structure. You receive project direction, mentor access, and opportunities to contribute in ways that can translate into tangible output.</p>
-                        <ul class="story-list">
-                            <li>Focused rare-cancer research with real-world impact</li>
-                            <li>Medical student mentorship that is practical, responsive, and application-aware</li>
-                            <li>A pathway from contribution to conference abstracts, posters, and publication</li>
-                        </ul>
+                    <h3>Direct Mentorship</h3>
+                    <p>Develop meaningful connections with medical students who have successfully navigated the application process.</p>
+                </div>
+                <div class="value-card" data-scroll-animate>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
+                    <h3>Proven Success</h3>
+                    <p>Join a community whose members have received numerous acceptances to top medical schools across the country.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section" style="background: var(--bg-warm); border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm);">
-            <div class="container">
-                <div class="section-tag" data-animate>Why students join</div>
-                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Professional support that makes your time count.</h2>
-                <div class="feature-grid">
-                    <article class="feature-card surface-card" data-animate>
-                        <div class="feature-icon">01</div>
-                        <h3>Authorship with substance</h3>
-                        <p>Earn credit through meaningful contribution, whether that means literature review, analysis, drafting, revision, or presentation support.</p>
-                    </article>
-                    <article class="feature-card surface-card" data-animate style="--stagger: 0.05s;">
-                        <div class="feature-icon">02</div>
-                        <h3>Mentors who recently lived it</h3>
-                        <p>Learn from medical students who know what makes a strong application and how to build sustainable habits along the way.</p>
-                    </article>
-                    <article class="feature-card surface-card" data-animate style="--stagger: 0.1s;">
-                        <div class="feature-icon">03</div>
-                        <h3>Fully virtual and flexible</h3>
-                        <p>Contribute from anywhere and scale your involvement around classes, work, and major exam periods.</p>
-                    </article>
-                    <article class="feature-card surface-card" data-animate style="--stagger: 0.15s;">
-                        <div class="feature-icon">04</div>
-                        <h3>Pre-gathered data and templates</h3>
-                        <p>Skip the confusion of getting started. We provide structure so your energy goes toward thinking, writing, and producing.</p>
-                    </article>
-                    <article class="feature-card surface-card" data-animate style="--stagger: 0.2s;">
-                        <div class="feature-icon">05</div>
-                        <h3>Rare cancer research impact</h3>
-                        <p>Work on understudied disease spaces where thoughtful analysis can contribute to the broader medical conversation.</p>
-                    </article>
-                    <article class="feature-card surface-card" data-animate style="--stagger: 0.25s;">
-                        <div class="feature-icon">06</div>
-                        <h3>Admissions-ready growth</h3>
-                        <p>Build the kind of longitudinal experience that gives interviews, essays, and recommendation letters real depth.</p>
-                    </article>
-                </div>
+    <!-- Mission Statement -->
+    <section class="mission-statement">
+        <div class="container">
+            <div class="mission-box" data-scroll-animate>
+                <h2>Our Mission</h2>
+                <p>To empower aspiring physicians and researchers by providing accessible research opportunities and mentorship, guided by the core values of <strong>Character, Competence, and Care.</strong></p>
+                <p style="margin-top: 1.5rem;">We are dedicated to helping you develop as a candidate and a future healthcare professional.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section">
-            <div class="container">
-                <div class="mission-box surface-card" data-animate>
-                    <h2>Our Mission</h2>
-                    <p>To empower aspiring physicians and researchers by providing accessible research opportunities and mentorship, guided by the core values of <strong>Character, Competence, and Care.</strong></p>
-                    <p>We want motivated students to have a place where opportunity is not gated by geography, cost, or prior connections, and where professional growth is paired with meaningful scientific contribution.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <div class="section-tag" data-animate>How mentorship works</div>
-                <h2 class="section-title" data-animate style="--stagger: 0.1s;">A clear process that keeps you moving.</h2>
-                <p class="section-description" data-animate style="--stagger: 0.18s;">Students do their best work when expectations are clear. Med-RAMP is designed to turn uncertainty into momentum.</p>
-                <div class="process-shell">
-                    <article class="process-step" data-animate>
-                        <div class="icon-box">1</div>
-                        <h3>Start with structure</h3>
-                        <p>Join a project, receive templates and guidance, and understand exactly what strong contribution looks like from day one.</p>
-                    </article>
-                    <article class="process-step" data-animate style="--stagger: 0.08s;">
-                        <div class="icon-box">2</div>
-                        <h3>Work with responsive support</h3>
-                        <p>Ask questions, get feedback, and learn how to think like a contributor rather than a passive observer.</p>
-                    </article>
-                    <article class="process-step" data-animate style="--stagger: 0.16s;">
-                        <div class="icon-box">3</div>
-                        <h3>Translate effort into output</h3>
-                        <p>As your contribution deepens, you gain the chance to earn authorship, present findings, and tell a stronger professional story.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" style="background: var(--bg-warm); border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm);">
-            <div class="container">
-                <div class="section-tag" data-animate>What outcomes look like</div>
-                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Proof that the model translates into results.</h2>
-                <div class="testimonials-grid">
-                    <article class="quote-card surface-card featured" data-animate>
-                        <div class="quote-stars">Participant perspective</div>
-                        <p>"Med-RAMP gave me the research experience I needed to stand out. The mentorship was practical, the writing support was rigorous, and my authorships became a core strength in my application."</p>
-                        <div class="quote-author">
-                            <span class="avatar-small">MM</span>
-                            <div>
-                                <div class="quote-name">Mark M.</div>
-                                <div class="quote-role">Accepted to Mayo Clinic Alix School of Medicine</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="quote-card surface-card" data-animate style="--stagger: 0.08s;">
-                        <div class="proof-label">Case study</div>
-                        <p>One Med-RAMP student documented how sustained contribution translated into <strong>5 abstracts and posters</strong>, a stronger interview narrative, and <strong>3 medical school acceptances</strong>, including a top choice.</p>
-                        <div class="quote-author">
-                            <span class="avatar-small">CS</span>
-                            <div>
-                                <div class="quote-name">Application transformation story</div>
-                                <div class="quote-role">Read more on the Med-RAMP blog</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="quote-card surface-card" data-animate style="--stagger: 0.16s;">
-                        <div class="proof-label">Research venues</div>
-                        <p>Participants have contributed to work presented or published in spaces such as <strong>JCO</strong>, <strong>Cancers</strong>, <strong>Frontiers in Oncology</strong>, and academic research symposia.</p>
-                        <div class="quote-author">
-                            <span class="avatar-small">RV</span>
-                            <div>
-                                <div class="quote-name">Output that signals rigor</div>
-                                <div class="quote-role">See examples in the research archive</div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="container">
-                <div class="section-tag" data-animate>Research focus</div>
-                <h2 class="section-title" data-animate style="--stagger: 0.1s;">Where Med-RAMP directs its research energy.</h2>
-                <p class="section-description" data-animate style="--stagger: 0.2s;">Our projects focus on rare-cancer questions where better demographic, genomic, and outcomes data can sharpen the broader medical understanding of disease.</p>
-                <div class="focus-grid">
-                    <article class="focus-card surface-card" data-animate>
-                        <h3>Rare cancer demographics</h3>
-                        <p>We analyze national databases like the NCDB to identify who is affected, when disparities emerge, and how presentation patterns vary across populations.</p>
-                    </article>
-                    <article class="focus-card surface-card" data-animate style="--stagger: 0.06s;">
-                        <h3>Genomic insight generation</h3>
-                        <p>Projects explore molecular and mutational characteristics that can expand scientific understanding and inform precision-medicine thinking.</p>
-                    </article>
-                    <article class="focus-card surface-card" data-animate style="--stagger: 0.12s;">
-                        <h3>Treatment and survival outcomes</h3>
-                        <p>We investigate patterns in prognosis, treatment utilization, and outcome disparities across understudied malignancies.</p>
-                    </article>
-                </div>
-
-                <div class="mentorship-cta surface-card" data-animate style="margin-top: 32px; --stagger: 0.18s;">
-                    <div>
-                        <h3 style="margin-bottom: 8px; font-size: 1.4rem;">Ready to learn from mentors who know the path?</h3>
-                        <p>Join a professional, mission-driven program that helps ambitious students build both meaningful research output and the confidence to compete.</p>
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title" data-scroll-animate>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card" data-scroll-animate>
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                        </svg>
                     </div>
-                    <a class="btn btn-primary" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Start your application</a>
+                    <h3>Character</h3>
+                    <p>We uphold the highest ethical standards, fostering integrity, honesty, and professionalism in all our interactions and research endeavors.</p>
+                </div>
+                <div class="value-card" data-scroll-animate>
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12 18c-3.31 0-6-2.69-6-6 0-2.38 1.19-4.47 3-5.74V5c0-.55.45-1 1-1h4c.55 0 1 .45 1 1v1.26c1.81 1.27 3 3.36 3 5.74 0 3.31-2.69 6-6 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <h3>Competence</h3>
+                    <p>We are committed to excellence, ensuring every participant develops the skills and knowledge needed for impactful medical research.</p>
+                </div>
+                <div class="value-card" data-scroll-animate>
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <h3>Care</h3>
+                    <p>We cultivate a supportive and collaborative community, prioritizing mentorship and the well-being of every aspiring physician.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="cta-banner">
-            <div class="container">
-                <h2 class="cta-title" data-animate>Ready to build real research momentum?</h2>
-                <p class="cta-subtext" data-animate>Join a program that pairs meaningful output with credible mentorship, so your next step feels strategic instead of uncertain.</p>
-                <a class="btn btn-dark" href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" rel="noopener noreferrer">Apply Now</a>
-                <div class="cta-reassurance" data-animate style="--stagger: 0.08s;">100% virtual &middot; 100% free &middot; no prior research experience required</div>
+    <!-- Research Focus Section -->
+    <section class="research-focus-section">
+        <div class="container">
+            <h2 class="section-title" data-scroll-animate>Our Research Focus</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: rgba(255,255,255,0.9); font-size: 1.1rem;" data-scroll-animate>
+                Med-RAMP specializes in rare cancer research, utilizing large databases to uncover demographic and genomic patterns that can inform treatment strategies and improve patient outcomes.
+            </p>
+            <div class="research-areas">
+                <div class="research-card" data-scroll-animate>
+                    <h3>Rare Cancer Demographics</h3>
+                    <p>We analyze population-based cancer databases like the National Cancer Database (NCDB) to identify demographic patterns, incidence rates, and disparities in rare cancer types.</p>
+                </div>
+                <div class="research-card" data-scroll-animate>
+                    <h3>Genomic Analysis</h3>
+                    <p>Our research explores the molecular and genetic characteristics of rare malignancies, contributing to personalized medicine approaches.</p>
+                </div>
+                <div class="research-card" data-scroll-animate>
+                    <h3>Treatment Outcomes</h3>
+                    <p>We investigate prognostic factors and treatment responses in understudied cancer variants to guide clinical decision-making.</p>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <div id="footer-placeholder"></div>
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2 data-scroll-animate>Ready to Kickstart Your Research Career?</h2>
+            <p data-scroll-animate>Join a program that's transforming the pre-med experience and making a real difference.</p>
+            <a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank" class="btn btn-primary btn-large" data-scroll-animate>Apply Now</a>
+        </div>
+    </section>
 
-    <script src="js/load-header-footer-1.js"></script>
-    <script src="js/page-effects-1.js" defer></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Med-RAMP</h3>
+                    <p>Empowering the next generation of physician-scientists through mentorship and research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about1.html">About Us</a></li>
+                        <li><a href="publications1.html">Publications</a></li>
+                        <li><a href="faqs1.html">FAQ</a></li>
+                        <li><a href="blog1.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/1b31NgtUQn37vqH27" target="_blank">Apply Now</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Med-RAMP. All Rights Reserved.</p>
+                <p class="security-badge">?? Secure Site</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lazy load heavy libraries only when needed -->
+    <script defer>
+    // Only load Vanta.js if user doesn't have reduced motion preference and connection is decent
+    window.addEventListener('load', function() {
+        const shouldLoadVanta = !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+                                (navigator.connection ? navigator.connection.effectiveType !== 'slow-2g' : true);
+        
+        if (shouldLoadVanta) {
+            // Load Three.js
+            const threeScript = document.createElement('script');
+            threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+            threeScript.onload = () => {
+                // Load Vanta.js after Three.js
+                const vantaScript = document.createElement('script');
+                vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js';
+                vantaScript.onload = () => {
+                    // Initialize Vanta only after both libraries are loaded
+                    if (window.VANTA) {
+                        VANTA.NET({
+                            el: "#vanta-background",
+                            mouseControls: true,
+                            touchControls: true,
+                            gyroControls: false,
+                            minHeight: 200.00,
+                            minWidth: 200.00,
+                            scale: 1.00,
+                            scaleMobile: 1.00,
+                            color: 0x720bbb,
+                            backgroundColor: 0x15193c,
+                            spacing: 18.00,
+                            points: 7.00,
+                            maxDistance: 24.00,
+                            showDots: false
+                        });
+                    }
+                };
+                document.head.appendChild(vantaScript);
+            };
+            document.head.appendChild(threeScript);
+        }
+    });
+    </script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>

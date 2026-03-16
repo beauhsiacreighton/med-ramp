@@ -6,16 +6,27 @@ A modern, professional multi-page website for the Medical Research Assistance an
 
 ```
 med-ramp/
-├── index.html                 # Homepage
-├── about.html                 # About Us page
-├── publications.html          # Publications page
-├── success-stories.html       # Success Stories page
-├── blog.html                  # Blog page
-├── faq.html                   # FAQ page
+├── index.html                 # Homepage (rich redesign)
+├── about.html                 # About Us page (rich redesign)
+├── publications.html          # Publications page (rich redesign)
+├── blog.html                  # Blog page (rich redesign)
+├── faq.html                   # FAQ page (rich redesign)
+├── index1.html                # Homepage (original design)
+├── about1.html                # About Us page (original design)
+├── publications1.html         # Publications page (original design)
+├── blog1.html                 # Blog page (original design)
+├── faqs1.html                 # FAQ page (original design)
 ├── css/
-│   └── styles.css            # All styling
+│   ├── styles.css             # Styles for rich redesign pages
+│   └── styles-1.css           # Styles for original design pages
 ├── js/
-│   └── main.js               # All JavaScript functionality
+│   ├── main.js                # JavaScript for original design pages
+│   ├── load-header-footer.js  # Header/footer loader for rich redesign pages
+│   ├── load-header-footer-1.js # Header/footer loader for original design pages
+│   └── page-effects-1.js      # Animations and effects for rich redesign pages
+├── components/
+│   ├── header-footer.html     # Shared header/footer for rich redesign pages
+│   └── header-footer-1.html   # Shared header/footer for original design pages
 ├── images/
 │   └── (your images go here)
 ├── blog-posts/
@@ -113,12 +124,13 @@ To add a new blog post, simply edit `blog-posts/posts.json`:
 - Browser-safe (no localStorage)
 
 ### ✅ Pages
-1. **Homepage** - Hero section, stats, features, process timeline
-2. **About Us** - Mission, values, research focus, team
-3. **Publications** - Searchable/filterable database of research
-4. **Success Stories** - Testimonials with achievements
-5. **Blog** - Dynamic posts loaded from JSON
-6. **FAQ** - Organized collapsible questions
+1. **Homepage** (`index.html`) - Rich redesign with proof carousel, metrics, and FAQ preview
+2. **About Us** (`about.html`) - Rich redesign with story, process, and outcome sections
+3. **Publications** (`publications.html`) - Rich redesign with featured carousel and advanced filtering
+4. **Blog** (`blog.html`) - Rich redesign with spotlight and dynamic post loading
+5. **FAQ** (`faq.html`) - Rich redesign with sidebar, search, and category filters
+
+Original design variants are available at `index1.html`, `about1.html`, `publications1.html`, `blog1.html`, and `faqs1.html`.
 
 ## 🖼️ Updating Images
 
@@ -158,7 +170,18 @@ All features work seamlessly across devices.
 ## 🔧 Customization Guide
 
 ### Changing Colors
-Edit the CSS variables in `css/styles.css`:
+Edit the CSS variables in `css/styles.css` (rich redesign pages):
+
+```css
+:root {
+    --accent: #015da9;        /* Main blue */
+    --accent-light: #e0eef8;  /* Light blue background */
+    --text: #1a1a1a;          /* Body text */
+    --muted: #6b7280;         /* Muted text */
+}
+```
+
+Or in `css/styles-1.css` (original design pages):
 
 ```css
 :root {
@@ -169,25 +192,16 @@ Edit the CSS variables in `css/styles.css`:
 ```
 
 ### Updating Statistics
-Edit the numbers in `index.html`:
+Edit the metric counters in `index.html`:
 
 ```html
-<div class="stat-number" data-target="300">0</div>
+<span class="hero-metric-value" data-countup="300" data-countup-suffix="+">0+</span>
 ```
 
-Change `data-target="300"` to your actual number.
+Change `data-countup="300"` to your actual number.
 
-### Modifying Team Members
-Edit the team section in `about.html`. Each team member follows this structure:
-
-```html
-<div class="team-member" data-scroll-animate>
-    <div class="member-avatar">👨‍⚕️</div>
-    <div class="member-name">Name</div>
-    <div class="member-role">Role</div>
-    <p class="member-bio">Bio text...</p>
-</div>
-```
+### Modifying About Page Content
+Edit the story and focus sections in `about.html` using the `.story-card` and `.focus-card` elements.
 
 ## 🐛 Troubleshooting
 
