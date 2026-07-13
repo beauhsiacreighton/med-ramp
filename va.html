@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENT Dot Phrases — CPRS Template Library</title>
+<meta name="description" content="A searchable library of note templates to paste into CPRS. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <header class="masthead">
+    <div>
+      <div class="masthead-title">
+        <span class="rx">.</span>
+        <h1>ENT Dot Phrases</h1>
+      </div>
+      <p class="masthead-sub">a template library for CPRS · stored in this browser only · no patient data</p>
+    </div>
+    <div class="masthead-actions">
+      <button class="btn" id="btn-import">Import backup</button>
+      <button class="btn" id="btn-export">Export backup</button>
+      <button class="btn btn-primary" id="btn-new">+ New template</button>
+    </div>
+  </header>
+
+  <div class="storage-banner" id="storage-banner" role="alert" hidden>
+    Your browser is blocking local storage (common in private/incognito
+    windows), so favorites and custom templates won't be saved between
+    visits. Everything will still work for this session.
+  </div>
+
+  <section class="controls">
+    <div class="search-row">
+      <label for="search-input" class="visually-hidden">Search templates</label>
+      <input type="search" id="search-input" placeholder="Search by shorthand, title, or keyword — e.g. sept, tonsil, discharge" autocomplete="off">
+      <span class="result-count" id="result-count" aria-live="polite"></span>
+    </div>
+
+    <div class="filter-row">
+      <div class="tab-group" id="note-type-tabs" role="group" aria-label="Filter by note type"></div>
+
+      <div class="select-field">
+        <label for="subspecialty-select">Subspecialty</label>
+        <select id="subspecialty-select">
+          <option value="">All</option>
+        </select>
+      </div>
+
+      <div class="checkbox-field">
+        <input type="checkbox" id="favorites-only">
+        <label for="favorites-only">★ Favorites only</label>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-grid">
+    <div class="list-panel" id="list-panel" aria-label="Template results"></div>
+
+    <div class="detail-panel" id="detail-panel">
+      <div class="detail-empty">
+        Select a template on the left, or search above — try "sept" or "discharge".
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>Runs 100% client-side. Your edits live in this browser's local storage — export a backup before clearing browser data or switching devices.</span>
+    <span id="template-total"></span>
+  </footer>
+</div>
+
+<!-- Edit / New template modal -->
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">Edit template</h2>
+    <form id="template-form">
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label for="field-shorthand">Shorthand</label>
+          <input type="text" id="field-shorthand" placeholder=".SEPTOPLASTY" required>
+        </div>
+        <div class="form-row">
+          <label for="field-title">Title</label>
+          <input type="text" id="field-title" placeholder="Septoplasty — Operative Note" required>
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label for="field-notetype">Note type</label>
+          <select id="field-notetype"></select>
+        </div>
+        <div class="form-row">
+          <label for="field-subspecialty">Subspecialty</label>
+          <select id="field-subspecialty"></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="field-tags">Tags (comma separated)</label>
+        <input type="text" id="field-tags" placeholder="nasal, septum, surgery">
+      </div>
+      <div class="form-row">
+        <label for="field-body">Template text — use [brackets] for fillable blanks</label>
+        <textarea id="field-body" spellcheck="false"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="btn-modal-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="btn-modal-save">Save template</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<input type="file" id="import-file-input" accept="application/json" class="visually-hidden">
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+<script src="vatemplates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
