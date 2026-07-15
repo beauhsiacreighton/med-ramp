@@ -1,4 +1,4 @@
-[
+window.BUILT_IN_TEMPLATES = [
   {
     "id": "new-patient-general",
     "shorthand": ".NEWPTENT",
@@ -233,4 +233,4 @@
     "tags": ["discharge", "post-op", "instructions", "general"],
     "body": "DISCHARGE SUMMARY — POST-OPERATIVE\n\nProcedure performed: [___] on [date]\nSurgeon: [___]\n\nHospital course: Patient underwent [___] without complication; see operative note for full details. Post-operatively the patient was [monitored overnight/discharged same day], tolerating [diet/pain control] appropriately.\n\nDischarge condition: Stable\n\nDischarge instructions:\n-activity: avoid heavy lifting (>[___] lbs) and strenuous activity for [___] days\n-wound care: [___]\n-diet: [___]\n-medications: [pain control regimen: ___], resume home medications as directed\n-signs to report to ENT/ER: fever >101.5F, uncontrolled bleeding, worsening pain, signs of infection\n\nFollow up: ENT clinic in [___] [days/weeks]\n\nPatient verbalized understanding of discharge instructions."
   }
-]
+];
