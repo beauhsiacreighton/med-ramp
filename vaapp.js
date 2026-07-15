@@ -96,6 +96,49 @@
   /* ------------------------------------------------------------
      Data assembly
      ------------------------------------------------------------ */
+  function parseTemplatesText(text) {
+    var trimmed = (text || "").trim();
+    if (!trimmed) return [];
+    if (trimmed.charAt(0) === "[") {
+      var parsed = JSON.parse(trimmed);
+      return Array.isArray(parsed) ? parsed : [];
+    }
+    var eq = trimmed.indexOf("=");
+    if (eq !== -1) {
+      var rhs = trimmed.slice(eq + 1).trim().replace(/;\s*$/, "");
+      var parsedRhs = JSON.parse(rhs);
+      return Array.isArray(parsedRhs) ? parsedRhs : [];
+    }
+    return [];
+  }
+
+  function ensureBuiltInTemplates(done) {
+    var existing = window.BUILT_IN_TEMPLATES;
+    if (Array.isArray(existing) && existing.length > 0) {
+      done();
+      return;
+    }
+    if (typeof fetch !== "function") {
+      window.BUILT_IN_TEMPLATES = [];
+      done();
+      return;
+    }
+    fetch("vatemplates.js", { cache: "no-cache" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("fetch failed");
+        return res.text();
+      })
+      .then(function (text) {
+        window.BUILT_IN_TEMPLATES = parseTemplatesText(text);
+        done();
+      })
+      .catch(function (err) {
+        console.warn("Could not load built-in templates", err);
+        window.BUILT_IN_TEMPLATES = [];
+        done();
+      });
+  }
+
   function rebuildAll() {
     var builtIn = (window.BUILT_IN_TEMPLATES || []).map(function (t) {
       return Object.assign({}, t, { builtIn: true });
@@ -679,26 +722,10 @@
   /* ------------------------------------------------------------
      Wire up static controls
      ------------------------------------------------------------ */
-  function init() {
-    storageAvailable = testStorage();
-    if (!storageAvailable) showStorageBanner();
-
-    state.personalTemplates = loadJSON(STORAGE_KEYS.personal, []);
-    state.favorites = loadJSON(STORAGE_KEYS.favorites, []);
-    if (!Array.isArray(state.personalTemplates)) state.personalTemplates = [];
-    if (!Array.isArray(state.favorites)) state.favorites = [];
-
-    rebuildAll();
-    renderNoteTypeTabs();
-    renderList();
-    renderDetail();
-
+  function wireControls() {
     var totalEl = document.getElementById("template-total");
     if (totalEl) {
-      var update = function () {
-        totalEl.textContent = state.all.length + " templates in your library";
-      };
-      update();
+      totalEl.textContent = state.all.length + " templates in your library";
     }
 
     document.getElementById("search-input").addEventListener("input", debounce(function (e) {
@@ -742,6 +769,24 @@
       if (e.key === "Escape" && !document.getElementById("modal-backdrop").hidden) {
         closeEditModal();
       }
+    });
+  }
+
+  function init() {
+    storageAvailable = testStorage();
+    if (!storageAvailable) showStorageBanner();
+
+    state.personalTemplates = loadJSON(STORAGE_KEYS.personal, []);
+    state.favorites = loadJSON(STORAGE_KEYS.favorites, []);
+    if (!Array.isArray(state.personalTemplates)) state.personalTemplates = [];
+    if (!Array.isArray(state.favorites)) state.favorites = [];
+
+    ensureBuiltInTemplates(function () {
+      rebuildAll();
+      renderNoteTypeTabs();
+      renderList();
+      renderDetail();
+      wireControls();
     });
   }
 
