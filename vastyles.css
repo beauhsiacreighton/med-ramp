@@ -467,7 +467,8 @@ textarea.body-editor{
   font-size: 13.5px;
   line-height: 1.65;
   background: var(--paper-dim);
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   transition: border-color 140ms ease, box-shadow 140ms ease;
 }
 textarea.body-editor:focus-visible{
@@ -566,7 +567,8 @@ textarea.body-editor:focus-visible{
   font-family: var(--mono);
   font-size: 13px;
   min-height: 220px;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 .form-grid-2{
