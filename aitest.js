@@ -21,7 +21,7 @@ async function sendMessage() {
   const text = userInput.value.trim();
 
   if (!apiKey) {
-    statusEl.textContent = 'Enter your OpenRouter API key first.';
+    statusEl.textContent = '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';
     return;
   }
   if (!text) return;
