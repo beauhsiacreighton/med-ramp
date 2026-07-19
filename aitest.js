@@ -41,11 +41,15 @@ async function sendMessage() {
       },
       body: JSON.stringify({
         model: model,
-        messages: messages
+        messages: messages,
+        max_tokens: 1024
       })
     });
 
     const data = await response.json();
+
+    // Always log the full raw response so it can be inspected in DevTools console.
+    console.log('OpenRouter raw response:', data);
 
     if (!response.ok) {
       const errMsg = (data.error && data.error.message) || JSON.stringify(data);
@@ -54,9 +58,19 @@ async function sendMessage() {
       return;
     }
 
-    const reply = data.choices && data.choices[0] && data.choices[0].message
-      ? data.choices[0].message.content
-      : '(no content returned)';
+    const choice = data.choices && data.choices[0];
+    const msg = choice && choice.message;
+
+    // Some reasoning models put text in message.content; if that's empty,
+    // fall back to reasoning text, or show the finish_reason for debugging.
+    let reply = msg && msg.content ? msg.content : '';
+    if (!reply && msg && msg.reasoning) {
+      reply = '(model returned only reasoning, no final answer)\n\n' + msg.reasoning;
+    }
+    if (!reply) {
+      reply = '(no content returned) — raw response logged to browser console. finish_reason: ' +
+        (choice && choice.finish_reason ? choice.finish_reason : 'unknown');
+    }
 
     addMessage('assistant', reply);
     messages.push({ role: 'assistant', content: reply });
