@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>Pre-Visit Dizziness History | ENT Intake</title>
+<meta name="description" content="A guided pre-visit questionnaire that prepares a structured dizziness history for your ENT physician." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="dizzy.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2.2"/>
+          <path d="M9 22c3.5-6 8-9 11-9s7.5 3 11 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="20" cy="24.5" r="2.4" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-name">Dizziness Intake</span>
+    </div>
+    <p class="brand-tagline">A pre-visit history tool for your ENT clinic</p>
+  </header>
+
+  <!-- Balance horizon progress indicator -->
+  <div class="horizon-wrap" id="horizonWrap" aria-hidden="true">
+    <svg id="horizonSvg" viewBox="0 0 200 24" preserveAspectRatio="none">
+      <line id="horizonLine" x1="4" y1="12" x2="196" y2="12" />
+      <circle id="horizonDot" cx="4" cy="12" r="4.5" />
+    </svg>
+  </div>
+
+  <div class="progress-track" role="progressbar" id="progressTrack" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Questionnaire progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <p class="progress-label" id="progressLabel" aria-live="polite"></p>
+
+  <!-- Main content -->
+  <main class="main-area" id="mainArea">
+
+    <!-- Screen: Welcome -->
+    <section class="screen" id="screen-welcome" data-active="true">
+      <div class="card welcome-card">
+        <h1 class="welcome-title">Let's prepare for your visit</h1>
+        <p class="welcome-body">
+          This short guided questionnaire collects a structured history of your dizziness so your
+          ENT physician can review it before your appointment. It takes most patients about
+          5&ndash;8 minutes.
+        </p>
+        <ul class="welcome-points">
+          <li>One simple question at a time</li>
+          <li>You can go back and change any answer</li>
+          <li>Your answers are organized into a summary for your doctor</li>
+        </ul>
+        <div class="welcome-notice">
+          <strong>Please note:</strong> This tool does not diagnose any condition. It only organizes
+          your history so your doctor can evaluate you more efficiently. If you are experiencing a
+          medical emergency &mdash; such as sudden severe headache, chest pain, difficulty speaking,
+          weakness, or fainting &mdash; please seek emergency care immediately.
+        </div>
+        <button class="btn btn-primary btn-large" id="startBtn" type="button">Begin questionnaire</button>
+      </div>
+    </section>
+
+    <!-- Screen: Question flow -->
+    <section class="screen" id="screen-questions" data-active="false">
+      <div class="card question-card">
+        <div id="questionContainer" aria-live="polite"></div>
+        <div class="nav-row">
+          <button class="btn btn-ghost" id="backBtn" type="button">Back</button>
+          <button class="btn btn-primary" id="nextBtn" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen: Loading -->
+    <section class="screen" id="screen-loading" data-active="false">
+      <div class="card loading-card">
+        <div class="loading-spinner" aria-hidden="true">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <circle cx="30" cy="30" r="24" fill="none" stroke="var(--color-border)" stroke-width="5"/>
+            <circle cx="30" cy="30" r="24" fill="none" stroke="var(--color-primary)" stroke-width="5"
+                    stroke-linecap="round" stroke-dasharray="150" stroke-dashoffset="110" class="spin-arc"/>
+          </svg>
+        </div>
+        <h2 class="loading-title" id="loadingTitle">Organizing your history&hellip;</h2>
+        <p class="loading-body">This will only take a moment.</p>
+      </div>
+    </section>
+
+    <!-- Screen: Error -->
+    <section class="screen" id="screen-error" data-active="false">
+      <div class="card">
+        <h2 class="error-title">Something went wrong</h2>
+        <p id="errorMessage" class="error-body"></p>
+        <div class="nav-row nav-row-single">
+          <button class="btn btn-primary" id="retryBtn" type="button">Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen: Results -->
+    <section class="screen" id="screen-results" data-active="false">
+      <div class="results-wrap">
+
+        <div class="card results-header-card">
+          <h1 class="results-title">Your Pre-Visit Summary</h1>
+          <p class="results-subtitle">
+            Review this summary and share it with your ENT physician. This is decision-support
+            information only &mdash; it is not a diagnosis.
+          </p>
+          <div class="results-actions">
+            <button class="btn btn-secondary" id="copyHpiBtn" type="button">Copy HPI</button>
+            <button class="btn btn-secondary" id="copyReportBtn" type="button">Copy Entire Report</button>
+            <button class="btn btn-ghost" id="restartBtn" type="button">Start New Interview</button>
+          </div>
+          <p class="copy-confirm" id="copyConfirm" aria-live="polite"></p>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">Patient Summary</h2>
+          <div id="patientSummary" class="result-body"></div>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">History of Present Illness (HPI)</h2>
+          <div id="hpiText" class="result-body result-prose"></div>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">Pertinent Positives</h2>
+          <ul id="pertinentPositives" class="result-list"></ul>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">Pertinent Negatives</h2>
+          <ul id="pertinentNegatives" class="result-list"></ul>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">Possible Differential Diagnosis</h2>
+          <ol id="differentialList" class="result-list result-list-numbered"></ol>
+        </div>
+
+        <div class="card result-section result-section-flag">
+          <h2 class="result-heading">Potential Red Flags</h2>
+          <ul id="redFlagsList" class="result-list"></ul>
+        </div>
+
+        <div class="card result-section">
+          <h2 class="result-heading">Missing Important Information</h2>
+          <ul id="missingInfoList" class="result-list"></ul>
+        </div>
+
+        <p class="disclaimer-footer">
+          Generated with AI assistance from a large language model using only the information you
+          provided. This summary is intended as decision support for your physician and is not a
+          medical diagnosis. It may be incomplete or inaccurate; clinical judgment and in-person
+          examination remain necessary.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>This tool does not provide medical advice, diagnosis, or treatment. In an emergency, call your local emergency number.</p>
+  </footer>
+
+</div>
+
+<script src="dizzy.js"></script>
+</body>
+</html>
