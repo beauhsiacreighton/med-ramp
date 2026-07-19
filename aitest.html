@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OpenRouter Key Test</title>
+<link rel="stylesheet" href="aitest.css">
+</head>
+<body>
+  <div id="app">
+    <h1>OpenRouter Key Tester</h1>
+
+    <label for="apiKey">OpenRouter API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-or-v1-...">
+
+    <label for="model">Model</label>
+    <input type="text" id="model" value="openai/gpt-4o-mini">
+
+    <div id="chatLog"></div>
+
+    <div id="inputRow">
+      <input type="text" id="userInput" placeholder="Type a message and press Enter...">
+      <button id="sendBtn">Send</button>
+    </div>
+
+    <p id="status"></p>
+  </div>
+
+  <script src="aitest.js"></script>
+</body>
+</html>
