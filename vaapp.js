@@ -123,7 +123,7 @@
       done();
       return;
     }
-    fetch("vatemplates.js?v=2", { cache: "no-cache" })
+    fetch("vatemplates.js?v=3", { cache: "no-cache" })
       .then(function (res) {
         if (!res.ok) throw new Error("fetch failed");
         return res.text();
