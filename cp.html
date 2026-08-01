@@ -10,11 +10,12 @@
   1. Create a free Firebase project at https://console.firebase.google.com
   2. In the project, enable "Firestore Database" (production mode is fine).
   3. In Project settings > General, scroll to "Your apps" > Web app, register an app,
-     and copy the firebaseConfig object it gives you into FIREBASE_CONFIG below.
+     copy js/firebase-config.example.js to js/firebase-config.js, and paste the config.
   4. In Firestore > Rules, paste the rules from the README/chat message you got with
      this file, then Publish.
-  5. Push this file to a GitHub repo, enable GitHub Pages (Settings > Pages > Deploy
-     from branch), and open the resulting URL on any device.
+  5. Push this file to a GitHub repo, enable GitHub Pages (Settings > Pages >
+     Source: GitHub Actions), add a FIREBASE_CONFIG repository secret with your
+     web app config JSON, and open the resulting URL on any device.
 
   Nothing sensitive is stored on GitHub — this file is just code. All actual note
   content lives in Firestore, and only ever leaves this browser as AES-256-GCM
@@ -302,6 +303,7 @@
 
 </div>
 
+<script src="js/firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
@@ -309,29 +311,19 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 // ======================================================================
-// 1. FIREBASE CONFIG — replace with the config from your own Firebase
-//    project (Project settings > General > Your apps > Web app).
-//    These values are not secret; access is controlled by Firestore rules.
+// 1. FIREBASE CONFIG — loaded from js/firebase-config.js (see
+//    js/firebase-config.example.js). Restrict the API key by HTTP referrer
+//    in Google Cloud Console; access is controlled by Firestore rules.
 // ======================================================================
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const firebaseConfig = window.FIREBASE_CONFIG;
+if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "YOUR_API_KEY") {
+  throw new Error(
+    "Firebase is not configured. Copy js/firebase-config.example.js to js/firebase-config.js and add your project config."
+  );
+}
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBXSWmS3Mzez9-q5PakIvU3BHN4_tzLRGg",
-  authDomain: "paster-8e9cb.firebaseapp.com",
-  projectId: "paster-8e9cb",
-  storageBucket: "paster-8e9cb.firebasestorage.app",
-  messagingSenderId: "29503876979",
-  appId: "1:29503876979:web:a73aebf38e9bad1a821f06",
-  measurementId: "G-BDPP1HSVH8"
-};
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 // ======================================================================
 // 2. CRYPTO — everything below runs locally in the browser. The passcode
