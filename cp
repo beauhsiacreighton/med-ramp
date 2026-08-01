@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Keypad — private sync pad</title>
+
+<!--
+  SETUP CHECKLIST (do this once):
+  1. Create a free Firebase project at https://console.firebase.google.com
+  2. In the project, enable "Firestore Database" (production mode is fine).
+  3. In Project settings > General, scroll to "Your apps" > Web app, register an app,
+     and copy the firebaseConfig object it gives you into FIREBASE_CONFIG below.
+  4. In Firestore > Rules, paste the rules from the README/chat message you got with
+     this file, then Publish.
+  5. Push this file to a GitHub repo, enable GitHub Pages (Settings > Pages > Deploy
+     from branch), and open the resulting URL on any device.
+
+  Nothing sensitive is stored on GitHub — this file is just code. All actual note
+  content lives in Firestore, and only ever leaves this browser as AES-256-GCM
+  ciphertext. The passcode itself is never sent anywhere; it only exists in memory
+  on each device long enough to derive a room ID and an encryption key from it.
+
+  This is a personal convenience tool, not a HIPAA-covered system or a substitute
+  for hospital-approved systems. See the accompanying notes for why that
+  distinction matters if you plan to use this for patient information.
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#12151b;
+    --surface:#1b1f27;
+    --surface-2:#232833;
+    --line:#2c3241;
+    --text:#eceef3;
+    --muted:#8b93a7;
+    --brass:#c89b4a;
+    --brass-dim:#8a6f3c;
+    --good:#5fae86;
+    --bad:#d97878;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #1a1f29 0%, var(--ink) 55%);
+    color:var(--text);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100%;
+    padding:24px;
+  }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+
+  .stage{ width:100%; max-width:460px; position:relative; }
+
+  /* ---- shared card ---- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:32px 28px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  /* ---- lock icon ---- */
+  .lock-wrap{ display:flex; justify-content:center; margin-bottom:18px; }
+  .lock-wrap svg{ width:40px; height:40px; }
+  .shackle{ transform-origin: 20px 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1.4); }
+  .unlocked .shackle{ transform: rotate(-24deg) translate(-3px,-1px); }
+  .lock-body{ fill:var(--surface-2); stroke:var(--brass); stroke-width:1.6; }
+  .shackle path{ fill:none; stroke:var(--brass); stroke-width:1.6; }
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:15px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    text-align:center;
+    margin:0 0 26px;
+    font-weight:500;
+  }
+
+  label.field-label{
+    display:block;
+    font-size:12px;
+    letter-spacing:.06em;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+
+  .code-row{ display:flex; gap:8px; }
+  input#passcode{
+    flex:1;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 14px;
+    font-size:18px;
+    letter-spacing:.08em;
+    color:var(--text);
+    outline:none;
+  }
+  input#passcode:focus{ border-color:var(--brass); box-shadow:0 0 0 3px rgba(200,155,74,.15); }
+
+  button{
+    font-family:inherit;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+  }
+  .icon-btn{
+    width:48px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-size:16px;
+  }
+  .icon-btn:hover{ color:var(--text); border-color:var(--brass-dim); }
+
+  .primary-btn{
+    width:100%;
+    margin-top:16px;
+    padding:14px;
+    background:var(--brass);
+    color:#1a1508;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.02em;
+  }
+  .primary-btn:hover{ background:#d6a856; }
+  .primary-btn:disabled{ opacity:.5; cursor:default; }
+
+  .ghost-btn{
+    width:100%;
+    margin-top:10px;
+    padding:11px;
+    background:transparent;
+    color:var(--muted);
+    border:1px dashed var(--line);
+    font-size:13px;
+  }
+  .ghost-btn:hover{ color:var(--text); border-color:var(--brass-dim); }
+
+  .hint{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:14px;
+    line-height:1.5;
+    min-height:1.2em;
+  }
+  .hint.warn{ color:var(--brass); }
+
+  .footnote{
+    text-align:center;
+    font-size:11.5px;
+    color:#5a6274;
+    margin-top:22px;
+    line-height:1.5;
+  }
+
+  /* ---- pad view ---- */
+  .pad-card{ padding:20px; }
+  .pad-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+    gap:10px;
+  }
+  .room-chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:7px 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    letter-spacing:.04em;
+  }
+  .room-chip button{
+    background:none; color:var(--brass); font-size:12px; padding:0;
+  }
+  .status{
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--muted);
+  }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--muted); }
+  .status.good .dot{ background:var(--good); }
+  .status.bad .dot{ background:var(--bad); }
+
+  textarea#editor{
+    width:100%;
+    height:46vh;
+    min-height:220px;
+    resize:vertical;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:var(--text);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14.5px;
+    line-height:1.6;
+    padding:16px;
+    outline:none;
+  }
+  textarea#editor:focus{ border-color:var(--brass-dim); }
+
+  .pad-actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+  }
+  .pad-actions button{
+    flex:1;
+    padding:11px;
+    font-size:13px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .pad-actions button:hover{ color:var(--text); border-color:var(--brass-dim); }
+  .pad-actions button.danger:hover{ color:var(--bad); border-color:var(--bad); }
+
+  .view{ transition: opacity .35s ease, transform .35s ease; }
+  .view.hidden{ display:none; }
+  .view.leaving{ opacity:0; transform:translateY(-6px); }
+  .view.entering{ opacity:0; transform:translateY(6px); }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- GATE VIEW -->
+  <div id="gateView" class="view">
+    <div class="card">
+      <div class="lock-wrap" id="lockIcon">
+        <svg viewBox="0 0 40 40">
+          <rect class="lock-body" x="8" y="17" width="24" height="17" rx="4"/>
+          <g class="shackle">
+            <path d="M13 17 V12 a7 7 0 0 1 14 0 v5"/>
+          </g>
+        </svg>
+      </div>
+      <h1>Enter your code</h1>
+
+      <label class="field-label" for="passcode">Passcode</label>
+      <div class="code-row">
+        <input id="passcode" class="mono" type="password" autocomplete="off"
+               autocapitalize="off" spellcheck="false" placeholder="e.g. AB3D-9F2K-QR7T-2MXY">
+        <button class="icon-btn" id="toggleShow" type="button" title="Show/hide">👁</button>
+      </div>
+
+      <button class="primary-btn" id="enterBtn">Open room</button>
+      <button class="ghost-btn" id="genBtn" type="button">Generate a new strong code</button>
+
+      <div class="hint" id="gateHint"></div>
+
+      <div class="footnote">
+        Same code, same room, any device. Content is encrypted in this browser
+        before it ever leaves — the server only ever sees ciphertext.<br>
+        There's no password reset: if you lose the code, that room's text is
+        unrecoverable. This is a personal tool, not a HIPAA-covered system —
+        avoid entering identifying patient information.
+      </div>
+    </div>
+  </div>
+
+  <!-- PAD VIEW -->
+  <div id="padView" class="view hidden">
+    <div class="card pad-card">
+      <div class="pad-header">
+        <div class="room-chip">
+          <span id="roomChipText">••••-••••-••••-••••</span>
+          <button id="revealCode" type="button" title="Reveal code">show</button>
+          <button id="copyCode" type="button" title="Copy code">copy</button>
+        </div>
+        <div class="status" id="statusEl"><span class="dot"></span><span id="statusText">Connecting…</span></div>
+      </div>
+
+      <textarea id="editor" placeholder="Start typing — this syncs to any device with the same code…"></textarea>
+
+      <div class="pad-actions">
+        <button id="wipeBtn" class="danger" type="button">Delete text</button>
+        <button id="leaveBtn" type="button">Lock &amp; leave</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+// ======================================================================
+// 1. FIREBASE CONFIG — replace with the config from your own Firebase
+//    project (Project settings > General > Your apps > Web app).
+//    These values are not secret; access is controlled by Firestore rules.
+// ======================================================================
+const FIREBASE_CONFIG = {
+  apiKey: "REPLACE_ME",
+  authDomain: "REPLACE_ME.firebaseapp.com",
+  projectId: "REPLACE_ME",
+};
+
+const app = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(app);
+
+// ======================================================================
+// 2. CRYPTO — everything below runs locally in the browser. The passcode
+//    never leaves this device; only AES-GCM ciphertext is written to
+//    Firestore.
+// ======================================================================
+const enc = new TextEncoder();
+const dec = new TextDecoder();
+
+function bufToHex(buf){
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+function bufToB64(buf){
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i=0;i<bytes.byteLength;i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+function b64ToBuf(b64){
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+  return bytes.buffer;
+}
+
+async function roomIdFromPasscode(passcode){
+  const hash = await crypto.subtle.digest("SHA-256", enc.encode("keypad-room-v1:" + passcode));
+  return bufToHex(hash);
+}
+
+async function keyFromPasscode(passcode){
+  const baseKey = await crypto.subtle.importKey(
+    "raw", enc.encode(passcode), "PBKDF2", false, ["deriveKey"]
+  );
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt: enc.encode("keypad-enc-salt-v1"), iterations: 250000, hash:"SHA-256" },
+    baseKey,
+    { name:"AES-GCM", length:256 },
+    false,
+    ["encrypt","decrypt"]
+  );
+}
+
+async function encryptText(key, text){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const cipherBuf = await crypto.subtle.encrypt({ name:"AES-GCM", iv }, key, enc.encode(text));
+  return { iv: bufToB64(iv), ciphertext: bufToB64(cipherBuf) };
+}
+
+async function decryptText(key, ivB64, ciphertextB64){
+  const iv = new Uint8Array(b64ToBuf(ivB64));
+  const plainBuf = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, b64ToBuf(ciphertextB64));
+  return dec.decode(plainBuf);
+}
+
+function generateCode(){
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // no 0/O/1/I/L ambiguity
+  const rand = new Uint32Array(16);
+  crypto.getRandomValues(rand);
+  const groups = [];
+  for (let g=0; g<4; g++){
+    let s = "";
+    for (let i=0;i<4;i++) s += chars[rand[g*4+i] % chars.length];
+    groups.push(s);
+  }
+  return groups.join("-");
+}
+
+// ======================================================================
+// 3. UI wiring
+// ======================================================================
+const gateView = document.getElementById('gateView');
+const padView = document.getElementById('padView');
+const passInput = document.getElementById('passcode');
+const toggleShow = document.getElementById('toggleShow');
+const enterBtn = document.getElementById('enterBtn');
+const genBtn = document.getElementById('genBtn');
+const gateHint = document.getElementById('gateHint');
+const lockIcon = document.getElementById('lockIcon');
+
+const editor = document.getElementById('editor');
+const statusEl = document.getElementById('statusEl');
+const statusText = document.getElementById('statusText');
+const roomChipText = document.getElementById('roomChipText');
+const revealCode = document.getElementById('revealCode');
+const copyCode = document.getElementById('copyCode');
+const wipeBtn = document.getElementById('wipeBtn');
+const leaveBtn = document.getElementById('leaveBtn');
+
+let state = {
+  passcode: null,
+  key: null,
+  docRef: null,
+  unsub: null,
+  lastLocalEdit: 0,
+  saveTimer: null,
+};
+
+toggleShow.addEventListener('click', () => {
+  passInput.type = passInput.type === 'password' ? 'text' : 'password';
+});
+
+genBtn.addEventListener('click', () => {
+  const code = generateCode();
+  passInput.value = code;
+  passInput.type = 'text';
+  gateHint.textContent = "Write this down — you'll need to type it on your other device. It can't be recovered if lost.";
+  gateHint.classList.add('warn');
+});
+
+passInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterBtn.click(); });
+
+enterBtn.addEventListener('click', async () => {
+  const passcode = passInput.value.trim();
+  if (!passcode){
+    gateHint.textContent = "Type or generate a code first.";
+    gateHint.classList.add('warn');
+    return;
+  }
+  enterBtn.disabled = true;
+  gateHint.classList.remove('warn');
+  gateHint.textContent = "";
+  try{
+    await enterRoom(passcode);
+    lockIcon.classList.add('unlocked');
+    setTimeout(() => {
+      gateView.classList.add('hidden');
+      padView.classList.remove('hidden');
+    }, 260);
+  } catch(err){
+    console.error(err);
+    gateHint.textContent = "Something went wrong opening that room. Try again.";
+    gateHint.classList.add('warn');
+  } finally {
+    enterBtn.disabled = false;
+  }
+});
+
+async function enterRoom(passcode){
+  setStatus('Connecting…', '');
+  const roomId = await roomIdFromPasscode(passcode);
+  const key = await keyFromPasscode(passcode);
+
+  state.passcode = passcode;
+  state.key = key;
+  state.docRef = doc(db, "rooms", roomId);
+  roomChipText.textContent = maskCode(passcode);
+  roomChipText.dataset.full = passcode;
+  roomChipText.dataset.masked = "true";
+
+  if (state.unsub) state.unsub();
+  state.unsub = onSnapshot(state.docRef, async (snap) => {
+    if (Date.now() - state.lastLocalEdit < 900) return; // don't clobber active typing
+    if (!snap.exists()){
+      setStatus('Empty room — start typing', '');
+      return;
+    }
+    const data = snap.data();
+    if (!data || !data.ciphertext) return;
+    try{
+      const text = await decryptText(state.key, data.iv, data.ciphertext);
+      if (editor.value !== text) editor.value = text;
+      setStatus('Synced', 'good');
+    } catch(e){
+      setStatus('Could not decrypt — check the code', 'bad');
+    }
+  }, (err) => {
+    console.error(err);
+    setStatus('Connection error', 'bad');
+  });
+}
+
+function maskCode(code){
+  return code.replace(/[^-]/g, '•');
+}
+
+revealCode.addEventListener('click', () => {
+  const masked = roomChipText.dataset.masked !== "false";
+  roomChipText.textContent = masked ? roomChipText.dataset.full : maskCode(roomChipText.dataset.full);
+  roomChipText.dataset.masked = masked ? "false" : "true";
+  revealCode.textContent = masked ? "hide" : "show";
+});
+
+copyCode.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(roomChipText.dataset.full);
+    copyCode.textContent = "copied";
+    setTimeout(() => copyCode.textContent = "copy", 1200);
+  } catch(e){ /* clipboard may be unavailable; ignore */ }
+});
+
+function setStatus(text, kind){
+  statusText.textContent = text;
+  statusEl.className = 'status' + (kind ? ' ' + kind : '');
+}
+
+editor.addEventListener('input', () => {
+  state.lastLocalEdit = Date.now();
+  setStatus('Saving…', '');
+  clearTimeout(state.saveTimer);
+  state.saveTimer = setTimeout(saveNow, 500);
+});
+
+async function saveNow(){
+  if (!state.docRef || !state.key) return;
+  try{
+    const { iv, ciphertext } = await encryptText(state.key, editor.value);
+    await setDoc(state.docRef, { iv, ciphertext, updatedAt: serverTimestamp() });
+    setStatus('Saved', 'good');
+  } catch(e){
+    console.error(e);
+    setStatus('Save failed — check connection', 'bad');
+  }
+}
+
+leaveBtn.addEventListener('click', () => {
+  if (state.unsub) state.unsub();
+  state = { passcode:null, key:null, docRef:null, unsub:null, lastLocalEdit:0, saveTimer:null };
+  editor.value = '';
+  passInput.value = '';
+  passInput.type = 'password';
+  gateHint.textContent = '';
+  gateHint.classList.remove('warn');
+  lockIcon.classList.remove('unlocked');
+  padView.classList.add('hidden');
+  gateView.classList.remove('hidden');
+});
+
+wipeBtn.addEventListener('click', async () => {
+  if (!state.docRef) return;
+  if (!confirm("Delete the text stored in this room? This can't be undone.")) return;
+  try{
+    await deleteDoc(state.docRef);
+    editor.value = '';
+    setStatus('Deleted', '');
+  } catch(e){
+    console.error(e);
+    setStatus('Delete failed — check connection', 'bad');
+  }
+});
+</script>
+</body>
+</html>
