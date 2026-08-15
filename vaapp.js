@@ -24,6 +24,7 @@
 
   var BLANK_PATTERN = /\[[^\]\n]*\]/g;
   var OPERATIVE_DATE_PATTERN = /((?:Date of (?:Surgery|Procedure))|(?:DATE OF SURGERY)):\s*\[___\]/gi;
+  var LATERALITY_PATTERN = /\bL\/R\b/g;
   var MOBILE_BREAKPOINT = 860;
 
   /* ------------------------------------------------------------
@@ -109,8 +110,16 @@
     });
   }
 
+  // Display-time normalization: "L/R" -> "Left/Right" (also catches "L/R/bilateral").
+  // Applied at render time rather than rewriting the template data, so it's
+  // consistent across built-in AND personal templates with zero risk of a
+  // manual find/replace mistake in the data file.
+  function normalizeLaterality(body) {
+    return (body || "").replace(LATERALITY_PATTERN, "Left/Right");
+  }
+
   function prepareTemplateBody(body) {
-    return injectOperativeDates(body || "");
+    return normalizeLaterality(injectOperativeDates(body || ""));
   }
 
   function parseBlankContent(inner) {
@@ -133,6 +142,13 @@
     }
 
     return { type: "fill", options: [] };
+  }
+
+  // A "fill" blank counts as just a placeholder marker (e.g. "___" or "...")
+  // if it has no real words in it. Blanks with real words (e.g. "Age") get
+  // the Enter-to-strip-brackets treatment; pure placeholders don't.
+  function isPlaceholderOnly(inner) {
+    return /^[_.\s]*$/.test(inner || "");
   }
 
   function findBlankAt(text, index) {
@@ -192,10 +208,9 @@
       clearActiveBlank();
       return;
     }
+    // NOTE: multi-choice blanks start with NOTHING checked. The user picks
+    // explicitly; we never guess for them.
     var selected = selectedMap || {};
-    if (blank.parsed.type === "multi" && Object.keys(selected).length === 0) {
-      selected[0] = true;
-    }
     state.activeBlank = {
       start: blank.start,
       end: blank.end,
@@ -210,6 +225,7 @@
   function detectActiveBlankAtCursor(editor) {
     var cursor = editor.selectionStart || 0;
     var blank = findBlankAt(editor.value, cursor);
+
     if (blank && blank.parsed.type !== "fill") {
       if (state.activeBlank && state.activeBlank.start === blank.start && state.activeBlank.end === blank.end) {
         // Same blank that's already active — this call is almost certainly
@@ -220,9 +236,25 @@
       }
       setActiveBlank(blank, optionIndexAtPosition(blank, cursor));
       highlightActiveOption(editor);
-    } else {
-      clearActiveBlank();
+      return;
     }
+
+    if (blank && blank.parsed.type === "fill") {
+      // Clicking into ANY fill blank (worded or empty) selects its whole
+      // contents so you can just start typing over it — no more double- or
+      // triple-clicking to grab it.
+      clearActiveBlank();
+      var innerStart = blank.start + 1;
+      var innerEnd = blank.end - 1;
+      if (innerEnd > innerStart &&
+          !(editor.selectionStart === innerStart && editor.selectionEnd === innerEnd)) {
+        editor.setSelectionRange(innerStart, innerEnd);
+        scrollBlankIntoView(editor, { start: innerStart, end: innerEnd });
+      }
+      return;
+    }
+
+    clearActiveBlank();
   }
 
   function highlightActiveOption(editor) {
@@ -240,8 +272,12 @@
     var idx = active.optionIndex;
     if (!ranges[idx]) idx = 0;
 
+    var selStart = blank.start + ranges[idx].start;
+    var selEnd = blank.start + ranges[idx].end;
+
     editor.focus({ preventScroll: true });
-    editor.setSelectionRange(blank.start + ranges[idx].start, blank.start + ranges[idx].end);
+    editor.setSelectionRange(selStart, selEnd);
+    scrollBlankIntoView(editor, { start: selStart, end: selEnd });
     updateChoiceBar(active);
   }
 
@@ -269,6 +305,41 @@
     return true;
   }
 
+  // Replaces editor.value in [start, end) with `replacement` using the
+  // browser's native editing command when available, which keeps Ctrl+Z
+  // working. Directly assigning editor.value wipes the undo stack in most
+  // browsers, so we avoid that except as a last-resort fallback.
+  function replaceEditorRange(editor, start, end, replacement) {
+    editor.focus({ preventScroll: true });
+    editor.setSelectionRange(start, end);
+
+    var handledNatively = false;
+    try {
+      if (document.execCommand) {
+        handledNatively = document.execCommand("insertText", false, replacement);
+      }
+    } catch (e) {
+      handledNatively = false;
+    }
+
+    if (!handledNatively) {
+      var before = editor.value.slice(0, start);
+      var after = editor.value.slice(end);
+      editor.value = before + replacement + after;
+      var evt;
+      try {
+        evt = new Event("input", { bubbles: true });
+      } catch (e2) {
+        evt = document.createEvent("Event");
+        evt.initEvent("input", true, true);
+      }
+      editor.dispatchEvent(evt);
+      editor.setSelectionRange(start + replacement.length, start + replacement.length);
+    }
+
+    return start + replacement.length;
+  }
+
   function confirmActiveBlank(editor) {
     var active = state.activeBlank;
     if (!active || active.parsed.type === "fill") return false;
@@ -288,20 +359,30 @@
         if (active.selected[String(i)]) selected.push(opt);
       });
       if (!selected.length) {
-        selected.push(active.parsed.options[active.optionIndex] || active.parsed.options[0] || "");
+        // Nothing checked — don't guess. Ask instead of silently inserting
+        // whatever option happens to be highlighted.
+        setStatus("Tap at least one option, or press Esc to skip this blank.", true);
+        return false;
       }
       replacement = selected.join(", ");
     }
 
-    var before = editor.value.slice(0, blank.start);
-    var after = editor.value.slice(blank.end);
-    editor.value = before + replacement + after;
-
-    var cursor = blank.start + replacement.length;
+    var cursor = replaceEditorRange(editor, blank.start, blank.end, replacement);
     editor.setSelectionRange(cursor, cursor);
     clearActiveBlank();
     setStatus("Selection confirmed.", false);
     return true;
+  }
+
+  // Enter on a worded fill blank (e.g. "[Age]") keeps the text and drops
+  // the brackets, then advances like a normal confirm.
+  function resolveWordedFillBlank(editor, blank) {
+    var replacement = (blank.inner || "").trim();
+    var cursor = replaceEditorRange(editor, blank.start, blank.end, replacement);
+    editor.setSelectionRange(cursor, cursor);
+    clearActiveBlank();
+    setStatus("Kept the text, removed the brackets.", false);
+    if (state.tabJumpEnabled) jumpToNextBlank(editor);
   }
 
   function updateChoiceBar(active) {
@@ -309,8 +390,7 @@
     if (!bar) return;
 
     if (!active || active.parsed.type === "fill") {
-      bar.hidden = true;
-      bar.innerHTML = "";
+      bar.classList.remove("is-visible");
       return;
     }
 
@@ -330,7 +410,7 @@
       '<div class="choice-bar-label">' + escapeHtml(hint) + "</div>" +
       '<div class="choice-chip-row">' + chips + "</div>" +
       '<button type="button" class="btn btn-small btn-primary" id="choice-confirm-btn">Confirm selection</button>';
-    bar.hidden = false;
+    bar.classList.add("is-visible");
 
     bar.querySelectorAll("[data-choice-index]").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -379,14 +459,15 @@
 
     if (isMobileLayout()) {
       help.innerHTML =
-        '<strong>Mobile tips:</strong> Use <span class="kbd">Next blank</span> / <span class="kbd">Previous blank</span> ' +
+        '<strong>Mobile tips:</strong> Tap a blank to select it. Use <span class="kbd">Next blank</span> / <span class="kbd">Previous blank</span> ' +
         'at the top of the note to jump between blanks. When a choice blank is active, tap options then <span class="kbd">Confirm</span>.';
     } else {
       help.innerHTML =
-        '<strong>Desktop shortcuts:</strong> <span class="kbd">Tab</span> / <span class="kbd">Shift+Tab</span> move between blanks' +
+        '<strong>Desktop shortcuts:</strong> Click a blank to select it · <span class="kbd">Tab</span> / <span class="kbd">Shift+Tab</span> move between blanks' +
         (state.tabJumpEnabled ? "" : " (enable the checkbox below)") +
         ' · In choice blanks, <span class="kbd">Tab</span> or <span class="kbd">←</span>/<span class="kbd">→</span> cycles options · ' +
-        '<span class="kbd">Enter</span> confirms · Multi-choice blanks use <span class="kbd">Space</span> to toggle options';
+        '<span class="kbd">Enter</span> confirms (or keeps the text on a worded blank) · <span class="kbd">Esc</span> skips a blank · ' +
+        'Multi-choice blanks use <span class="kbd">Space</span> to toggle options';
     }
   }
 
@@ -433,7 +514,8 @@
     selectedId: null,
     tabJumpEnabled: true,
     helpBannerDismissed: false,
-    activeBlank: null
+    activeBlank: null,
+    pageScrolledForSelection: false
   };
 
   function uid() {
@@ -687,10 +769,27 @@
   /* ------------------------------------------------------------
      Rendering: detail panel
      ------------------------------------------------------------ */
+  function isElementReasonablyVisible(el) {
+    if (!el) return true;
+    var rect = el.getBoundingClientRect();
+    var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    return rect.top >= 0 && rect.top < viewportHeight * 0.6;
+  }
+
+  function scrollDetailIntoView() {
+    var target = document.getElementById("editor-help-wrap") || document.getElementById("detail-panel");
+    if (target && typeof target.scrollIntoView === "function") {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   function selectTemplate(id) {
     state.selectedId = id;
+    state.pageScrolledForSelection = false;
     renderList();
     renderDetail();
+    scrollDetailIntoView();
+    state.pageScrolledForSelection = true;
   }
 
   function toggleFavorite(id) {
@@ -745,10 +844,12 @@
           '<button type="button" class="btn btn-primary" id="btn-mobile-next">Next blank →</button>' +
         '</div>' +
       "</div>" +
-      '<div class="choice-bar" id="choice-bar" hidden aria-live="polite"></div>' +
-      '<textarea class="body-editor" id="body-editor" spellcheck="false" aria-label="Template text, editable before copying">' +
-        escapeHtml(prepareTemplateBody(t.body)) +
-      "</textarea>" +
+      '<div class="editor-wrap" id="editor-wrap">' +
+        '<textarea class="body-editor" id="body-editor" spellcheck="false" aria-label="Template text, editable before copying">' +
+          escapeHtml(prepareTemplateBody(t.body)) +
+        "</textarea>" +
+        '<div class="choice-bar" id="choice-bar" aria-live="polite"></div>' +
+      "</div>" +
       '<div class="editor-toolbar">' +
         '<div class="editor-toolbar-left">' +
           '<button type="button" class="btn btn-primary" id="btn-copy">Copy to clipboard</button>' +
@@ -775,7 +876,7 @@
       jumpToPreviousBlank(editor);
     });
     document.getElementById("btn-reset").addEventListener("click", function () {
-      editor.value = prepareTemplateBody(t.body);
+      replaceEditorRange(editor, 0, editor.value.length, prepareTemplateBody(t.body));
       clearActiveBlank();
       setStatus("Text reset to saved version.", false);
       editor.focus();
@@ -810,6 +911,9 @@
 
     editor.addEventListener("click", function () {
       detectActiveBlankAtCursor(editor);
+      if (!isElementReasonablyVisible(document.getElementById("editor-help-wrap"))) {
+        scrollDetailIntoView();
+      }
     });
 
     editor.addEventListener("select", function () {
@@ -842,10 +946,28 @@
     var cursor = editor.selectionStart || 0;
     var blank = findBlankAt(editor.value, cursor);
 
+    // Enter on a worded fill blank ("[Age]") keeps the words, drops the
+    // brackets, and advances. Pure placeholder blanks ("[___]") are left
+    // alone so Enter still behaves normally there.
+    if (e.key === "Enter" && blank && blank.parsed.type === "fill" && !isPlaceholderOnly(blank.inner)) {
+      e.preventDefault();
+      resolveWordedFillBlank(editor, blank);
+      return;
+    }
+
     if (blank && blank.parsed.type !== "fill") {
       if (!state.activeBlank || state.activeBlank.start !== blank.start) {
         setActiveBlank(blank, 0);
       }
+    }
+
+    // Escape skips the current blank without choosing anything.
+    if (e.key === "Escape" && state.activeBlank) {
+      e.preventDefault();
+      clearActiveBlank();
+      setStatus("Skipped.", false);
+      if (state.tabJumpEnabled) jumpToNextBlank(editor);
+      return;
     }
 
     if (e.key === "Enter" && state.activeBlank && state.activeBlank.parsed.type !== "fill") {
@@ -919,6 +1041,7 @@
     if (blank.parsed.type === "fill") {
       clearActiveBlank();
       textarea.setSelectionRange(blank.start, blank.end);
+      scrollBlankIntoView(textarea, { start: blank.start, end: blank.end });
     } else {
       setActiveBlank(blank, 0);
       highlightActiveOption(textarea);
@@ -976,6 +1099,101 @@
 
   function jumpToPreviousBlank(textarea) {
     jumpToBlank(textarea, -1);
+  }
+
+  /* ------------------------------------------------------------
+     Smooth, centered scrolling to keep the active blank visible
+     ------------------------------------------------------------ */
+  var mirrorEl = null;
+  var MIRROR_PROPS = [
+    "boxSizing", "width", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft",
+    "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth",
+    "fontFamily", "fontSize", "fontWeight", "fontStyle", "letterSpacing",
+    "lineHeight", "textTransform", "wordSpacing", "tabSize"
+  ];
+
+  function getMirror(editor) {
+    if (!mirrorEl) {
+      mirrorEl = document.createElement("div");
+      mirrorEl.style.position = "absolute";
+      mirrorEl.style.visibility = "hidden";
+      mirrorEl.style.top = "0";
+      mirrorEl.style.left = "-9999px";
+      mirrorEl.style.height = "auto";
+      mirrorEl.style.overflow = "hidden";
+      mirrorEl.style.whiteSpace = "pre-wrap";
+      mirrorEl.style.wordWrap = "break-word";
+      mirrorEl.setAttribute("aria-hidden", "true");
+      document.body.appendChild(mirrorEl);
+    }
+    var computed = window.getComputedStyle(editor);
+    MIRROR_PROPS.forEach(function (prop) {
+      mirrorEl.style[prop] = computed[prop];
+    });
+    mirrorEl.style.width = computed.width;
+    return mirrorEl;
+  }
+
+  function caretTopFor(editor, index) {
+    var mirror = getMirror(editor);
+    var value = editor.value;
+    mirror.textContent = "";
+    mirror.appendChild(document.createTextNode(value.slice(0, index)));
+    var marker = document.createElement("span");
+    marker.textContent = value.slice(index, index + 1) || ".";
+    mirror.appendChild(marker);
+    mirror.appendChild(document.createTextNode(value.slice(index + 1)));
+    return marker.offsetTop;
+  }
+
+  function smoothScrollTo(el, target, duration) {
+    var start = el.scrollTop;
+    var change = target - start;
+    if (Math.abs(change) < 1) return;
+    if (el.__scrollAnim) window.cancelAnimationFrame(el.__scrollAnim);
+    var startTime = null;
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    function step(ts) {
+      if (startTime === null) startTime = ts;
+      var elapsed = ts - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      el.scrollTop = start + change * easeInOutQuad(progress);
+      if (progress < 1) {
+        el.__scrollAnim = window.requestAnimationFrame(step);
+      } else {
+        el.__scrollAnim = null;
+      }
+    }
+    el.__scrollAnim = window.requestAnimationFrame(step);
+  }
+
+  // Centers the given character range vertically within the textarea's
+  // visible viewport, animated smoothly. Fails silently if measurement
+  // isn't possible for any reason — the native selection is still visible
+  // either way, this just makes sure it isn't scrolled off-screen.
+  function scrollBlankIntoView(editor, range) {
+    if (!editor || !range) return;
+    try {
+      var computed = window.getComputedStyle(editor);
+      var lineHeight = parseFloat(computed.lineHeight);
+      if (!lineHeight || isNaN(lineHeight)) {
+        lineHeight = parseFloat(computed.fontSize) * 1.4;
+      }
+      var startTop = caretTopFor(editor, range.start);
+      var endTop = caretTopFor(editor, Math.max(range.start, range.end - 1));
+      var midTop = (startTop + endTop) / 2 + lineHeight / 2;
+      var target = midTop - editor.clientHeight / 2;
+      var max = editor.scrollHeight - editor.clientHeight;
+      if (max < 0) max = 0;
+      target = Math.max(0, Math.min(target, max));
+      smoothScrollTo(editor, target, 260);
+    } catch (e) {
+      // Measurement failed — no big deal, selection is still visible.
+    }
   }
 
   /* ------------------------------------------------------------
