@@ -171,6 +171,17 @@
     return ranges;
   }
 
+  function optionIndexAtPosition(blank, absolutePos) {
+    var delimiter = blank.parsed.type === "multi" ? "//" : "/";
+    var ranges = getOptionRanges(blank.text, blank.parsed.options, delimiter);
+    for (var i = 0; i < ranges.length; i++) {
+      var absStart = blank.start + ranges[i].start;
+      var absEnd = blank.start + ranges[i].end;
+      if (absolutePos >= absStart && absolutePos <= absEnd) return i;
+    }
+    return 0;
+  }
+
   function clearActiveBlank() {
     state.activeBlank = null;
     updateChoiceBar(null);
@@ -200,7 +211,14 @@
     var cursor = editor.selectionStart || 0;
     var blank = findBlankAt(editor.value, cursor);
     if (blank && blank.parsed.type !== "fill") {
-      setActiveBlank(blank, 0);
+      if (state.activeBlank && state.activeBlank.start === blank.start && state.activeBlank.end === blank.end) {
+        // Same blank that's already active — this call is almost certainly
+        // our own highlightActiveOption() moving the selection, which fires
+        // a native 'select' event. Don't re-detect, or every Tab/chip click
+        // gets immediately reset back to the first option.
+        return;
+      }
+      setActiveBlank(blank, optionIndexAtPosition(blank, cursor));
       highlightActiveOption(editor);
     } else {
       clearActiveBlank();
@@ -222,7 +240,7 @@
     var idx = active.optionIndex;
     if (!ranges[idx]) idx = 0;
 
-    editor.focus();
+    editor.focus({ preventScroll: true });
     editor.setSelectionRange(blank.start + ranges[idx].start, blank.start + ranges[idx].end);
     updateChoiceBar(active);
   }
@@ -897,7 +915,7 @@
   }
 
   function focusBlank(textarea, blank) {
-    textarea.focus();
+    textarea.focus({ preventScroll: true });
     if (blank.parsed.type === "fill") {
       clearActiveBlank();
       textarea.setSelectionRange(blank.start, blank.end);
