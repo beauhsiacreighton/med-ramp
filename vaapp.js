@@ -80,10 +80,14 @@
     } else {
       state.tabJumpEnabled = true;
     }
+    state.helpBannerDismissed = !!(prefs && prefs.helpBannerDismissed);
   }
 
   function savePrefs() {
-    saveJSON(STORAGE_KEYS.prefs, { tabJumpEnabled: state.tabJumpEnabled });
+    saveJSON(STORAGE_KEYS.prefs, {
+      tabJumpEnabled: state.tabJumpEnabled,
+      helpBannerDismissed: state.helpBannerDismissed
+    });
   }
 
   function isMobileLayout() {
@@ -342,20 +346,59 @@
   }
 
   function updateEditorHelp() {
+    var wrap = document.getElementById("editor-help-wrap");
     var help = document.getElementById("editor-help");
+    var showBtn = document.getElementById("editor-help-show");
     if (!help) return;
+
+    if (state.helpBannerDismissed) {
+      if (wrap) wrap.hidden = true;
+      if (showBtn) showBtn.hidden = false;
+      return;
+    }
+
+    if (wrap) wrap.hidden = false;
+    if (showBtn) showBtn.hidden = true;
 
     if (isMobileLayout()) {
       help.innerHTML =
-        '<strong>Mobile tips:</strong> Use <span class="kbd">Next blank</span> or swipe right in the note to move between blanks. ' +
-        "When a choice blank is active, tap an option then tap <span class=\"kbd\">Confirm</span>.";
+        '<strong>Mobile tips:</strong> Use <span class="kbd">Next blank</span> / <span class="kbd">Previous blank</span> ' +
+        "or swipe right/left in the note. When a choice blank is active, tap options then <span class=\"kbd\">Confirm</span>.";
     } else {
       help.innerHTML =
-        '<strong>Desktop shortcuts:</strong> <span class="kbd">Tab</span> moves to the next blank' +
+        '<strong>Desktop shortcuts:</strong> <span class="kbd">Tab</span> / <span class="kbd">Shift+Tab</span> move between blanks' +
         (state.tabJumpEnabled ? "" : " (enable the checkbox below)") +
         ' · In choice blanks, <span class="kbd">Tab</span> or <span class="kbd">←</span>/<span class="kbd">→</span> cycles options · ' +
-        '<span class="kbd">Enter</span> confirms your choice · Multi-choice blanks use <span class="kbd">Space</span> to toggle options';
+        '<span class="kbd">Enter</span> confirms · Multi-choice blanks use <span class="kbd">Space</span> to toggle options';
     }
+  }
+
+  function wireEditorHelpBanner() {
+    var dismissBtn = document.getElementById("editor-help-dismiss");
+    var showBtn = document.getElementById("editor-help-show");
+
+    if (dismissBtn) {
+      dismissBtn.addEventListener("click", function () {
+        state.helpBannerDismissed = true;
+        savePrefs();
+        updateEditorHelp();
+      });
+    }
+
+    if (showBtn) {
+      showBtn.addEventListener("click", function () {
+        state.helpBannerDismissed = false;
+        savePrefs();
+        updateEditorHelp();
+      });
+    }
+  }
+
+  function countRemainingBlanks(text) {
+    BLANK_PATTERN.lastIndex = 0;
+    var count = 0;
+    while (BLANK_PATTERN.exec(text)) count++;
+    return count;
   }
 
   /* ------------------------------------------------------------
@@ -372,6 +415,7 @@
     favoritesOnly: false,
     selectedId: null,
     tabJumpEnabled: true,
+    helpBannerDismissed: false,
     activeBlank: null,
     touchStartX: null,
     touchStartY: null
@@ -675,7 +719,11 @@
         "</div>" +
       "</div>" +
       '<hr class="rule">' +
-      '<p class="editor-help" id="editor-help" aria-live="polite"></p>' +
+      '<div class="editor-help-wrap" id="editor-help-wrap">' +
+        '<p class="editor-help" id="editor-help" aria-live="polite"></p>' +
+        '<button type="button" class="editor-help-dismiss" id="editor-help-dismiss" aria-label="Dismiss keyboard tips">×</button>' +
+      '</div>' +
+      '<button type="button" class="btn btn-small btn-ghost editor-help-show" id="editor-help-show" hidden>Show keyboard tips</button>' +
       '<div class="choice-bar" id="choice-bar" hidden aria-live="polite"></div>' +
       '<textarea class="body-editor" id="body-editor" spellcheck="false" aria-label="Template text, editable before copying">' +
         escapeHtml(prepareTemplateBody(t.body)) +
@@ -683,6 +731,7 @@
       '<div class="editor-toolbar">' +
         '<div class="editor-toolbar-left">' +
           '<button type="button" class="btn btn-primary" id="btn-copy">Copy to clipboard</button>' +
+          '<button type="button" class="btn" id="btn-prev-blank">Previous blank</button>' +
           '<button type="button" class="btn" id="btn-next-blank">Next blank</button>' +
           '<button type="button" class="btn btn-ghost" id="btn-reset">Reset text</button>' +
           '<label class="checkbox-field editor-tab-toggle">' +
@@ -693,17 +742,23 @@
         '<span class="status-msg" id="status-msg" aria-live="polite"></span>' +
       "</div>" +
       '<div class="mobile-editor-bar" id="mobile-editor-bar" hidden>' +
-        '<button type="button" class="btn btn-primary btn-block" id="btn-mobile-next">Next blank →</button>' +
-        '<p class="mobile-editor-hint">Swipe right in the note to jump to the next blank</p>' +
+        '<div class="mobile-editor-actions">' +
+          '<button type="button" class="btn" id="btn-mobile-prev">← Previous</button>' +
+          '<button type="button" class="btn btn-primary" id="btn-mobile-next">Next →</button>' +
+        '</div>' +
+        '<p class="mobile-editor-hint">Swipe right for next blank · swipe left for previous</p>' +
       "</div>";
 
     var editor = document.getElementById("body-editor");
 
     document.getElementById("btn-copy").addEventListener("click", function () {
-      copyToClipboard(editor.value);
+      copyToClipboard(editor.value, true);
     });
     document.getElementById("btn-next-blank").addEventListener("click", function () {
       jumpToNextBlank(editor);
+    });
+    document.getElementById("btn-prev-blank").addEventListener("click", function () {
+      jumpToPreviousBlank(editor);
     });
     document.getElementById("btn-reset").addEventListener("click", function () {
       editor.value = prepareTemplateBody(t.body);
@@ -733,6 +788,7 @@
 
     updateEditorHelp();
     updateMobileEditorBar();
+    wireEditorHelpBanner();
 
     editor.addEventListener("keydown", function (e) {
       handleEditorKeydown(editor, e);
@@ -759,6 +815,13 @@
     if (mobileNext) {
       mobileNext.addEventListener("click", function () {
         jumpToNextBlank(editor);
+      });
+    }
+
+    var mobilePrev = document.getElementById("btn-mobile-prev");
+    if (mobilePrev) {
+      mobilePrev.addEventListener("click", function () {
+        jumpToPreviousBlank(editor);
       });
     }
   }
@@ -801,15 +864,16 @@
     }
 
     if (e.key === "Tab") {
-      if (state.activeBlank && state.activeBlank.parsed.type !== "fill" && !e.shiftKey) {
+      if (state.activeBlank && state.activeBlank.parsed.type !== "fill") {
         e.preventDefault();
-        cycleActiveOption(editor, 1);
+        cycleActiveOption(editor, e.shiftKey ? -1 : 1);
         return;
       }
 
-      if (state.tabJumpEnabled && !e.shiftKey) {
+      if (state.tabJumpEnabled) {
         e.preventDefault();
-        jumpToNextBlank(editor);
+        if (e.shiftKey) jumpToPreviousBlank(editor);
+        else jumpToNextBlank(editor);
         return;
       }
     }
@@ -832,9 +896,8 @@
       state.touchStartY = null;
 
       if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy)) return;
-      if (dx > 0) {
-        jumpToNextBlank(editor);
-      }
+      if (dx > 0) jumpToNextBlank(editor);
+      else jumpToPreviousBlank(editor);
     }, { passive: true });
   }
 
@@ -852,39 +915,23 @@
   /* ------------------------------------------------------------
      Blank navigation
      ------------------------------------------------------------ */
-  function jumpToNextBlank(textarea) {
-    var text = textarea.value;
-    var cursor = textarea.selectionEnd || 0;
+  function collectBlanks(text) {
     BLANK_PATTERN.lastIndex = 0;
-
+    var blanks = [];
     var match;
-    var firstMatch = null;
-    var nextMatch = null;
-
     while ((match = BLANK_PATTERN.exec(text)) !== null) {
-      if (firstMatch === null) firstMatch = match;
-      if (match.index > cursor || (match.index === cursor && cursor === textarea.selectionStart)) {
-        nextMatch = match;
-        break;
-      }
+      blanks.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        text: match[0],
+        inner: match[0].slice(1, -1),
+        parsed: parseBlankContent(match[0].slice(1, -1))
+      });
     }
+    return blanks;
+  }
 
-    var target = nextMatch || firstMatch;
-
-    if (!target) {
-      clearActiveBlank();
-      setStatus("No [blanks] left in this template.", true);
-      return;
-    }
-
-    var blank = {
-      start: target.index,
-      end: target.index + target[0].length,
-      text: target[0],
-      inner: target[0].slice(1, -1),
-      parsed: parseBlankContent(target[0].slice(1, -1))
-    };
-
+  function focusBlank(textarea, blank) {
     textarea.focus();
     if (blank.parsed.type === "fill") {
       clearActiveBlank();
@@ -893,14 +940,78 @@
       setActiveBlank(blank, 0);
       highlightActiveOption(textarea);
     }
+  }
 
-    if (!nextMatch) setStatus("Back to the first blank.", false);
+  function jumpToBlank(textarea, direction) {
+    var text = textarea.value;
+    var cursor = textarea.selectionStart || 0;
+    var blanks = collectBlanks(text);
+
+    if (!blanks.length) {
+      clearActiveBlank();
+      setStatus("No [blanks] left in this template.", true);
+      return;
+    }
+
+    var target = null;
+    var wrapped = false;
+
+    if (direction > 0) {
+      for (var i = 0; i < blanks.length; i++) {
+        if (blanks[i].start > cursor ||
+            (blanks[i].start === cursor && cursor === textarea.selectionEnd)) {
+          target = blanks[i];
+          break;
+        }
+      }
+      if (!target) {
+        target = blanks[0];
+        wrapped = true;
+      }
+    } else {
+      for (var j = blanks.length - 1; j >= 0; j--) {
+        if (blanks[j].start < cursor) {
+          target = blanks[j];
+          break;
+        }
+      }
+      if (!target) {
+        target = blanks[blanks.length - 1];
+        wrapped = true;
+      }
+    }
+
+    focusBlank(textarea, target);
+    if (wrapped) {
+      setStatus(direction > 0 ? "Back to the first blank." : "Back to the last blank.", false);
+    }
+  }
+
+  function jumpToNextBlank(textarea) {
+    jumpToBlank(textarea, 1);
+  }
+
+  function jumpToPreviousBlank(textarea) {
+    jumpToBlank(textarea, -1);
   }
 
   /* ------------------------------------------------------------
      Copy to clipboard
      ------------------------------------------------------------ */
-  function copyToClipboard(text) {
+  function copyToClipboard(text, fromUserAction) {
+    var remaining = countRemainingBlanks(text);
+    if (fromUserAction && remaining > 0) {
+      var noun = remaining === 1 ? "blank" : "blanks";
+      var proceed = window.confirm(
+        remaining + " unfilled " + noun + " remain in this note (text inside [brackets]).\n\n" +
+        "Copy anyway and paste into CPRS?"
+      );
+      if (!proceed) {
+        setStatus("Copy cancelled — fill remaining blanks first.", true);
+        return;
+      }
+    }
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
         setStatus("Copied — paste into CPRS.", false);

@@ -498,14 +498,48 @@ hr.rule{
 }
 
 .editor-help{
-  margin: 0 0 10px;
-  padding: 10px 12px;
+  margin: 0;
+  padding: 10px 36px 10px 12px;
   border-radius: var(--radius-sm);
   background: var(--teal-tint);
   border: 1px solid rgba(44, 122, 118, 0.18);
   color: var(--ink-soft);
   font-size: 12.5px;
   line-height: 1.55;
+}
+
+.editor-help-wrap{
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.editor-help-wrap[hidden],
+.editor-help-show[hidden]{
+  display: none;
+}
+
+.editor-help-dismiss{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.editor-help-dismiss:hover{
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+}
+
+.editor-help-show{
+  margin-bottom: 10px;
 }
 
 .editor-help .kbd{
@@ -614,6 +648,16 @@ textarea.body-editor:focus-visible{
 
 .mobile-editor-bar .btn-block{
   width: 100%;
+  justify-content: center;
+}
+
+.mobile-editor-actions{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mobile-editor-actions .btn{
   justify-content: center;
 }
 
