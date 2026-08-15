@@ -118,8 +118,115 @@
     return (body || "").replace(LATERALITY_PATTERN, "Left/Right");
   }
 
+  var MIXED_BLANK_TOKEN = "\uE000";
+
+  function blankNeedsSplitting(inner) {
+    var trimmed = (inner || "").trim();
+    if (!trimmed || trimmed.indexOf("___") === -1) return false;
+    return !/^[_.\s]+$/.test(trimmed);
+  }
+
+  function hasSlashChoiceLabel(label) {
+    if (label.indexOf("//") !== -1 || label.indexOf("[") !== -1) return false;
+    if (label.indexOf("/") === -1 || label.indexOf(" / ") !== -1) return false;
+    var parts = label.split(/\s*\/\s*/).map(function (s) { return s.trim(); }).filter(Boolean);
+    return parts.length >= 2 && parts.every(function (p) { return p.length > 0 && p.length < 72; });
+  }
+
+  function detokenizeMixedBlanks(text) {
+    return text.replace(new RegExp(MIXED_BLANK_TOKEN, "g"), "[___]");
+  }
+
+  function splitMixedBlankInner(inner) {
+    var trimmed = (inner || "").trim();
+    if (!blankNeedsSplitting(trimmed)) return "[" + inner + "]";
+
+    if (trimmed.indexOf("//") !== -1) {
+      var opts = trimmed.split(/\s*\/\/\s*/).map(function (s) { return s.trim(); }).filter(Boolean);
+      var clean = [];
+      var trailing = [];
+      opts.forEach(function (opt) {
+        if (opt.indexOf("___") !== -1) {
+          var cm = opt.match(/^(.+?):\s*___\s*$/);
+          if (cm) trailing.push(cm[1] + ": " + MIXED_BLANK_TOKEN);
+          else trailing.push(opt.replace(/___/g, MIXED_BLANK_TOKEN));
+        } else clean.push(opt);
+      });
+      var out = "";
+      if (clean.length >= 2) out = "[" + clean.join("//") + "]";
+      else if (clean.length === 1) out = "[" + clean[0] + "]";
+      trimmed = out + (out && trailing.length ? " " : "") + trailing.join(" ");
+      if (!trimmed) return "[" + inner + "]";
+      return detokenizeMixedBlanks(trimmed);
+    }
+
+    var result = trimmed.replace(/___/g, MIXED_BLANK_TOKEN);
+    var tokenCount = (result.match(new RegExp(MIXED_BLANK_TOKEN, "g")) || []).length;
+
+    if (tokenCount > 1) {
+      result = result.split(/,\s*/).map(function (seg) {
+        var cm = seg.match(/^(.+?):\s*\uE000\s*$/);
+        if (cm) {
+          var label = cm[1];
+          if (hasSlashChoiceLabel(label)) return "[" + label.split(/\s*\/\s*/).join("/") + "]: " + MIXED_BLANK_TOKEN;
+          return label + ": " + MIXED_BLANK_TOKEN;
+        }
+        return seg.replace(new RegExp("([^\\s])\\s*" + MIXED_BLANK_TOKEN + "$"), "$1 " + MIXED_BLANK_TOKEN)
+          .replace(new RegExp("^" + MIXED_BLANK_TOKEN + "\\s+"), MIXED_BLANK_TOKEN + " ")
+          .replace(new RegExp("([^\\s])" + MIXED_BLANK_TOKEN), "$1" + MIXED_BLANK_TOKEN);
+      }).join(", ");
+      return detokenizeMixedBlanks(result);
+    }
+
+    var colonMatch = result.match(/^(.+?):\s*\uE000\s*(.*)$/);
+    if (colonMatch) {
+      var colonLabel = colonMatch[1];
+      var suffix = colonMatch[3] || "";
+      if (hasSlashChoiceLabel(colonLabel)) {
+        result = "[" + colonLabel.split(/\s*\/\s*/).join("/") + "]: " + MIXED_BLANK_TOKEN + suffix;
+      } else {
+        result = colonLabel + ": " + MIXED_BLANK_TOKEN + suffix;
+      }
+      return detokenizeMixedBlanks(result);
+    }
+
+    result = result.replace(new RegExp("\\s+\\/\\s*" + MIXED_BLANK_TOKEN, "g"), " " + MIXED_BLANK_TOKEN);
+    result = result.replace(new RegExp("([^\\s/\\[\\]]+)\\/\\s*" + MIXED_BLANK_TOKEN, "g"), "[$1] " + MIXED_BLANK_TOKEN);
+    result = result.replace(
+      new RegExp("^([^,\\uE000]+)\\/([^,\\uE000]+),(.+" + MIXED_BLANK_TOKEN + ".*)$"),
+      "[$1/$2],$3"
+    );
+    result = result.replace(
+      new RegExp(MIXED_BLANK_TOKEN + "\\s+([^/\\[\\]]+\\/[^/\\[\\]]+)$"),
+      MIXED_BLANK_TOKEN + " [$1]"
+    );
+    result = result.replace(new RegExp("([^\\s])\\s+" + MIXED_BLANK_TOKEN + "\\s+([^\\s])", "g"), "$1 " + MIXED_BLANK_TOKEN + " $2");
+    result = result.replace(new RegExp("([^\\s])\\s+" + MIXED_BLANK_TOKEN + "$"), "$1 " + MIXED_BLANK_TOKEN);
+    result = result.replace(new RegExp("^" + MIXED_BLANK_TOKEN + "\\s+"), MIXED_BLANK_TOKEN + " ");
+    result = result.replace(new RegExp(",\\s*" + MIXED_BLANK_TOKEN), ", " + MIXED_BLANK_TOKEN);
+    result = result.replace(new RegExp("([^\\s])" + MIXED_BLANK_TOKEN), "$1" + MIXED_BLANK_TOKEN);
+    result = result.replace(new RegExp(MIXED_BLANK_TOKEN + "([^\\s\\],.])"), MIXED_BLANK_TOKEN + "$1");
+    return detokenizeMixedBlanks(result);
+  }
+
+  // Split brackets that mix placeholder underscores with words or slashes
+  // into separate bracket groups (or move labels outside brackets).
+  function normalizeMixedBlanks(body) {
+    var prev;
+    var out = body || "";
+    do {
+      prev = out;
+      out = out.replace(BLANK_PATTERN, function (match) {
+        var inner = match.slice(1, -1);
+        if (!blankNeedsSplitting(inner)) return match;
+        return splitMixedBlankInner(inner);
+      });
+    } while (out !== prev);
+    return out;
+  }
+
   function prepareTemplateBody(body) {
-    return normalizeLaterality(injectOperativeDates(body || ""));
+    return normalizeMixedBlanks(normalizeLaterality(injectOperativeDates(body || "")));
   }
 
   function parseBlankContent(inner) {
@@ -240,16 +347,12 @@
     }
 
     if (blank && blank.parsed.type === "fill") {
-      // Clicking into ANY fill blank (worded or empty) selects its whole
-      // contents so you can just start typing over it — no more double- or
-      // triple-clicking to grab it.
+      // Clicking into ANY fill blank selects the entire bracketed blank,
+      // including the brackets, so it is easy to see and replace.
       clearActiveBlank();
-      var innerStart = blank.start + 1;
-      var innerEnd = blank.end - 1;
-      if (innerEnd > innerStart &&
-          !(editor.selectionStart === innerStart && editor.selectionEnd === innerEnd)) {
-        editor.setSelectionRange(innerStart, innerEnd);
-        scrollBlankIntoView(editor, { start: innerStart, end: innerEnd });
+      if (!(editor.selectionStart === blank.start && editor.selectionEnd === blank.end)) {
+        editor.setSelectionRange(blank.start, blank.end);
+        scrollBlankIntoView(editor, { start: blank.start, end: blank.end });
       }
       return;
     }
