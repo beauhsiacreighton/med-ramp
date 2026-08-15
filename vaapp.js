@@ -6,7 +6,8 @@
      ------------------------------------------------------------ */
   var STORAGE_KEYS = {
     personal: "ent_dotphrases_personal_v1",
-    favorites: "ent_dotphrases_favorites_v1"
+    favorites: "ent_dotphrases_favorites_v1",
+    prefs: "ent_dotphrases_prefs_v1"
   };
 
   var NOTE_TYPE_COLORS = {
@@ -22,6 +23,9 @@
     "Facial Plastics", "Peds ENT", "Sleep"];
 
   var BLANK_PATTERN = /\[[^\]\n]*\]/g;
+  var OPERATIVE_DATE_PATTERN = /((?:Date of (?:Surgery|Procedure))|(?:DATE OF SURGERY)):\s*\[___\]/gi;
+  var MOBILE_BREAKPOINT = 860;
+  var SWIPE_THRESHOLD_PX = 56;
 
   /* ------------------------------------------------------------
      Storage helpers (never let storage failures break the app)
@@ -69,6 +73,334 @@
     if (banner) banner.hidden = false;
   }
 
+  function loadPrefs() {
+    var prefs = loadJSON(STORAGE_KEYS.prefs, {});
+    if (prefs && typeof prefs.tabJumpEnabled === "boolean") {
+      state.tabJumpEnabled = prefs.tabJumpEnabled;
+    } else {
+      state.tabJumpEnabled = true;
+    }
+    state.helpBannerDismissed = !!(prefs && prefs.helpBannerDismissed);
+  }
+
+  function savePrefs() {
+    saveJSON(STORAGE_KEYS.prefs, {
+      tabJumpEnabled: state.tabJumpEnabled,
+      helpBannerDismissed: state.helpBannerDismissed
+    });
+  }
+
+  function isMobileLayout() {
+    return window.matchMedia("(max-width: " + MOBILE_BREAKPOINT + "px)").matches ||
+      (window.matchMedia("(pointer: coarse)").matches && window.innerWidth <= 1024);
+  }
+
+  function formatTodayDate() {
+    var now = new Date();
+    var month = String(now.getMonth() + 1);
+    var day = String(now.getDate());
+    var year = now.getFullYear();
+    return month + "/" + day + "/" + year;
+  }
+
+  function injectOperativeDates(body) {
+    var today = formatTodayDate();
+    return (body || "").replace(OPERATIVE_DATE_PATTERN, function (match, label) {
+      return label + ": " + today;
+    });
+  }
+
+  function prepareTemplateBody(body) {
+    return injectOperativeDates(body || "");
+  }
+
+  function parseBlankContent(inner) {
+    var trimmed = (inner || "").trim();
+    if (!trimmed) return { type: "fill", options: [] };
+
+    if (trimmed.indexOf("//") !== -1) {
+      return {
+        type: "multi",
+        options: trimmed.split(/\s*\/\/\s*/).map(function (s) { return s.trim(); }).filter(Boolean)
+      };
+    }
+
+    if (trimmed.indexOf("/") !== -1 && trimmed.indexOf("___") === -1 && !/^[_\s.]+$/.test(trimmed)) {
+      if (/^\+\/-/.test(trimmed)) return { type: "fill", options: [] };
+      var parts = trimmed.split(/\s*\/\s*/).map(function (s) { return s.trim(); }).filter(Boolean);
+      if (parts.length >= 2 && parts.every(function (p) { return p.length > 0 && p.length < 72; })) {
+        return { type: "single", options: parts };
+      }
+    }
+
+    return { type: "fill", options: [] };
+  }
+
+  function findBlankAt(text, index) {
+    BLANK_PATTERN.lastIndex = 0;
+    var match;
+    while ((match = BLANK_PATTERN.exec(text)) !== null) {
+      var start = match.index;
+      var end = start + match[0].length;
+      if (index >= start && index <= end) {
+        return {
+          start: start,
+          end: end,
+          text: match[0],
+          inner: match[0].slice(1, -1),
+          parsed: parseBlankContent(match[0].slice(1, -1))
+        };
+      }
+    }
+    return null;
+  }
+
+  function getOptionRanges(fullMatch, options, delimiter) {
+    var ranges = [];
+    var searchFrom = 1;
+    var delim = delimiter === "//" ? "//" : "/";
+    for (var i = 0; i < options.length; i++) {
+      var idx = fullMatch.indexOf(options[i], searchFrom);
+      if (idx === -1) continue;
+      ranges.push({ start: idx, end: idx + options[i].length, text: options[i] });
+      searchFrom = idx + options[i].length;
+      if (i < options.length - 1) {
+        var delimIdx = fullMatch.indexOf(delim, searchFrom);
+        if (delimIdx !== -1) searchFrom = delimIdx + delim.length;
+      }
+    }
+    return ranges;
+  }
+
+  function clearActiveBlank() {
+    state.activeBlank = null;
+    updateChoiceBar(null);
+  }
+
+  function setActiveBlank(blank, optionIndex, selectedMap) {
+    if (!blank || blank.parsed.type === "fill") {
+      clearActiveBlank();
+      return;
+    }
+    var selected = selectedMap || {};
+    if (blank.parsed.type === "multi" && Object.keys(selected).length === 0) {
+      selected[0] = true;
+    }
+    state.activeBlank = {
+      start: blank.start,
+      end: blank.end,
+      text: blank.text,
+      parsed: blank.parsed,
+      optionIndex: typeof optionIndex === "number" ? optionIndex : 0,
+      selected: selected
+    };
+    updateChoiceBar(state.activeBlank);
+  }
+
+  function syncActiveBlankFromEditor(editor) {
+    if (!state.activeBlank) return;
+    var cursor = editor.selectionStart || 0;
+    var blank = findBlankAt(editor.value, cursor);
+    if (!blank || blank.start !== state.activeBlank.start || blank.end !== state.activeBlank.end) {
+      clearActiveBlank();
+      return;
+    }
+    state.activeBlank.text = blank.text;
+  }
+
+  function highlightActiveOption(editor) {
+    var active = state.activeBlank;
+    if (!active || active.parsed.type === "fill") return;
+
+    var blank = findBlankAt(editor.value, active.start + 1);
+    if (!blank) {
+      clearActiveBlank();
+      return;
+    }
+
+    var delimiter = active.parsed.type === "multi" ? "//" : "/";
+    var ranges = getOptionRanges(blank.text, active.parsed.options, delimiter);
+    var idx = active.optionIndex;
+    if (!ranges[idx]) idx = 0;
+
+    editor.focus();
+    editor.setSelectionRange(ranges[idx].start, ranges[idx].end);
+    updateChoiceBar(active);
+  }
+
+  function cycleActiveOption(editor, direction) {
+    var active = state.activeBlank;
+    if (!active || active.parsed.type === "fill") return false;
+
+    var count = active.parsed.options.length;
+    if (!count) return false;
+
+    active.optionIndex = (active.optionIndex + direction + count) % count;
+    highlightActiveOption(editor);
+    return true;
+  }
+
+  function toggleActiveMultiOption(editor) {
+    var active = state.activeBlank;
+    if (!active || active.parsed.type !== "multi") return false;
+
+    var key = String(active.optionIndex);
+    if (active.selected[key]) delete active.selected[key];
+    else active.selected[key] = true;
+
+    highlightActiveOption(editor);
+    return true;
+  }
+
+  function confirmActiveBlank(editor) {
+    var active = state.activeBlank;
+    if (!active || active.parsed.type === "fill") return false;
+
+    var blank = findBlankAt(editor.value, active.start + 1);
+    if (!blank) {
+      clearActiveBlank();
+      return false;
+    }
+
+    var replacement = "";
+    if (active.parsed.type === "single") {
+      replacement = active.parsed.options[active.optionIndex] || active.parsed.options[0] || "";
+    } else {
+      var selected = [];
+      active.parsed.options.forEach(function (opt, i) {
+        if (active.selected[String(i)]) selected.push(opt);
+      });
+      if (!selected.length) {
+        selected.push(active.parsed.options[active.optionIndex] || active.parsed.options[0] || "");
+      }
+      replacement = selected.join(", ");
+    }
+
+    var before = editor.value.slice(0, blank.start);
+    var after = editor.value.slice(blank.end);
+    editor.value = before + replacement + after;
+
+    var cursor = blank.start + replacement.length;
+    editor.setSelectionRange(cursor, cursor);
+    clearActiveBlank();
+    setStatus("Selection confirmed.", false);
+    return true;
+  }
+
+  function updateChoiceBar(active) {
+    var bar = document.getElementById("choice-bar");
+    if (!bar) return;
+
+    if (!active || active.parsed.type === "fill") {
+      bar.hidden = true;
+      bar.innerHTML = "";
+      return;
+    }
+
+    var isMulti = active.parsed.type === "multi";
+    var hint = isMulti
+      ? "Tap options to toggle · Confirm when done"
+      : "Tap an option · Confirm when done";
+
+    var chips = active.parsed.options.map(function (opt, i) {
+      var selected = isMulti ? !!active.selected[String(i)] : i === active.optionIndex;
+      var classes = "choice-chip" + (selected ? " is-selected" : "");
+      return '<button type="button" class="' + classes + '" data-choice-index="' + i + '">' +
+        escapeHtml(opt) + "</button>";
+    }).join("");
+
+    bar.innerHTML =
+      '<div class="choice-bar-label">' + escapeHtml(hint) + "</div>" +
+      '<div class="choice-chip-row">' + chips + "</div>" +
+      '<button type="button" class="btn btn-small btn-primary" id="choice-confirm-btn">Confirm selection</button>';
+    bar.hidden = false;
+
+    bar.querySelectorAll("[data-choice-index]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var editor = document.getElementById("body-editor");
+        if (!editor || !state.activeBlank) return;
+        var index = parseInt(btn.getAttribute("data-choice-index"), 10);
+        if (state.activeBlank.parsed.type === "multi") {
+          state.activeBlank.optionIndex = index;
+          toggleActiveMultiOption(editor);
+        } else {
+          state.activeBlank.optionIndex = index;
+          highlightActiveOption(editor);
+          if (isMobileLayout()) {
+            confirmActiveBlank(editor);
+            if (state.tabJumpEnabled) jumpToNextBlank(editor);
+          }
+        }
+      });
+    });
+
+    var confirmBtn = document.getElementById("choice-confirm-btn");
+    if (confirmBtn) {
+      confirmBtn.addEventListener("click", function () {
+        var editor = document.getElementById("body-editor");
+        if (!editor) return;
+        confirmActiveBlank(editor);
+        if (state.tabJumpEnabled) jumpToNextBlank(editor);
+      });
+    }
+  }
+
+  function updateEditorHelp() {
+    var wrap = document.getElementById("editor-help-wrap");
+    var help = document.getElementById("editor-help");
+    var showBtn = document.getElementById("editor-help-show");
+    if (!help) return;
+
+    if (state.helpBannerDismissed) {
+      if (wrap) wrap.hidden = true;
+      if (showBtn) showBtn.hidden = false;
+      return;
+    }
+
+    if (wrap) wrap.hidden = false;
+    if (showBtn) showBtn.hidden = true;
+
+    if (isMobileLayout()) {
+      help.innerHTML =
+        '<strong>Mobile tips:</strong> Use <span class="kbd">Next blank</span> / <span class="kbd">Previous blank</span> ' +
+        "or swipe right/left in the note. When a choice blank is active, tap options then <span class=\"kbd\">Confirm</span>.";
+    } else {
+      help.innerHTML =
+        '<strong>Desktop shortcuts:</strong> <span class="kbd">Tab</span> / <span class="kbd">Shift+Tab</span> move between blanks' +
+        (state.tabJumpEnabled ? "" : " (enable the checkbox below)") +
+        ' · In choice blanks, <span class="kbd">Tab</span> or <span class="kbd">←</span>/<span class="kbd">→</span> cycles options · ' +
+        '<span class="kbd">Enter</span> confirms · Multi-choice blanks use <span class="kbd">Space</span> to toggle options';
+    }
+  }
+
+  function wireEditorHelpBanner() {
+    var dismissBtn = document.getElementById("editor-help-dismiss");
+    var showBtn = document.getElementById("editor-help-show");
+
+    if (dismissBtn) {
+      dismissBtn.addEventListener("click", function () {
+        state.helpBannerDismissed = true;
+        savePrefs();
+        updateEditorHelp();
+      });
+    }
+
+    if (showBtn) {
+      showBtn.addEventListener("click", function () {
+        state.helpBannerDismissed = false;
+        savePrefs();
+        updateEditorHelp();
+      });
+    }
+  }
+
+  function countRemainingBlanks(text) {
+    BLANK_PATTERN.lastIndex = 0;
+    var count = 0;
+    while (BLANK_PATTERN.exec(text)) count++;
+    return count;
+  }
+
   /* ------------------------------------------------------------
      State
      ------------------------------------------------------------ */
@@ -82,7 +414,11 @@
     subspecialtyFilter: "",
     favoritesOnly: false,
     selectedId: null,
-    tabJumpEnabled: false
+    tabJumpEnabled: true,
+    helpBannerDismissed: false,
+    activeBlank: null,
+    touchStartX: null,
+    touchStartY: null
   };
 
   function uid() {
@@ -383,32 +719,50 @@
         "</div>" +
       "</div>" +
       '<hr class="rule">' +
+      '<div class="editor-help-wrap" id="editor-help-wrap">' +
+        '<p class="editor-help" id="editor-help" aria-live="polite"></p>' +
+        '<button type="button" class="editor-help-dismiss" id="editor-help-dismiss" aria-label="Dismiss keyboard tips">×</button>' +
+      '</div>' +
+      '<button type="button" class="btn btn-small btn-ghost editor-help-show" id="editor-help-show" hidden>Show keyboard tips</button>' +
+      '<div class="choice-bar" id="choice-bar" hidden aria-live="polite"></div>' +
       '<textarea class="body-editor" id="body-editor" spellcheck="false" aria-label="Template text, editable before copying">' +
-        escapeHtml(t.body) +
+        escapeHtml(prepareTemplateBody(t.body)) +
       "</textarea>" +
       '<div class="editor-toolbar">' +
         '<div class="editor-toolbar-left">' +
           '<button type="button" class="btn btn-primary" id="btn-copy">Copy to clipboard</button>' +
+          '<button type="button" class="btn" id="btn-prev-blank">Previous blank</button>' +
           '<button type="button" class="btn" id="btn-next-blank">Next blank</button>' +
           '<button type="button" class="btn btn-ghost" id="btn-reset">Reset text</button>' +
-          '<label class="checkbox-field" style="margin-left:6px;">' +
+          '<label class="checkbox-field editor-tab-toggle">' +
             '<input type="checkbox" id="tab-jump-toggle" ' + (state.tabJumpEnabled ? "checked" : "") + '>' +
-            "Tab key jumps to next blank" +
+            "Tab moves to next blank" +
           "</label>" +
         "</div>" +
         '<span class="status-msg" id="status-msg" aria-live="polite"></span>' +
+      "</div>" +
+      '<div class="mobile-editor-bar" id="mobile-editor-bar" hidden>' +
+        '<div class="mobile-editor-actions">' +
+          '<button type="button" class="btn" id="btn-mobile-prev">← Previous</button>' +
+          '<button type="button" class="btn btn-primary" id="btn-mobile-next">Next →</button>' +
+        '</div>' +
+        '<p class="mobile-editor-hint">Swipe right for next blank · swipe left for previous</p>' +
       "</div>";
 
     var editor = document.getElementById("body-editor");
 
     document.getElementById("btn-copy").addEventListener("click", function () {
-      copyToClipboard(editor.value);
+      copyToClipboard(editor.value, true);
     });
     document.getElementById("btn-next-blank").addEventListener("click", function () {
       jumpToNextBlank(editor);
     });
+    document.getElementById("btn-prev-blank").addEventListener("click", function () {
+      jumpToPreviousBlank(editor);
+    });
     document.getElementById("btn-reset").addEventListener("click", function () {
-      editor.value = t.body;
+      editor.value = prepareTemplateBody(t.body);
+      clearActiveBlank();
       setStatus("Text reset to saved version.", false);
       editor.focus();
     });
@@ -428,14 +782,123 @@
     var tabToggle = document.getElementById("tab-jump-toggle");
     tabToggle.addEventListener("change", function () {
       state.tabJumpEnabled = tabToggle.checked;
+      savePrefs();
+      updateEditorHelp();
     });
 
+    updateEditorHelp();
+    updateMobileEditorBar();
+    wireEditorHelpBanner();
+
     editor.addEventListener("keydown", function (e) {
-      if (e.key === "Tab" && state.tabJumpEnabled) {
-        e.preventDefault();
-        jumpToNextBlank(editor);
+      handleEditorKeydown(editor, e);
+    });
+
+    editor.addEventListener("click", function () {
+      syncActiveBlankFromEditor(editor);
+    });
+
+    editor.addEventListener("select", function () {
+      var cursor = editor.selectionStart || 0;
+      var blank = findBlankAt(editor.value, cursor);
+      if (blank && blank.parsed.type !== "fill") {
+        setActiveBlank(blank, 0);
+        highlightActiveOption(editor);
+      } else {
+        clearActiveBlank();
       }
     });
+
+    wireEditorTouchNavigation(editor);
+
+    var mobileNext = document.getElementById("btn-mobile-next");
+    if (mobileNext) {
+      mobileNext.addEventListener("click", function () {
+        jumpToNextBlank(editor);
+      });
+    }
+
+    var mobilePrev = document.getElementById("btn-mobile-prev");
+    if (mobilePrev) {
+      mobilePrev.addEventListener("click", function () {
+        jumpToPreviousBlank(editor);
+      });
+    }
+  }
+
+  function updateMobileEditorBar() {
+    var bar = document.getElementById("mobile-editor-bar");
+    if (!bar) return;
+    bar.hidden = !isMobileLayout();
+    updateEditorHelp();
+  }
+
+  function handleEditorKeydown(editor, e) {
+    var cursor = editor.selectionStart || 0;
+    var blank = findBlankAt(editor.value, cursor);
+
+    if (blank && blank.parsed.type !== "fill") {
+      if (!state.activeBlank || state.activeBlank.start !== blank.start) {
+        setActiveBlank(blank, 0);
+      }
+    }
+
+    if (e.key === "Enter" && state.activeBlank && state.activeBlank.parsed.type !== "fill") {
+      e.preventDefault();
+      confirmActiveBlank(editor);
+      if (state.tabJumpEnabled) jumpToNextBlank(editor);
+      return;
+    }
+
+    if (e.key === " " && state.activeBlank && state.activeBlank.parsed.type === "multi") {
+      e.preventDefault();
+      toggleActiveMultiOption(editor);
+      return;
+    }
+
+    if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && state.activeBlank &&
+        state.activeBlank.parsed.type !== "fill") {
+      e.preventDefault();
+      cycleActiveOption(editor, e.key === "ArrowRight" ? 1 : -1);
+      return;
+    }
+
+    if (e.key === "Tab") {
+      if (state.activeBlank && state.activeBlank.parsed.type !== "fill") {
+        e.preventDefault();
+        cycleActiveOption(editor, e.shiftKey ? -1 : 1);
+        return;
+      }
+
+      if (state.tabJumpEnabled) {
+        e.preventDefault();
+        if (e.shiftKey) jumpToPreviousBlank(editor);
+        else jumpToNextBlank(editor);
+        return;
+      }
+    }
+  }
+
+  function wireEditorTouchNavigation(editor) {
+    editor.addEventListener("touchstart", function (e) {
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+      state.touchStartX = e.changedTouches[0].clientX;
+      state.touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    editor.addEventListener("touchend", function (e) {
+      if (state.touchStartX == null || state.touchStartY == null) return;
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+
+      var dx = e.changedTouches[0].clientX - state.touchStartX;
+      var dy = e.changedTouches[0].clientY - state.touchStartY;
+      state.touchStartX = null;
+      state.touchStartY = null;
+
+      if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy)) return;
+      if (dx > 0) jumpToNextBlank(editor);
+      else jumpToPreviousBlank(editor);
+    }, { passive: true });
   }
 
   function setStatus(msg, isWarn) {
@@ -452,39 +915,103 @@
   /* ------------------------------------------------------------
      Blank navigation
      ------------------------------------------------------------ */
-  function jumpToNextBlank(textarea) {
-    var text = textarea.value;
-    var cursor = textarea.selectionEnd || 0;
+  function collectBlanks(text) {
     BLANK_PATTERN.lastIndex = 0;
-
+    var blanks = [];
     var match;
-    var firstMatch = null;
-    var nextMatch = null;
-
     while ((match = BLANK_PATTERN.exec(text)) !== null) {
-      if (firstMatch === null) firstMatch = match;
-      if (match.index >= cursor) {
-        nextMatch = match;
-        break;
-      }
+      blanks.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        text: match[0],
+        inner: match[0].slice(1, -1),
+        parsed: parseBlankContent(match[0].slice(1, -1))
+      });
     }
+    return blanks;
+  }
 
-    var target = nextMatch || firstMatch;
+  function focusBlank(textarea, blank) {
+    textarea.focus();
+    if (blank.parsed.type === "fill") {
+      clearActiveBlank();
+      textarea.setSelectionRange(blank.start, blank.end);
+    } else {
+      setActiveBlank(blank, 0);
+      highlightActiveOption(textarea);
+    }
+  }
 
-    if (!target) {
+  function jumpToBlank(textarea, direction) {
+    var text = textarea.value;
+    var cursor = textarea.selectionStart || 0;
+    var blanks = collectBlanks(text);
+
+    if (!blanks.length) {
+      clearActiveBlank();
       setStatus("No [blanks] left in this template.", true);
       return;
     }
 
-    textarea.focus();
-    textarea.setSelectionRange(target.index, target.index + target[0].length);
-    if (!nextMatch) setStatus("Back to the first blank.", false);
+    var target = null;
+    var wrapped = false;
+
+    if (direction > 0) {
+      for (var i = 0; i < blanks.length; i++) {
+        if (blanks[i].start > cursor ||
+            (blanks[i].start === cursor && cursor === textarea.selectionEnd)) {
+          target = blanks[i];
+          break;
+        }
+      }
+      if (!target) {
+        target = blanks[0];
+        wrapped = true;
+      }
+    } else {
+      for (var j = blanks.length - 1; j >= 0; j--) {
+        if (blanks[j].start < cursor) {
+          target = blanks[j];
+          break;
+        }
+      }
+      if (!target) {
+        target = blanks[blanks.length - 1];
+        wrapped = true;
+      }
+    }
+
+    focusBlank(textarea, target);
+    if (wrapped) {
+      setStatus(direction > 0 ? "Back to the first blank." : "Back to the last blank.", false);
+    }
+  }
+
+  function jumpToNextBlank(textarea) {
+    jumpToBlank(textarea, 1);
+  }
+
+  function jumpToPreviousBlank(textarea) {
+    jumpToBlank(textarea, -1);
   }
 
   /* ------------------------------------------------------------
      Copy to clipboard
      ------------------------------------------------------------ */
-  function copyToClipboard(text) {
+  function copyToClipboard(text, fromUserAction) {
+    var remaining = countRemainingBlanks(text);
+    if (fromUserAction && remaining > 0) {
+      var noun = remaining === 1 ? "blank" : "blanks";
+      var proceed = window.confirm(
+        remaining + " unfilled " + noun + " remain in this note (text inside [brackets]).\n\n" +
+        "Copy anyway and paste into CPRS?"
+      );
+      if (!proceed) {
+        setStatus("Copy cancelled — fill remaining blanks first.", true);
+        return;
+      }
+    }
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
         setStatus("Copied — paste into CPRS.", false);
@@ -770,12 +1297,15 @@
         closeEditModal();
       }
     });
+
+    window.addEventListener("resize", debounce(updateMobileEditorBar, 150));
   }
 
   function init() {
     storageAvailable = testStorage();
     if (!storageAvailable) showStorageBanner();
 
+    loadPrefs();
     state.personalTemplates = loadJSON(STORAGE_KEYS.personal, []);
     state.favorites = loadJSON(STORAGE_KEYS.favorites, []);
     if (!Array.isArray(state.personalTemplates)) state.personalTemplates = [];
