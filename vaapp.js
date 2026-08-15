@@ -25,7 +25,6 @@
   var BLANK_PATTERN = /\[[^\]\n]*\]/g;
   var OPERATIVE_DATE_PATTERN = /((?:Date of (?:Surgery|Procedure))|(?:DATE OF SURGERY)):\s*\[___\]/gi;
   var MOBILE_BREAKPOINT = 860;
-  var SWIPE_THRESHOLD_PX = 56;
 
   /* ------------------------------------------------------------
      Storage helpers (never let storage failures break the app)
@@ -197,15 +196,15 @@
     updateChoiceBar(state.activeBlank);
   }
 
-  function syncActiveBlankFromEditor(editor) {
-    if (!state.activeBlank) return;
+  function detectActiveBlankAtCursor(editor) {
     var cursor = editor.selectionStart || 0;
     var blank = findBlankAt(editor.value, cursor);
-    if (!blank || blank.start !== state.activeBlank.start || blank.end !== state.activeBlank.end) {
+    if (blank && blank.parsed.type !== "fill") {
+      setActiveBlank(blank, 0);
+      highlightActiveOption(editor);
+    } else {
       clearActiveBlank();
-      return;
     }
-    state.activeBlank.text = blank.text;
   }
 
   function highlightActiveOption(editor) {
@@ -363,7 +362,7 @@
     if (isMobileLayout()) {
       help.innerHTML =
         '<strong>Mobile tips:</strong> Use <span class="kbd">Next blank</span> / <span class="kbd">Previous blank</span> ' +
-        "or swipe right/left in the note. When a choice blank is active, tap options then <span class=\"kbd\">Confirm</span>.";
+        'at the top of the note to jump between blanks. When a choice blank is active, tap options then <span class="kbd">Confirm</span>.';
     } else {
       help.innerHTML =
         '<strong>Desktop shortcuts:</strong> <span class="kbd">Tab</span> / <span class="kbd">Shift+Tab</span> move between blanks' +
@@ -416,9 +415,7 @@
     selectedId: null,
     tabJumpEnabled: true,
     helpBannerDismissed: false,
-    activeBlank: null,
-    touchStartX: null,
-    touchStartY: null
+    activeBlank: null
   };
 
   function uid() {
@@ -724,6 +721,12 @@
         '<button type="button" class="editor-help-dismiss" id="editor-help-dismiss" aria-label="Dismiss keyboard tips">×</button>' +
       '</div>' +
       '<button type="button" class="btn btn-small btn-ghost editor-help-show" id="editor-help-show" hidden>Show keyboard tips</button>' +
+      '<div class="mobile-editor-bar" id="mobile-editor-bar" hidden>' +
+        '<div class="mobile-editor-actions">' +
+          '<button type="button" class="btn" id="btn-mobile-prev">← Previous</button>' +
+          '<button type="button" class="btn btn-primary" id="btn-mobile-next">Next blank →</button>' +
+        '</div>' +
+      "</div>" +
       '<div class="choice-bar" id="choice-bar" hidden aria-live="polite"></div>' +
       '<textarea class="body-editor" id="body-editor" spellcheck="false" aria-label="Template text, editable before copying">' +
         escapeHtml(prepareTemplateBody(t.body)) +
@@ -731,8 +734,8 @@
       '<div class="editor-toolbar">' +
         '<div class="editor-toolbar-left">' +
           '<button type="button" class="btn btn-primary" id="btn-copy">Copy to clipboard</button>' +
-          '<button type="button" class="btn" id="btn-prev-blank">Previous blank</button>' +
-          '<button type="button" class="btn" id="btn-next-blank">Next blank</button>' +
+          '<button type="button" class="btn editor-toolbar-blank-nav" id="btn-prev-blank">Previous blank</button>' +
+          '<button type="button" class="btn editor-toolbar-blank-nav" id="btn-next-blank">Next blank</button>' +
           '<button type="button" class="btn btn-ghost" id="btn-reset">Reset text</button>' +
           '<label class="checkbox-field editor-tab-toggle">' +
             '<input type="checkbox" id="tab-jump-toggle" ' + (state.tabJumpEnabled ? "checked" : "") + '>' +
@@ -740,13 +743,6 @@
           "</label>" +
         "</div>" +
         '<span class="status-msg" id="status-msg" aria-live="polite"></span>' +
-      "</div>" +
-      '<div class="mobile-editor-bar" id="mobile-editor-bar" hidden>' +
-        '<div class="mobile-editor-actions">' +
-          '<button type="button" class="btn" id="btn-mobile-prev">← Previous</button>' +
-          '<button type="button" class="btn btn-primary" id="btn-mobile-next">Next →</button>' +
-        '</div>' +
-        '<p class="mobile-editor-hint">Swipe right for next blank · swipe left for previous</p>' +
       "</div>";
 
     var editor = document.getElementById("body-editor");
@@ -795,21 +791,12 @@
     });
 
     editor.addEventListener("click", function () {
-      syncActiveBlankFromEditor(editor);
+      detectActiveBlankAtCursor(editor);
     });
 
     editor.addEventListener("select", function () {
-      var cursor = editor.selectionStart || 0;
-      var blank = findBlankAt(editor.value, cursor);
-      if (blank && blank.parsed.type !== "fill") {
-        setActiveBlank(blank, 0);
-        highlightActiveOption(editor);
-      } else {
-        clearActiveBlank();
-      }
+      detectActiveBlankAtCursor(editor);
     });
-
-    wireEditorTouchNavigation(editor);
 
     var mobileNext = document.getElementById("btn-mobile-next");
     if (mobileNext) {
@@ -877,28 +864,6 @@
         return;
       }
     }
-  }
-
-  function wireEditorTouchNavigation(editor) {
-    editor.addEventListener("touchstart", function (e) {
-      if (!e.changedTouches || !e.changedTouches[0]) return;
-      state.touchStartX = e.changedTouches[0].clientX;
-      state.touchStartY = e.changedTouches[0].clientY;
-    }, { passive: true });
-
-    editor.addEventListener("touchend", function (e) {
-      if (state.touchStartX == null || state.touchStartY == null) return;
-      if (!e.changedTouches || !e.changedTouches[0]) return;
-
-      var dx = e.changedTouches[0].clientX - state.touchStartX;
-      var dy = e.changedTouches[0].clientY - state.touchStartY;
-      state.touchStartX = null;
-      state.touchStartY = null;
-
-      if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy)) return;
-      if (dx > 0) jumpToNextBlank(editor);
-      else jumpToPreviousBlank(editor);
-    }, { passive: true });
   }
 
   function setStatus(msg, isWarn) {
