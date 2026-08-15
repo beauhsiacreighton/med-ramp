@@ -223,7 +223,7 @@
     if (!ranges[idx]) idx = 0;
 
     editor.focus();
-    editor.setSelectionRange(ranges[idx].start, ranges[idx].end);
+    editor.setSelectionRange(blank.start + ranges[idx].start, blank.start + ranges[idx].end);
     updateChoiceBar(active);
   }
 
