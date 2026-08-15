@@ -558,13 +558,48 @@ hr.rule{
   font-weight: 600;
 }
 
+
+/* NEW — wraps the textarea so the choice bar can float without shifting layout */
+.editor-wrap{
+  position: relative;
+}
+
+/* REPLACES the old .choice-bar rule */
 .choice-bar{
-  margin-bottom: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 10px;
+  z-index: 30;
   padding: 12px;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--paper-dim);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 160ms;
 }
+
+.choice-bar.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 0s;
+}
+
+/* NEW — nice landing spot when the page auto-scrolls to the editor */
+.editor-help-wrap,
+.detail-panel{
+  scroll-margin-top: 18px;
+}
+
+
+
 
 .choice-bar-label{
   font-size: 12px;
@@ -785,8 +820,9 @@ footer.site-footer{
   gap: 8px;
 }
 
+
 @media (prefers-reduced-motion: reduce){
-  .btn, .chart-tab, .template-item, .search-row input, textarea.body-editor, .star-btn{
+  .btn, .chart-tab, .template-item, .search-row input, textarea.body-editor, .star-btn, .choice-bar{
     transition: none !important;
   }
 }
