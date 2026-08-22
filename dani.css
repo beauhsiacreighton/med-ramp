@@ -602,7 +602,7 @@ button { font-family: var(--font-body); cursor: pointer; }
 .floral-decor--gifts {
   top: -10px;
   right: -10px;
-  transform: rotate(180deg);
+  transform: ;
 }
 /* keep real content above the watermark */
 .section > *:not(.floral-decor) { position: relative; z-index: 1; }
