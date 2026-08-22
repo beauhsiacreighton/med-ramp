@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dani — Mamma Mia, Here I Go Again! 🪩</title>
+<meta name="description" content="Invitación al cumpleaños #26 de Dani">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dani.css">
+</head>
+<body>
+
+<!-- Sound toggle -->
+<button class="sound-toggle" id="soundToggle" aria-label="Silenciar o activar música">🔊</button>
+
+<!-- Scroll nav dots -->
+<nav class="scroll-nav" id="scrollNav" aria-hidden="true"></nav>
+
+<!-- Hidden YouTube player for background music -->
+<div id="ytPlayer" style="position:absolute; width:0; height:0; overflow:hidden;"></div>
+
+<!-- ============================================
+     1. COVER
+     ============================================ -->
+<section class="cover" id="cover">
+  <div class="disco-ball floating" aria-hidden="true">
+    <svg width="60" height="60" viewBox="0 0 60 60">
+      <defs>
+        <pattern id="discoPattern" width="8" height="8" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#c9d6de"/>
+          <rect width="3.5" height="3.5" fill="#eef3f6"/>
+          <rect x="4" y="4" width="3.5" height="3.5" fill="#9fb3bf"/>
+        </pattern>
+      </defs>
+      <circle cx="30" cy="30" r="26" fill="url(#discoPattern)" stroke="#7d8f99" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <h1 class="cover__name script">Dani</h1>
+  <button class="btn" id="openBtn">Abrir</button>
+</section>
+
+<!-- ============================================
+     2. HERO INVITE
+     ============================================ -->
+<section class="hero" id="hero">
+  <div class="hero__frame reveal">
+    <!-- floral corner decorations -->
+    <svg class="hero__florals" viewBox="0 0 400 140" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+      <g opacity="0.9">
+        <circle cx="40" cy="30" r="16" fill="#e58bb5"/>
+        <circle cx="65" cy="18" r="14" fill="#eea4c4"/>
+        <circle cx="20" cy="15" r="12" fill="#d9648f"/>
+        <circle cx="360" cy="28" r="16" fill="#e58bb5"/>
+        <circle cx="335" cy="16" r="14" fill="#eea4c4"/>
+        <circle cx="380" cy="14" r="12" fill="#d9648f"/>
+        <path d="M10 30 Q30 5 70 20" stroke="#6b9d5c" stroke-width="3" fill="none" opacity="0.6"/>
+        <path d="M330 28 Q360 5 390 22" stroke="#6b9d5c" stroke-width="3" fill="none" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <div class="hero__discoballs" aria-hidden="true">
+      <svg width="46" height="46" viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="url(#discoPattern)" stroke="#7d8f99" stroke-width="0.5"/></svg>
+      <svg width="34" height="34" viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="url(#discoPattern)" stroke="#7d8f99" stroke-width="0.5"/></svg>
+    </div>
+
+    <div class="hero__content">
+      <h2 class="hero__title">MAMMA MIA!</h2>
+      <p class="hero__subtitle script">Here I go again!</p>
+      <div class="hero__age">26</div>
+      <p class="hero__myname script">Dani</p>
+
+      <div class="hero__date">
+        <div><div class="big">Sábado</div><div class="label">Día</div></div>
+        <div><div class="big">19 Sep</div><div class="label">2026</div></div>
+        <div><div class="big">15:00</div><div class="label">Hora</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tile-border" aria-hidden="true"></div>
+
+<!-- ============================================
+     3. INTRO + COUNTDOWN
+     ============================================ -->
+<section class="section" id="intro">
+  <div class="countdown-copy reveal">
+    <h2 class="script" style="font-size:2rem; color:var(--bougainvillea-deep);">Mamma Mia... here I go again!</h2>
+    <p>Se acerca mi cumpleaños #26 y, antes de comenzar una nueva aventura, quiero celebrar rodeada de las personas que quiero.</p>
+    <p style="margin-top:12px; font-family:var(--font-script); font-size:1.4rem; color:var(--azure);">Faltan...</p>
+  </div>
+  <div class="countdown reveal" id="countdown">
+    <div class="countdown__unit"><div class="num" id="cd-days">--</div><div class="lbl">Días</div></div>
+    <div class="countdown__unit"><div class="num" id="cd-hours">--</div><div class="lbl">Horas</div></div>
+    <div class="countdown__unit"><div class="num" id="cd-mins">--</div><div class="lbl">Min</div></div>
+    <div class="countdown__unit"><div class="num" id="cd-secs">--</div><div class="lbl">Seg</div></div>
+  </div>
+</section>
+
+<!-- ============================================
+     4. PARTY / VENUE
+     ============================================ -->
+<section class="section section--band-cream" id="party">
+  <div class="venue reveal">
+    <h2>Sobre la fiesta...</h2>
+    <p class="when">Palapa MAYAB · 15:00</p>
+
+    <div class="photo-frame">
+      <img src="images/venue-collage.jpg" alt="Collage de inspiración Mamma Mia: mar, guitarra, veleros" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="photo-placeholder" style="display:none;">
+        <span class="icon">🖼️</span>
+        <span>Sube tu imagen aquí como</span>
+        <code>images/venue-collage.jpg</code>
+      </div>
+    </div>
+
+    <address>Ria. Ixtacomitán 1ra Secc, El Castaño,<br>86280 Villahermosa, Tab.</address>
+    <a class="btn btn--pink" href="https://www.google.com/maps/place/Privada+Mayab/@17.9639306,-92.9704392,17z/data=!3m1!4b1!4m6!3m5!1s0x85edd71a848da3df:0x71f4755c29fc912f!8m2!3d17.9639306!4d-92.9678643!16s%2Fg%2F1pp2wxw2t" target="_blank" rel="noopener">📍 Ubicación</a>
+  </div>
+</section>
+
+<!-- ============================================
+     5. RSVP
+     ============================================ -->
+<section class="section" id="rsvp">
+  <div class="rsvp-box reveal">
+    <h2>Confirmar asistencia</h2>
+    <p>La invitación es personal y te agradecería mucho que confirmes si vas a poder acompañarme. Esto me ayudará a preparar todo y contemplarte para la celebración.</p>
+    <p class="script" style="font-size:1.3rem; color:var(--bougainvillea-deep);">¡Espero que puedas estar!</p>
+
+    <div class="radio-row">
+      <label><input type="radio" name="rsvp" value="si"> Sí, confirmo</label>
+      <label><input type="radio" name="rsvp" value="no"> No puedo :(</label>
+    </div>
+
+    <label class="field-label" for="rsvpName">Nombre *</label>
+    <input class="text-input" id="rsvpName" type="text" placeholder="Escribir aquí...">
+
+    <div>
+      <button class="btn" id="rsvpSubmit">Responder invitación</button>
+    </div>
+
+    <!-- 
+      TODO (Dani): reemplaza este bloque con tu iframe de Tally/Google Forms cuando lo tengas.
+      Ejemplo: <iframe src="TU_LINK_AQUI" width="100%" height="500" frameborder="0"></iframe>
+      Mientras tanto, el botón de arriba puede simplemente abrir tu link en una pestaña nueva:
+      cambia rsvpFormUrl en script.js
+    -->
+  </div>
+</section>
+
+<!-- ============================================
+     6. TIMELINE / INFO IMPORTANTE
+     ============================================ -->
+<section class="section section--band-cream" id="timeline">
+  <div class="timeline reveal">
+    <h2>Información importante</h2>
+    <p>Te doy una pequeña orientación sobre cómo se desarrollará mi cumpleaños para que sepas qué esperar en cada momento.</p>
+    <p class="script" style="color:var(--bougainvillea-deep); font-size:1.3rem;">¡No llegues tarde!</p>
+    <ul class="timeline-list">
+      <li><span><strong>15:00</strong> Llegada</span></li>
+      <li><span><strong>16:00</strong> Celebración</span></li>
+      <li><span><strong>17:30</strong> Alberca y ¡que siga la fiesta!</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================
+     7 & 8 & 9. TEASER CARDS: MUSIC / DRESS CODE / NOTES
+     ============================================ -->
+<section class="section" id="extras">
+  <div class="teaser-grid">
+    <div class="teaser-card reveal">
+      <span class="icon">🎵</span>
+      <h3>Música</h3>
+      <p>Agrega las canciones que te gustarían bailar ese día.</p>
+      <button class="btn btn--outline" data-modal="modalMusic">Sugerir canción</button>
+    </div>
+
+    <div class="teaser-card reveal">
+      <span class="icon">👔</span>
+      <h3>Dress code</h3>
+      <p>Detalles sobre el estilo de vestuario.</p>
+      <button class="btn btn--outline" data-modal="modalDress">+ Información</button>
+    </div>
+
+    <div class="teaser-card reveal">
+      <span class="icon">ℹ️</span>
+      <h3>Notas y tips</h3>
+      <p>Más información a tener en cuenta.</p>
+      <button class="btn btn--outline" data-modal="modalNotes">Ver más...</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     10. INSPIRATION GALLERY
+     ============================================ -->
+<section class="section section--wide section--band-navy" id="gallery">
+  <div class="reveal" style="text-align:center;">
+    <h2>Sección de inspiración</h2>
+    <p style="margin-top:8px; opacity:0.85;">Inspírate en la paleta y los ejemplos de la imagen</p>
+  </div>
+  <div class="gallery-viewport">
+    <div class="gallery-track animating" id="galleryTrack">
+      <!-- loop images x2 for seamless scroll -->
+      <div class="gallery-item"><img src="images/moodboard-1.jpg" alt="Moodboard Mamma Mia 1" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-1.jpg</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-2.jpg" alt="Moodboard Mamma Mia 2" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-2.jpg</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-3.jpg" alt="Moodboard Mamma Mia 3" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-3.jpg</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-4.jpg" alt="Moodboard Mamma Mia 4" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-4.jpg</span></div>'"></div>
+      <!-- duplicate set for seamless loop -->
+      <div class="gallery-item"><img src="images/moodboard-1.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-2.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-3.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item"><img src="images/moodboard-4.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     11. GIFTS
+     ============================================ -->
+<section class="section" id="gifts">
+  <div class="gifts reveal">
+    <h2>Regalos</h2>
+    <p>El mejor regalo para mí es que estés ahí y podamos celebrar juntos.</p>
+    <p>Y como estoy a punto de comenzar una nueva aventura, esta vez mi maleta no tiene mucho espacio para regalos. 😄✈️</p>
+    <p>Si aun así quieres tener un detalle conmigo, habrá sobres disponibles para quienes quieran ayudarme a llevar un pedacito de esta celebración conmigo en mi nueva etapa.</p>
+    <p class="script" style="font-size:1.3rem; color:var(--bougainvillea-deep);">¡Gracias por ser parte de ella!</p>
+    <p style="font-size:0.9rem; opacity:0.75;">El regalo es opcional, la asistencia obligatoria ;)</p>
+    <button class="btn" data-modal="modalGifts">Ver datos</button>
+  </div>
+</section>
+
+<div class="tile-border" aria-hidden="true"></div>
+
+<!-- ============================================
+     12. CLOSING
+     ============================================ -->
+<section class="closing" id="closing">
+  <p class="closing__thanks">¡Muchas gracias!</p>
+  <p class="closing__name script">Dani</p>
+  <div class="closing-links">
+    <a href="#party">¿Cómo llegar al evento?</a>
+    <a href="#rsvp">Confirmar mi asistencia</a>
+    <a href="#extras">Sugerir una canción</a>
+    <a href="#cover">Volver arriba ↑</a>
+  </div>
+</section>
+
+<!-- ============================================
+     MODALS
+     ============================================ -->
+<div class="modal-overlay" id="modalMusic">
+  <div class="modal">
+    <button class="modal__close" data-close>×</button>
+    <h3>Sugerir canción favorita</h3>
+    <label class="field-label">Nombre y apellido *</label>
+    <input class="text-input" type="text" placeholder="Escribir aquí...">
+    <label class="field-label">Canción y autor@ *</label>
+    <input class="text-input" type="text" placeholder="Escribir aquí...">
+    <label class="field-label">Link de YouTube, Spotify... (opcional)</label>
+    <input class="text-input" type="text" placeholder="https://www.youtube.com/...">
+    <button class="btn">Enviar canción</button>
+    <div class="form-embed-note">
+      💡 Dani: reemplaza este formulario con tu iframe de Tally/Google Forms embebido aquí cuando esté listo.
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalDress">
+  <div class="modal">
+    <button class="modal__close" data-close>×</button>
+    <h3>Estilo del dress code</h3>
+    <div class="white-box">
+      <p>Inspirado en Mamma Mia: looks mediterráneos, frescos y llenos de azul, blanco y los colores de la paleta que encontrarás en la sección de inspiración.</p>
+      <p>En el caso de no tener, pueden ir de blanco.</p>
+      <p><strong>No traer otros colores.</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalNotes">
+  <div class="modal">
+    <button class="modal__close" data-close>×</button>
+    <h3>Notas y tips adicionales</h3>
+    <div class="white-box">
+      <p>Sí, habrá alberca, así que no olvides llevar tu traje de baño, un cambio de ropa y tu toalla.</p>
+      <p><strong>Tip:</strong> Si eres de las personas a las que los mosquitos quieren especialmente, te recomiendo llevar repelente.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalGifts">
+  <div class="modal">
+    <button class="modal__close" data-close>×</button>
+    <h3>Sobre los regalos</h3>
+    <div class="white-box" style="text-align:center;">
+      <p style="font-size:1.2rem;">🌧️✉️<br>Lluvia de sobres</p>
+    </div>
+  </div>
+</div>
+
+<script src="dani.js"></script>
+</body>
+</html>
