@@ -142,3 +142,22 @@ if (galleryTrack) {
   galleryTrack.addEventListener("mouseenter", () => galleryTrack.style.animationPlayState = "paused");
   galleryTrack.addEventListener("mouseleave", () => galleryTrack.style.animationPlayState = "running");
 }
+
+// ---- Lightbox: click a gallery image to view it larger ----
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
+
+document.querySelectorAll("#galleryTrack .gallery-item img").forEach((img) => {
+  img.addEventListener("click", () => {
+    lightboxImg.src = img.src;
+    lightbox.classList.add("open");
+  });
+});
+lightboxClose.addEventListener("click", () => lightbox.classList.remove("open"));
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) lightbox.classList.remove("open");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") lightbox.classList.remove("open");
+});
