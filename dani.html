@@ -25,18 +25,6 @@
      1. COVER
      ============================================ -->
 <section class="cover" id="cover">
-  <div class="disco-ball floating" aria-hidden="true">
-    <svg width="60" height="60" viewBox="0 0 60 60">
-      <defs>
-        <pattern id="discoPattern" width="8" height="8" patternUnits="userSpaceOnUse">
-          <rect width="8" height="8" fill="#c9d6de"/>
-          <rect width="3.5" height="3.5" fill="#eef3f6"/>
-          <rect x="4" y="4" width="3.5" height="3.5" fill="#9fb3bf"/>
-        </pattern>
-      </defs>
-      <circle cx="30" cy="30" r="26" fill="url(#discoPattern)" stroke="#7d8f99" stroke-width="0.5"/>
-    </svg>
-  </div>
   <h1 class="cover__name script">Dani</h1>
   <button class="btn" id="openBtn">Abrir</button>
 </section>
@@ -100,13 +88,14 @@
      5. RSVP
      ============================================ -->
 <section class="section" id="rsvp">
+  <img class="floral-decor floral-decor--tr" src="images/hero-floral-top.png" alt="" aria-hidden="true" onerror="this.remove()">
   <div class="rsvp-box reveal">
     <h2>Confirmar asistencia</h2>
     <p>La invitación es personal y te agradecería mucho que confirmes si vas a poder acompañarme. Esto me ayudará a preparar todo y contemplarte para la celebración.</p>
     <p class="script" style="font-size:1.3rem; color:var(--bougainvillea-deep);">¡Espero que puedas estar!</p>
 
     <iframe
-      data-tally-src="https://tally.so/embed/81bl9P?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      data-tally-src="https://tally.so/embed/81bl9P?alignLeft=1&transparentBackground=1&dynamicHeight=1"
       loading="lazy"
       width="100%"
       height="277"
@@ -123,6 +112,7 @@
      6. TIMELINE / INFO IMPORTANTE
      ============================================ -->
 <section class="section section--band-cream" id="timeline">
+  <img class="floral-decor floral-decor--tl" src="images/hero-floral-top.png" alt="" aria-hidden="true" onerror="this.remove()">
   <div class="timeline reveal">
     <h2>Información importante</h2>
     <p>Te doy una pequeña orientación sobre cómo se desarrollará mi cumpleaños para que sepas qué esperar en cada momento.</p>
@@ -170,19 +160,20 @@
   <div class="reveal" style="text-align:center;">
     <h2>Sección de inspiración</h2>
     <p style="margin-top:8px; opacity:0.85;">Inspírate en la paleta y los ejemplos de la imagen</p>
+    <p style="margin-top:4px; opacity:0.65; font-size:0.85rem;">Toca una imagen para verla más grande</p>
   </div>
   <div class="gallery-viewport">
     <div class="gallery-track animating" id="galleryTrack">
-      <!-- loop images x2 for seamless scroll -->
+      <!-- loop images x2 for a seamless circle: ...1,2,3,4,1,2,3,4... -->
       <div class="gallery-item"><img src="images/moodboard-1.jpg" alt="Moodboard Mamma Mia 1" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-1.jpg</span></div>'"></div>
       <div class="gallery-item"><img src="images/moodboard-2.jpg" alt="Moodboard Mamma Mia 2" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-2.jpg</span></div>'"></div>
       <div class="gallery-item"><img src="images/moodboard-3.jpg" alt="Moodboard Mamma Mia 3" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-3.jpg</span></div>'"></div>
       <div class="gallery-item"><img src="images/moodboard-4.jpg" alt="Moodboard Mamma Mia 4" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span><span>images/moodboard-4.jpg</span></div>'"></div>
-      <!-- duplicate set for seamless loop -->
-      <div class="gallery-item"><img src="images/moodboard-1.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
-      <div class="gallery-item"><img src="images/moodboard-2.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
-      <div class="gallery-item"><img src="images/moodboard-3.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
-      <div class="gallery-item"><img src="images/moodboard-4.jpg" alt="" aria-hidden="true" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <!-- duplicate set so item 4 flows straight back into item 1, forming a circle -->
+      <div class="gallery-item" aria-hidden="true"><img src="images/moodboard-1.jpg" alt="" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item" aria-hidden="true"><img src="images/moodboard-2.jpg" alt="" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item" aria-hidden="true"><img src="images/moodboard-3.jpg" alt="" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
+      <div class="gallery-item" aria-hidden="true"><img src="images/moodboard-4.jpg" alt="" onerror="this.parentElement.innerHTML+='<div class=photo-placeholder style=display:flex><span class=icon>🎨</span></div>'"></div>
     </div>
   </div>
 </section>
@@ -191,6 +182,7 @@
      11. GIFTS
      ============================================ -->
 <section class="section" id="gifts">
+  <img class="floral-decor floral-decor--br" src="images/hero-floral-top.png" alt="" aria-hidden="true" onerror="this.remove()">
   <div class="gifts reveal">
     <h2>Regalos</h2>
     <p>El mejor regalo para mí es que estés ahí y podamos celebrar juntos.</p>
@@ -225,16 +217,17 @@
   <div class="modal">
     <button class="modal__close" data-close>×</button>
     <h3>Sugerir canción favorita</h3>
-    <label class="field-label">Nombre y apellido *</label>
-    <input class="text-input" type="text" placeholder="Escribir aquí...">
-    <label class="field-label">Canción y autor@ *</label>
-    <input class="text-input" type="text" placeholder="Escribir aquí...">
-    <label class="field-label">Link de YouTube, Spotify... (opcional)</label>
-    <input class="text-input" type="text" placeholder="https://www.youtube.com/...">
-    <button class="btn">Enviar canción</button>
-    <div class="form-embed-note">
-      💡 Dani: reemplaza este formulario con tu iframe de Tally/Google Forms embebido aquí cuando esté listo.
-    </div>
+    <iframe
+      data-tally-src="https://tally.so/embed/J9E4a4?alignLeft=1&transparentBackground=1&dynamicHeight=1"
+      loading="lazy"
+      width="100%"
+      height="277"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      title="Sugerir canción favorita"
+      class="tally-embed">
+    </iframe>
   </div>
 </div>
 
@@ -269,6 +262,14 @@
       <p style="font-size:1.2rem;">🌧️✉️<br>Lluvia de sobres</p>
     </div>
   </div>
+</div>
+
+<!-- ============================================
+     LIGHTBOX (for gallery images)
+     ============================================ -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar imagen">×</button>
+  <img id="lightboxImg" src="" alt="Imagen ampliada">
 </div>
 
 <script>
