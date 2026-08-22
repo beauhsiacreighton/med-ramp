@@ -2,12 +2,10 @@
 // DANI'S 26th — MAMMA MIA BIRTHDAY INVITE
 // ============================================
 
-// ---- CONFIG: edit these when your forms/links are ready ----
+// ---- CONFIG ----
 const CONFIG = {
-  youtubeVideoId: "unfzfe8f9NI", // from the song link Dani provided
   eventDate: "2026-09-19T15:00:00-06:00", // Villahermosa, Tabasco is UTC-6
-  rsvpFormUrl: "", // paste your Tally/Google Form link here later
-  songFormUrl: "" // paste your song-suggestion form link here later
+  songFormUrl: "" // paste your song-suggestion form link here later, if you make a separate one
 };
 
 // ---- Smooth reveal on scroll ----
@@ -78,15 +76,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ---- RSVP / Song form buttons: open external form link if provided ----
-document.getElementById("rsvpSubmit")?.addEventListener("click", () => {
-  if (CONFIG.rsvpFormUrl) {
-    window.open(CONFIG.rsvpFormUrl, "_blank");
-  } else {
-    alert("Aquí se abrirá el formulario de confirmación de asistencia una vez que Dani agregue el link (ver CONFIG en script.js).");
-  }
-});
-
 // ---- Scroll nav dots ----
 const navSections = ["cover", "hero", "intro", "party", "rsvp", "timeline", "extras", "gallery", "gifts", "closing"];
 const scrollNav = document.getElementById("scrollNav");
@@ -114,74 +103,36 @@ navSections.forEach((id) => {
   if (el) navObserver.observe(el);
 });
 
-// ---- Background music via YouTube IFrame API ----
-let ytPlayer = null;
-let ytReady = false;
-let musicStarted = false;
-let musicMuted = false;
-
-const tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(tag);
-
-window.onYouTubeIframeAPIReady = function () {
-  ytPlayer = new YT.Player("ytPlayer", {
-    height: "0",
-    width: "0",
-    videoId: CONFIG.youtubeVideoId,
-    playerVars: {
-      autoplay: 0,
-      controls: 0,
-      loop: 1,
-      playlist: CONFIG.youtubeVideoId,
-      playsinline: 1
-    },
-    events: {
-      onReady: () => { ytReady = true; }
-    }
-  });
-};
-
+// ---- Background music via local mia.mp3 ----
+const bgMusic = document.getElementById("bgMusic");
 const soundToggle = document.getElementById("soundToggle");
+let musicStarted = false;
 
 function startMusic() {
-  if (!ytReady || musicStarted) return;
-  try {
-    ytPlayer.playVideo();
-    musicStarted = true;
-    soundToggle.classList.add("visible");
-    soundToggle.textContent = "🔊";
-  } catch (e) {
-    console.warn("No se pudo iniciar la música automáticamente:", e);
-  }
+  if (musicStarted) return;
+  bgMusic.play()
+    .then(() => {
+      musicStarted = true;
+      soundToggle.classList.add("visible");
+      soundToggle.textContent = "🔊";
+    })
+    .catch((e) => {
+      console.warn("No se pudo iniciar la música automáticamente:", e);
+    });
 }
 
 document.getElementById("openBtn").addEventListener("click", () => {
   document.getElementById("hero").scrollIntoView({ behavior: "smooth" });
-  // Give the API a moment if it just loaded
-  if (ytReady) {
-    startMusic();
-  } else {
-    const waitForReady = setInterval(() => {
-      if (ytReady) {
-        startMusic();
-        clearInterval(waitForReady);
-      }
-    }, 200);
-    setTimeout(() => clearInterval(waitForReady), 5000);
-  }
+  startMusic();
 });
 
 soundToggle.addEventListener("click", () => {
-  if (!ytPlayer) return;
-  if (musicMuted) {
-    ytPlayer.unMute();
+  if (bgMusic.muted) {
+    bgMusic.muted = false;
     soundToggle.textContent = "🔊";
-    musicMuted = false;
   } else {
-    ytPlayer.mute();
+    bgMusic.muted = true;
     soundToggle.textContent = "🔇";
-    musicMuted = true;
   }
 });
 
