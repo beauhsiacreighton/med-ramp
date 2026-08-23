@@ -11,8 +11,9 @@
   2. In the project, enable "Firestore Database" (production mode is fine).
   3. In Project settings > General, scroll to "Your apps" > Web app, register an app,
      and copy the firebaseConfig object it gives you into FIREBASE_CONFIG below.
-  4. In Firestore > Rules, paste the rules from the README/chat message you got with
-     this file, then Publish.
+  4. In Firestore > Rules, paste the rules from firestore.rules in this repo
+     (or the block in the script comment below), then click Publish. Without this
+     step the pad shows "Connection error" because production mode denies all access.
   5. Push this file to a GitHub repo, enable GitHub Pages (Settings > Pages > Deploy
      from branch), and open the resulting URL on any device.
 
@@ -333,6 +334,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Firestore > Rules (Firebase console) — paste and Publish if you see "Connection error":
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /rooms/{roomId} {
+//       allow read, delete: if roomId.matches('^[a-f0-9]{64}$');
+//       allow create, update: if roomId.matches('^[a-f0-9]{64}$')
+//         && request.resource.data.keys().hasOnly(['iv', 'ciphertext', 'updatedAt'])
+//         && request.resource.data.iv is string
+//         && request.resource.data.ciphertext is string
+//         && request.resource.data.ciphertext.size() < 1048576;
+//     }
+//   }
+// }
+
 // ======================================================================
 // 2. CRYPTO — everything below runs locally in the browser. The passcode
 //    never leaves this device; only AES-GCM ciphertext is written to
@@ -500,7 +516,7 @@ async function enterRoom(passcode){
     }
   }, (err) => {
     console.error(err);
-    setStatus('Connection error', 'bad');
+    setStatus(firestoreErrorLabel(err, 'Connection error'), 'bad');
   });
 }
 
@@ -523,6 +539,14 @@ copyCode.addEventListener('click', async () => {
   } catch(e){ /* clipboard may be unavailable; ignore */ }
 });
 
+function firestoreErrorLabel(err, fallback){
+  const code = err && (err.code || err.message);
+  if (code === 'permission-denied' || (typeof code === 'string' && code.includes('permission-denied'))){
+    return 'Firestore rules blocked access — publish firestore.rules in Firebase console';
+  }
+  return fallback;
+}
+
 function setStatus(text, kind){
   statusText.textContent = text;
   statusEl.className = 'status' + (kind ? ' ' + kind : '');
@@ -543,7 +567,7 @@ async function saveNow(){
     setStatus('Saved', 'good');
   } catch(e){
     console.error(e);
-    setStatus('Save failed — check connection', 'bad');
+    setStatus(firestoreErrorLabel(e, 'Save failed — check connection'), 'bad');
   }
 }
 
@@ -569,7 +593,7 @@ wipeBtn.addEventListener('click', async () => {
     setStatus('Deleted', '');
   } catch(e){
     console.error(e);
-    setStatus('Delete failed — check connection', 'bad');
+    setStatus(firestoreErrorLabel(e, 'Delete failed — check connection'), 'bad');
   }
 });
 </script>
