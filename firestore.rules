@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  // Keypad (cp.html): room IDs are SHA-256 hex hashes of the passcode.
+  // Note content is AES-GCM encrypted in the browser before write.
+    match /rooms/{roomId} {
+      allow read, delete: if roomId.matches('^[a-f0-9]{64}$');
+      allow create, update: if roomId.matches('^[a-f0-9]{64}$')
+        && request.resource.data.keys().hasOnly(['iv', 'ciphertext', 'updatedAt'])
+        && request.resource.data.iv is string
+        && request.resource.data.ciphertext is string
+        && request.resource.data.ciphertext.size() < 1048576;
+    }
+  }
+}
