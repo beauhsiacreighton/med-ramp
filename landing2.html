@@ -240,10 +240,10 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: rgba(7, 18, 30, 0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--color-line);
         }
 
         .site-header .wrap {
@@ -278,8 +278,14 @@
             font-family: var(--font-heading);
             font-size: 1.35rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--color-navy-900);
             letter-spacing: -0.01em;
+        }
+
+        /* Header call-to-action is slightly smaller than page buttons */
+        .site-header .btn {
+            padding: 10px 18px;
+            font-size: 0.875rem;
         }
 
         .site-nav .nav-links {
@@ -289,14 +295,14 @@
         }
 
         .nav-link {
-            color: #cbd5e1;
+            color: var(--color-ink-muted);
             font-weight: 500;
             font-size: 0.9375rem;
             transition: color var(--transition-smooth);
         }
 
         .nav-link:hover {
-            color: #ffffff;
+            color: var(--color-navy-900);
         }
 
         /* ==========================================================================
@@ -304,36 +310,62 @@
            ========================================================================== */
         .hero {
             position: relative;
-            background-color: var(--color-navy-950);
-            color: #ffffff;
+            background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 55%, #e6f0f9 100%);
+            color: var(--color-ink-base);
             padding-top: var(--space-24);
             padding-bottom: var(--space-24);
             overflow: hidden;
-            border-bottom: 1px solid var(--color-navy-800);
+            border-bottom: 1px solid var(--color-line);
         }
 
-        /* Ambient glowing lights + subtle technical grid */
+        /* Light animated background: slow-drifting soft blue light + faint grid */
         .hero-bg-overlay {
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background-image: 
-                radial-gradient(circle at 18% 25%, rgba(37, 99, 235, 0.22) 0%, transparent 45%),
-                radial-gradient(circle at 85% 70%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
-            opacity: 0.9;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(14, 165, 233, 0.16) 0%, transparent 42%),
+                radial-gradient(circle at 60% 10%, rgba(147, 197, 253, 0.20) 0%, transparent 40%),
+                linear-gradient(rgba(29, 78, 216, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(29, 78, 216, 0.05) 1px, transparent 1px);
+            background-size: 120% 120%, 120% 120%, 120% 120%, 48px 48px, 48px 48px;
+            animation: heroDrift 24s ease-in-out infinite alternate;
         }
 
-        /* If you have a custom photography background, set it here */
-        .hero-custom-bg {
+        @keyframes heroDrift {
+            from { background-position: 0% 0%, 100% 100%, 50% 0%, 0 0, 0 0; }
+            to { background-position: 8% 6%, 92% 94%, 56% 8%, 0 0, 0 0; }
+        }
+
+        /* Gentle animated waves along the bottom of the hero */
+        .hero-waves {
             position: absolute;
-            inset: 0;
-            /* Replace with: url('YOUR_IMAGE_URL.jpg') center/cover no-repeat; */
-            background-color: transparent;
-            mix-blend-mode: overlay;
-            opacity: 0.2;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 110px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: heroWaveBob 9s ease-in-out infinite;
+        }
+
+        .hero-wave-front {
+            animation-duration: 13s;
+            animation-direction: reverse;
+        }
+
+        @keyframes heroWaveBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .hero-content {
@@ -348,26 +380,25 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: #60a5fa;
+            color: var(--color-blue-600);
             margin-bottom: var(--space-4);
         }
 
         .hero h1 {
-            color: #ffffff;
+            color: var(--color-navy-900);
         }
 
         .hero-lede {
             font-size: 1.35rem;
             line-height: 1.6;
-            color: #cbd5e1;
+            color: var(--color-ink-muted);
             margin-bottom: var(--space-8);
         }
 
         /* Founder Quote */
         .founder-quote {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid var(--color-line);
             border-left: 4px solid var(--color-mark-edge);
             border-radius: var(--radius-md);
             padding: var(--space-6) var(--space-8);
@@ -376,7 +407,7 @@
 
         .founder-quote p {
             font-size: 1.1rem;
-            color: #e2e8f0;
+            color: var(--color-ink-base);
             margin-bottom: var(--space-3);
         }
 
@@ -385,15 +416,16 @@
             font-size: 0.875rem;
             font-style: normal;
             font-weight: 600;
-            color: #94a3b8;
+            color: var(--color-ink-muted);
         }
 
         /* Quantitative Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid var(--color-line);
+            box-shadow: var(--shadow-subtle);
             border-radius: var(--radius-lg);
             margin-bottom: var(--space-12);
             overflow: hidden;
@@ -407,41 +439,41 @@
         }
 
         .stat-item + .stat-item {
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 1px solid var(--color-line);
         }
 
         .stat-label {
             font-size: 0.875rem;
             font-weight: 500;
-            color: #94a3b8;
+            color: var(--color-ink-muted);
         }
 
         .stat-figure {
             font-family: var(--font-heading);
             font-size: 2.75rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--color-navy-900);
             line-height: 1;
         }
 
         /* Lead Capture Card */
         .lead-capture-card {
-            background-color: var(--color-navy-900);
-            color: #ffffff;
+            background-color: #ffffff;
+            color: var(--color-ink-base);
             border-radius: var(--radius-lg);
             padding: var(--space-10);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--color-line);
+            box-shadow: var(--shadow-card);
         }
 
         .lead-capture-card h2 {
-            color: #ffffff;
+            color: var(--color-navy-900);
             font-size: 1.75rem;
             margin-bottom: var(--space-3);
         }
 
         .lead-capture-card p {
-            color: #cbd5e1;
+            color: var(--color-ink-muted);
             font-size: 1rem;
             margin-bottom: var(--space-6);
         }
@@ -475,7 +507,7 @@
 
         .form-footnote {
             font-size: 0.8125rem;
-            color: #94a3b8;
+            color: var(--color-ink-muted);
             margin-top: var(--space-3);
         }
 
@@ -489,16 +521,16 @@
 
         .form-feedback.is-success {
             display: block;
-            background-color: rgba(15, 118, 110, 0.25);
+            background-color: #ecfdf5;
             border: 1px solid var(--color-success);
-            color: #5eead4;
+            color: #065f46;
         }
 
         .form-feedback.is-error {
             display: block;
-            background-color: rgba(220, 38, 38, 0.25);
+            background-color: #fef2f2;
             border: 1px solid #ef4444;
-            color: #fca5a5;
+            color: #991b1b;
         }
 
         /* ==========================================================================
@@ -517,6 +549,14 @@
             border-radius: var(--radius-lg);
             padding: var(--space-8);
             box-shadow: var(--shadow-subtle);
+            /* Scroll-linked clockwise rotation; set from JS via --card-rot */
+            transform: rotate(var(--card-rot, 0deg));
+            will-change: transform;
+        }
+
+        /* Counter-rotation keeps the text level while the card turns */
+        .problem-card-inner {
+            transform: rotate(calc(var(--card-rot, 0deg) * -1));
         }
 
         .problem-card-icon {
@@ -545,7 +585,57 @@
 
         /* ==========================================================================
            METHODOLOGY ROADMAP (Spacious Cards)
+           Submission-ready section: shimmering, wavelike background
            ========================================================================== */
+        #method {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #method .wrap {
+            position: relative;
+            z-index: 1;
+        }
+
+        .method-waves {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .method-waves svg {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .method-wave-back {
+            animation: methodWaveBob 9s ease-in-out infinite;
+        }
+
+        .method-wave-front {
+            animation: methodWaveBob 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes methodWaveBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Slow light sweep across the section for a subtle shimmer */
+        .method-shimmer {
+            position: absolute;
+            inset: -20% -10%;
+            pointer-events: none;
+            background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.55) 50%, transparent 58%);
+            animation: methodShimmer 7s ease-in-out infinite;
+        }
+
+        @keyframes methodShimmer {
+            0% { transform: translateX(-30%); }
+            55%, 100% { transform: translateX(30%); }
+        }
         .roadmap-list {
             list-style: none;
             display: grid;
@@ -602,54 +692,11 @@
             text-align: center;
         }
 
-        /* Stamp Graphic Placeholder */
-        .stamp-graphic {
-            width: 170px;
-            height: 170px;
-            border: 4px dashed #0f766e;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-3);
-            background: #f0fdfa;
-            color: #0f766e;
+        /* Real guarantee stamp image (replaces the CSS placeholder) */
+        .guarantee-stamp-img {
+            width: 180px;
+            height: 180px;
             transform: rotate(-7deg);
-            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.12);
-            position: relative;
-        }
-
-        .stamp-graphic::after {
-            content: "";
-            position: absolute;
-            inset: 6px;
-            border: 1.5px solid #0f766e;
-            border-radius: 50%;
-        }
-
-        .stamp-percent {
-            font-family: var(--font-heading);
-            font-size: 2.1rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .stamp-text {
-            font-family: var(--font-heading);
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-top: 4px;
-        }
-
-        .stamp-sub {
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #115e59;
         }
 
         /* ==========================================================================
@@ -702,11 +749,10 @@
             100% { transform: translateX(0); }
         }
 
-        /* Journal Logo Card */
+        /* Journal Logo Card — real journal/publisher logo pictures */
         .journal-badge {
             display: flex;
             align-items: center;
-            gap: var(--space-3);
             background: #ffffff;
             border: 1px solid var(--color-line);
             border-radius: var(--radius-md);
@@ -715,35 +761,16 @@
             white-space: nowrap;
         }
 
-        .journal-icon {
-            width: 32px;
-            height: 32px;
-            background-color: var(--color-navy-900);
-            color: #ffffff;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-heading);
-            font-weight: 800;
-            font-size: 0.85rem;
+        .journal-logo {
+            height: 44px;
+            width: auto;
+            max-width: 220px;
+            object-fit: contain;
+            display: block;
         }
 
-        .journal-title {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--color-navy-900);
-        }
-
-        .journal-impact {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--color-blue-600);
-            background-color: var(--color-blue-50);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: var(--space-2);
+        .journal-logo-tall {
+            height: 60px;
         }
 
         /* Article Marquee Card */
@@ -769,6 +796,16 @@
             margin-bottom: 4px;
         }
 
+        .article-heading a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .article-heading a:hover {
+            color: var(--color-blue-600);
+            text-decoration: underline;
+        }
+
         .article-heading {
             font-family: var(--font-heading);
             font-size: 0.925rem;
@@ -792,7 +829,7 @@
            ========================================================================== */
         .testimonial-carousel-wrap {
             position: relative;
-            max-width: 860px;
+            max-width: 960px;
             margin: var(--space-8) auto 0 auto;
         }
 
@@ -810,7 +847,10 @@
         }
 
         .testimonial-slide {
-            min-width: 100%;
+            /* Narrower than the viewport so neighbours peek in on both sides */
+            min-width: 80%;
+            flex-shrink: 0;
+            margin-right: 24px;
             padding: var(--space-12) var(--space-16);
             display: flex;
             flex-direction: column;
@@ -1152,10 +1192,23 @@
             color: #64748b;
         }
 
+        /* New ambient animations respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg-overlay,
+            .hero-wave,
+            .method-wave-back,
+            .method-wave-front,
+            .method-shimmer,
+            .track-left,
+            .track-right {
+                animation: none !important;
+            }
+        }
+
         /* Responsive Breakpoints */
         @media (max-width: 900px) {
             .stats-grid { grid-template-columns: 1fr; }
-            .stat-item + .stat-item { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+            .stat-item + .stat-item { border-left: none; border-top: 1px solid var(--color-line); }
             .problem-grid, .roadmap-list, .footer-grid { grid-template-columns: 1fr; }
             .guarantee-wrapper { grid-template-columns: 1fr; text-align: center; }
             .guarantee-stamp-box { margin-top: var(--space-6); }
@@ -1185,7 +1238,7 @@
                     <li><a href="#method" class="nav-link">Methodology</a></li>
                     <li><a href="#publications" class="nav-link">Published Studies</a></li>
                     <li><a href="#outcomes" class="nav-link">Outcomes</a></li>
-                    <li><a href="#pricing" class="nav-link">Tuition</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
                     <li><a href="#faq" class="nav-link">FAQ</a></li>
                 </ul>
             </nav>
@@ -1200,7 +1253,10 @@
         <!-- EPIC HERO SECTION (With Ambient Mesh & Photography Hooks) -->
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero-bg-overlay"></div>
-            <div class="hero-custom-bg" aria-hidden="true"></div>
+            <div class="hero-waves" aria-hidden="true">
+                <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,60 C240,105 480,15 720,55 C960,95 1200,25 1440,60 L1440,110 L0,110 Z" fill="#dbeafe"/></svg>
+                <svg class="hero-wave hero-wave-front" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,75 C240,35 480,105 720,65 C960,25 1200,95 1440,65 L1440,110 L0,110 Z" fill="#bfdbfe"/></svg>
+            </div>
 
             <div class="wrap">
                 <div class="hero-content">
@@ -1262,24 +1318,24 @@
                 
                 <div class="problem-grid">
                     <div class="problem-card">
-                        <div class="problem-card-icon" aria-hidden="true">✕</div>
+                        <div class="problem-card-inner"><div class="problem-card-icon" aria-hidden="true">✕</div>
                         <h3>Ghosted by Faculty</h3>
-                        <p>Sending dozens of cold emails to busy attendings, only to get left on read or told they simply don't have time to mentor students.</p>
+                        <p>Sending dozens of cold emails to busy attendings, only to get left on read or told they simply don't have time to mentor students.</p>                        </div>
                     </div>
                     <div class="problem-card">
-                        <div class="problem-card-icon" aria-hidden="true">✕</div>
+                        <div class="problem-card-inner"><div class="problem-card-icon" aria-hidden="true">✕</div>
                         <h3>Endless Lab Busywork</h3>
-                        <p>Spending months pipetting or doing grunt data entry without ever touching the manuscript or earning a verifiable authorship.</p>
+                        <p>Spending months pipetting or doing grunt data entry without ever touching the manuscript or earning a verifiable authorship.</p>                        </div>
                     </div>
                     <div class="problem-card">
-                        <div class="problem-card-icon" aria-hidden="true">✕</div>
+                        <div class="problem-card-inner"><div class="problem-card-icon" aria-hidden="true">✕</div>
                         <h3>Stuck in IRB Purgatory</h3>
-                        <p>Waiting 9 to 12 months just for institutional approval before you can even touch your first patient dataset.</p>
+                        <p>Waiting 9 to 12 months just for institutional approval before you can even touch your first patient dataset.</p>                        </div>
                     </div>
                     <div class="problem-card">
-                        <div class="problem-card-icon" aria-hidden="true">✕</div>
+                        <div class="problem-card-inner"><div class="problem-card-icon" aria-hidden="true">✕</div>
                         <h3>Application Deadline Dread</h3>
-                        <p>Watching your AMCAS or ERAS deadline creep closer while competitive residency programs demand scientific productivity.</p>
+                        <p>Watching your AMCAS or ERAS deadline creep closer while competitive residency programs demand scientific productivity.</p>                        </div>
                     </div>
                 </div>
             </div>
@@ -1287,6 +1343,11 @@
 
         <!-- METHODOLOGY -->
         <section class="section section-alt" id="method">
+            <div class="method-waves" aria-hidden="true">
+                <svg class="method-wave-back" viewBox="0 0 1440 900" preserveAspectRatio="none"><path d="M0,700 C240,640 480,760 720,700 C960,640 1200,760 1440,700 L1440,900 L0,900 Z" fill="#dbeafe"/></svg>
+                <svg class="method-wave-front" viewBox="0 0 1440 900" preserveAspectRatio="none"><path d="M0,770 C240,720 480,820 720,770 C960,720 1200,820 1440,770 L1440,900 L0,900 Z" fill="#bfdbfe"/></svg>
+            </div>
+            <div class="method-shimmer" aria-hidden="true"></div>
             <div class="wrap">
                 <span class="section-label">Med-RAMP Methodology</span>
                 <h2>From zero to a submission-ready abstract in 7 milestone days.</h2>
@@ -1312,7 +1373,7 @@
             </div>
         </section>
 
-        <!-- EXECUTION GUARANTEE WITH STAMP OF APPROVAL PLACEHOLDER -->
+        <!-- EXECUTION GUARANTEE WITH STAMP OF APPROVAL -->
         <section class="section">
             <div class="wrap">
                 <div class="guarantee-wrapper">
@@ -1323,13 +1384,9 @@
                         <p style="font-size: 0.875rem; color: var(--color-ink-faint); margin: 0;">In compliance with ICMJE ethics, external journal peer review remains independent. We guarantee the draft's academic standard under our mentorship.</p>
                     </div>
 
-                    <!-- STAMP OF APPROVAL PLACEHOLDER -->
+                    <!-- 100% GUARANTEE STAMP -->
                     <div class="guarantee-stamp-box">
-                        <div class="stamp-graphic" title="Med-RAMP 100% Money-Back Guarantee">
-                            <span class="stamp-percent">100%</span>
-                            <span class="stamp-text">Guaranteed</span>
-                            <span class="stamp-sub">Official Stamp</span>
-                        </div>
+                        <img class="guarantee-stamp-img" src="images/landing2-guarantee-stamp.svg" alt="100% Guaranteed stamp — Med-RAMP 100% money-back guarantee" width="180" height="180">
                     </div>
                 </div>
             </div>
@@ -1347,19 +1404,19 @@
             <div class="marquee-container" aria-label="Published Journals">
                 <div class="marquee-track track-left">
                     <!-- Set 1 -->
-                    <div class="journal-badge"><div class="journal-icon">JCO</div><span class="journal-title">Journal of Clinical Oncology</span><span class="journal-impact">IF 45.3</span></div>
-                    <div class="journal-badge"><div class="journal-icon">C</div><span class="journal-title">Cancers (Basel)</span><span class="journal-impact">IF 5.2</span></div>
-                    <div class="journal-badge"><div class="journal-icon">RT</div><span class="journal-title">Rare Tumors</span><span class="journal-impact">PubMed</span></div>
-                    <div class="journal-badge"><div class="journal-icon">AR</div><span class="journal-title">Anticancer Research</span><span class="journal-impact">IF 2.4</span></div>
-                    <div class="journal-badge"><div class="journal-icon">MB</div><span class="journal-title">Curr Issues Mol Biol</span><span class="journal-impact">IF 3.1</span></div>
-                    <div class="journal-badge"><div class="journal-icon">HN</div><span class="journal-title">Head &amp; Neck Oncology</span><span class="journal-impact">IF 3.8</span></div>
+                    <div class="journal-badge"><img class="journal-logo journal-logo-tall" src="images/logos/jco-cover.jpg" alt="Journal of Clinical Oncology"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/cancers-logo.png" alt="Cancers"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/sage-journals-logo.svg" alt="Rare Tumors — SAGE Journals"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/iiar-logo.png" alt="Anticancer Research — International Institute of Anticancer Research"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/cimb-logo.png" alt="Current Issues in Molecular Biology"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/ohn-logo.jpg" alt="Otolaryngology–Head and Neck Surgery"></div>
                     <!-- Set 2 (Duplicated for seamless loop) -->
-                    <div class="journal-badge"><div class="journal-icon">JCO</div><span class="journal-title">Journal of Clinical Oncology</span><span class="journal-impact">IF 45.3</span></div>
-                    <div class="journal-badge"><div class="journal-icon">C</div><span class="journal-title">Cancers (Basel)</span><span class="journal-impact">IF 5.2</span></div>
-                    <div class="journal-badge"><div class="journal-icon">RT</div><span class="journal-title">Rare Tumors</span><span class="journal-impact">PubMed</span></div>
-                    <div class="journal-badge"><div class="journal-icon">AR</div><span class="journal-title">Anticancer Research</span><span class="journal-impact">IF 2.4</span></div>
-                    <div class="journal-badge"><div class="journal-icon">MB</div><span class="journal-title">Curr Issues Mol Biol</span><span class="journal-impact">IF 3.1</span></div>
-                    <div class="journal-badge"><div class="journal-icon">HN</div><span class="journal-title">Head &amp; Neck Oncology</span><span class="journal-impact">IF 3.8</span></div>
+                    <div class="journal-badge"><img class="journal-logo journal-logo-tall" src="images/logos/jco-cover.jpg" alt="Journal of Clinical Oncology"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/cancers-logo.png" alt="Cancers"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/sage-journals-logo.svg" alt="Rare Tumors — SAGE Journals"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/iiar-logo.png" alt="Anticancer Research — International Institute of Anticancer Research"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/cimb-logo.png" alt="Current Issues in Molecular Biology"></div>
+                    <div class="journal-badge"><img class="journal-logo" src="images/logos/ohn-logo.jpg" alt="Otolaryngology–Head and Neck Surgery"></div>
                 </div>
             </div>
 
@@ -1369,54 +1426,94 @@
                     <!-- Set 1 -->
                     <div class="article-card">
                         <span class="article-journal-tag">J Clin Oncol</span>
-                        <div class="article-heading">Clear cell–type squamous cell carcinoma: An NCDB analysis.</div>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Clear+cell-type+squamous+cell+carcinoma%22+NCDB" target="_blank" rel="noopener">Clear cell–type squamous cell carcinoma: An NCDB analysis.</a></div>
                         <div class="article-authors">Saglimbeni GS, Nakshbandi N, Hsia B, Heise C.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Rare Tumors</span>
-                        <div class="article-heading">Genomic landscape of schwannomas: Somatic mutations &amp; disparities.</div>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Genomic+landscape+of+schwannomas%22" target="_blank" rel="noopener">Genomic landscape of schwannomas: Somatic mutations &amp; disparities.</a></div>
                         <div class="article-authors">Jacob J, Hsia B, Boyal N, Tauseef A.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Curr Issues Mol Biol</span>
-                        <div class="article-heading">Mutational Landscape of FGFR4 Across Malignancies (AACR GENIE).</div>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cimb48070748" target="_blank" rel="noopener">Mutational Landscape of FGFR4 Across Malignancies (AACR GENIE).</a></div>
                         <div class="article-authors">Ali H, Gengnagel T, Birkholz S, Hsia B, et al.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Anticancer Res</span>
-                        <div class="article-heading">Genomic Characteristics of Leiomyosarcoma: Project GENIE.</div>
+                        <div class="article-heading"><a href="https://doi.org/10.21873/anticanres.18245" target="_blank" rel="noopener">Genomic Characteristics of Leiomyosarcoma: Project GENIE.</a></div>
                         <div class="article-authors">Ali H, Chander C, Torbenson E, Hsia B, Silberstein PT.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Cancers (Basel)</span>
-                        <div class="article-heading">Genomic Insights into Cutaneous Squamous Cell Carcinoma.</div>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cancers18040558" target="_blank" rel="noopener">Genomic Insights into Cutaneous Squamous Cell Carcinoma.</a></div>
                         <div class="article-authors">Saglimbeni GS, Morris TJ, Hsia B, Tauseef A.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">Otolaryngol Head Neck Surg</span>
+                        <div class="article-heading"><a href="https://doi.org/10.1002/ohn.70115" target="_blank" rel="noopener">Genomic Characterization of Oncocytic Carcinoma of the Thyroid Using a Large Multi-Institutional Database.</a></div>
+                        <div class="article-authors">Hsia B, Dongre R, Veluvolu VD, Kuzniar J, Bitar G, Alshaka SA, et al.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">J Clin Oncol</span>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Genomic+profiling+of+diffuse+intrinsic+pontine+glioma%22+GENIE" target="_blank" rel="noopener">Genomic profiling of diffuse intrinsic pontine glioma in AACR Project GENIE.</a></div>
+                        <div class="article-authors">Surendra A, Prasad S, Chang A, Puvvadi S, Hsia B, Tauseef A.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">J Clin Oncol</span>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Comprehensive+genomic+profiling+of+adenoid+cystic+carcinoma%22+GENIE" target="_blank" rel="noopener">Comprehensive genomic profiling of adenoid cystic carcinoma using the AACR Genie Database.</a></div>
+                        <div class="article-authors">Patrick M, Maliy D, Chang A, Puvvadi S, Surendra A, Tauseef A, Hsia B.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">Cancers (Basel)</span>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cancers17030536" target="_blank" rel="noopener">Genomic characterization of chordoma: Insights from the AACR project GENIE database.</a></div>
+                        <div class="article-authors">Hsia B, Bitar G, Alshaka SA, Kim JD, Valencia-Sanchez BA, Faraji F, et al.</div>
                     </div>
                     <!-- Set 2 (Duplicated for seamless loop) -->
                     <div class="article-card">
                         <span class="article-journal-tag">J Clin Oncol</span>
-                        <div class="article-heading">Clear cell–type squamous cell carcinoma: An NCDB analysis.</div>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Clear+cell-type+squamous+cell+carcinoma%22+NCDB" target="_blank" rel="noopener">Clear cell–type squamous cell carcinoma: An NCDB analysis.</a></div>
                         <div class="article-authors">Saglimbeni GS, Nakshbandi N, Hsia B, Heise C.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Rare Tumors</span>
-                        <div class="article-heading">Genomic landscape of schwannomas: Somatic mutations &amp; disparities.</div>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Genomic+landscape+of+schwannomas%22" target="_blank" rel="noopener">Genomic landscape of schwannomas: Somatic mutations &amp; disparities.</a></div>
                         <div class="article-authors">Jacob J, Hsia B, Boyal N, Tauseef A.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Curr Issues Mol Biol</span>
-                        <div class="article-heading">Mutational Landscape of FGFR4 Across Malignancies (AACR GENIE).</div>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cimb48070748" target="_blank" rel="noopener">Mutational Landscape of FGFR4 Across Malignancies (AACR GENIE).</a></div>
                         <div class="article-authors">Ali H, Gengnagel T, Birkholz S, Hsia B, et al.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Anticancer Res</span>
-                        <div class="article-heading">Genomic Characteristics of Leiomyosarcoma: Project GENIE.</div>
+                        <div class="article-heading"><a href="https://doi.org/10.21873/anticanres.18245" target="_blank" rel="noopener">Genomic Characteristics of Leiomyosarcoma: Project GENIE.</a></div>
                         <div class="article-authors">Ali H, Chander C, Torbenson E, Hsia B, Silberstein PT.</div>
                     </div>
                     <div class="article-card">
                         <span class="article-journal-tag">Cancers (Basel)</span>
-                        <div class="article-heading">Genomic Insights into Cutaneous Squamous Cell Carcinoma.</div>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cancers18040558" target="_blank" rel="noopener">Genomic Insights into Cutaneous Squamous Cell Carcinoma.</a></div>
                         <div class="article-authors">Saglimbeni GS, Morris TJ, Hsia B, Tauseef A.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">Otolaryngol Head Neck Surg</span>
+                        <div class="article-heading"><a href="https://doi.org/10.1002/ohn.70115" target="_blank" rel="noopener">Genomic Characterization of Oncocytic Carcinoma of the Thyroid Using a Large Multi-Institutional Database.</a></div>
+                        <div class="article-authors">Hsia B, Dongre R, Veluvolu VD, Kuzniar J, Bitar G, Alshaka SA, et al.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">J Clin Oncol</span>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Genomic+profiling+of+diffuse+intrinsic+pontine+glioma%22+GENIE" target="_blank" rel="noopener">Genomic profiling of diffuse intrinsic pontine glioma in AACR Project GENIE.</a></div>
+                        <div class="article-authors">Surendra A, Prasad S, Chang A, Puvvadi S, Hsia B, Tauseef A.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">J Clin Oncol</span>
+                        <div class="article-heading"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Comprehensive+genomic+profiling+of+adenoid+cystic+carcinoma%22+GENIE" target="_blank" rel="noopener">Comprehensive genomic profiling of adenoid cystic carcinoma using the AACR Genie Database.</a></div>
+                        <div class="article-authors">Patrick M, Maliy D, Chang A, Puvvadi S, Surendra A, Tauseef A, Hsia B.</div>
+                    </div>
+                    <div class="article-card">
+                        <span class="article-journal-tag">Cancers (Basel)</span>
+                        <div class="article-heading"><a href="https://doi.org/10.3390/cancers17030536" target="_blank" rel="noopener">Genomic characterization of chordoma: Insights from the AACR project GENIE database.</a></div>
+                        <div class="article-authors">Hsia B, Bitar G, Alshaka SA, Kim JD, Valencia-Sanchez BA, Faraji F, et al.</div>
                     </div>
                 </div>
             </div>
@@ -1427,14 +1524,12 @@
             <div class="wrap">
                 <span class="section-label">Candidate Outcomes</span>
                 <h2>Proven admission outcomes.</h2>
-                <p class="section-intro">Here is what students report after completing structured clinical research under physician oversight.</p>
-
                 <div class="testimonial-carousel-wrap">
                     <div class="testimonial-viewport">
                         <div class="testimonial-slider" id="testimonialSlider">
                             <!-- Slide 1 -->
                             <div class="testimonial-slide">
-                                <p class="testimonial-quote">“Med-RAMP was central to my acceptances to multiple medical schools. I collaborated with pre-med and medical students to author abstracts and manuscripts. The mentorship gave me concrete, meaningful scientific experiences to speak about during admissions interviews.”</p>
+                                <p class="testimonial-quote">&ldquo;over the past two years, Med-RAMP has been instrumental in my acceptances to multiple medical schools. Through the program, I collaborated with fellow pre-med and medical students to write abstracts and manuscripts, strengthening my research and scientific writing skills beyond the program itself. The mentorship I received from Beau during my application cycle was invaluable. These experiences also gave me strong, meaningful examples to draw on during my medical school interviews, allowing me to speak confidently about my growth in research, and collaboration. I highly recommend Med-RAMP to pre-health students!&rdquo;</p>
                                 <div class="testimonial-meta">
                                     <div class="testimonial-person">
                                         <h4>Aryn L.</h4>
@@ -1443,9 +1538,8 @@
                                     <span class="testimonial-badge">Accepted — Univ. of Colorado School of Medicine</span>
                                 </div>
                             </div>
-                            <!-- Slide 2 -->
                             <div class="testimonial-slide">
-                                <p class="testimonial-quote">“Securing verifiable research experience as an undergraduate felt impossible until Med-RAMP. I executed projects that resulted in published papers and learned professional medical writing. Beau’s strategic guidance proved crucial during the application cycle.”</p>
+                                <p class="testimonial-quote">&ldquo;Getting meaningful research experience as an undergraduate can be challenging, which is why Med-RAMP was such a valuable opportunity for me. Through the program, I was able to complete projects that led to publications while developing skills in scientific writing and collaborating with a research team. The mentorship from Beau was especially impactful, and his guidance played a big role in helping me navigate the medical school application process and ultimately earn several medical school acceptances.&rdquo;</p>
                                 <div class="testimonial-meta">
                                     <div class="testimonial-person">
                                         <h4>Daniel T.</h4>
@@ -1454,26 +1548,34 @@
                                     <span class="testimonial-badge">Accepted — Multiple US MD Programs</span>
                                 </div>
                             </div>
-                            <!-- Slide 3 -->
                             <div class="testimonial-slide">
-                                <p class="testimonial-quote">“At Med-RAMP, effort directly correlated with publishable results. Elsewhere, I felt abandoned without actionable milestones. The mentorship focuses strictly on work that meets peer-review criteria. It was pivotal in my journey to Mayo Clinic.”</p>
-                                <div class="testimonial-meta">
-                                    <div class="testimonial-person">
-                                        <h4>Mark M.</h4>
-                                        <span style="font-size: 0.85rem; color: var(--color-ink-muted);">Mentored Student</span>
-                                    </div>
-                                    <span class="testimonial-badge">Accepted — Mayo Clinic Alix School of Medicine</span>
-                                </div>
-                            </div>
-                            <!-- Slide 4 -->
-                            <div class="testimonial-slide">
-                                <p class="testimonial-quote">“I joined as an undergraduate overwhelmed by institutional gatekeeping. Here, I developed authentic competence analyzing registries and drafting abstracts. Recommended without hesitation to any serious pre-medical scholar.”</p>
+                                <p class="testimonial-quote">&ldquo;I joined Med-RAMP as an undergraduate during a time when I felt overwhelmed trying to find meaningful clinical research opportunities. I am grateful to have discovered this program, and was able to build my research experience by learning from mentors, working on real research projects and getting published. Med-RAMP is truly designed with premeds and medical student in mind, and I highly recommend it to anyone looking to grow in clinical research!&rdquo;</p>
                                 <div class="testimonial-meta">
                                     <div class="testimonial-person">
                                         <h4>Amber C.</h4>
                                         <span style="font-size: 0.85rem; color: var(--color-ink-muted);">Mentored Student</span>
                                     </div>
                                     <span class="testimonial-badge">Medical Student — USF Morsani College of Medicine</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-slide">
+                                <p class="testimonial-quote">&ldquo;I can undoubtedly say that Med-RAMP was an indispensable part of my medical school application. I couldn't have done it without Beau's mentorship!&rdquo;</p>
+                                <div class="testimonial-meta">
+                                    <div class="testimonial-person">
+                                        <h4>Aaron S.</h4>
+                                        <span style="font-size: 0.85rem; color: var(--color-ink-muted);">Mentored Student</span>
+                                    </div>
+                                    <span class="testimonial-badge">Accepted — Multiple US MD Programs</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-slide">
+                                <p class="testimonial-quote">&ldquo;At Med-RAMP, my research effort mattered. Elsewhere, I'd feel lost and confused without guidance. That here, the mentors are extremely personable and knowledgeable about working on research that actually gets published, and it's a significant part of how I ultimately ended up at Mayo Clinic.&rdquo;</p>
+                                <div class="testimonial-meta">
+                                    <div class="testimonial-person">
+                                        <h4>Mark M.</h4>
+                                        <span style="font-size: 0.85rem; color: var(--color-ink-muted);">Mentored Student</span>
+                                    </div>
+                                    <span class="testimonial-badge">Accepted — Mayo Clinic Alix School of Medicine</span>
                                 </div>
                             </div>
                         </div>
@@ -1500,7 +1602,7 @@
             <div class="wrap">
                 <span class="section-label">Transparent Programs</span>
                 <h2>Structured mentorship tiers.</h2>
-                <p class="section-intro">Every track involves direct milestone reviews by Dr. Beau Hsia and is backed by our full execution guarantee.</p>
+                <p class="section-intro">Every track involves working directly with Dr. Beau Hsia and is backed by our 100% execution guarantee.</p>
 
                 <div class="pricing-table-container">
                     <table class="pricing-table">
@@ -1682,7 +1784,7 @@
                         <li><a href="#method">Mentorship Method</a></li>
                         <li><a href="#publications">Journal Archive</a></li>
                         <li><a href="#pricing">Tuition &amp; Fees</a></li>
-                        <li><a href="mailto:mentorship@med-ramp.com">Institutional Inquiries</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#d1bcb4bfa5bea3a2b9b8a191bcb4b5fca3b0bca1ffb2bebc">Institutional Inquiries</a></li>
                     </ul>
                 </div>
             </div>
@@ -1694,7 +1796,7 @@
     </footer>
 
     <!-- INTERACTION SCRIPTS: CAROUSEL, FORM, FAQ -->
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         document.addEventListener('DOMContentLoaded', function () {
             // 1. Dynamic Year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -1718,12 +1820,21 @@
 
             const dots = document.querySelectorAll('.carousel-dot');
 
+            // Center the active slide so neighbours peek in on the left and right
             function updateCarousel() {
-                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                const viewport = document.querySelector('.testimonial-viewport');
+                const firstSlide = slides[0];
+                if (!viewport || !firstSlide) return;
+                const slideWidth = firstSlide.getBoundingClientRect().width + 24; // slide + right margin
+                const offset = (viewport.clientWidth - (slideWidth - 24)) / 2 - currentIndex * slideWidth;
+                slider.style.transform = `translateX(${offset}px)`;
                 dots.forEach((dot, idx) => {
                     dot.classList.toggle('is-active', idx === currentIndex);
                 });
             }
+
+            window.addEventListener('resize', updateCarousel);
+            updateCarousel();
 
             function goToSlide(index) {
                 currentIndex = index;
@@ -1742,6 +1853,31 @@
 
             nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
+
+            // 2b. Scroll-linked clockwise rotation for the four problem cards.
+            // The card frame turns; the inner content counter-rotates so the text stays level.
+            const problemCards = document.querySelectorAll('.problem-card');
+            const problemSection = document.getElementById('problem');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function updateProblemCards() {
+                if (!problemSection || !problemCards.length || reduceMotion) return;
+                const rect = problemSection.getBoundingClientRect();
+                const vh = window.innerHeight || 1;
+                const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height * 0.6)));
+                problemCards.forEach((card, i) => {
+                    const start = i * 0.18;
+                    const local = Math.min(1, Math.max(0, (progress - start) / (1 - start)));
+                    card.style.setProperty('--card-rot', (local * 5).toFixed(2) + 'deg');
+                });
+            }
+            let cardTicking = false;
+            window.addEventListener('scroll', function () {
+                if (!cardTicking) {
+                    window.requestAnimationFrame(function () { updateProblemCards(); cardTicking = false; });
+                    cardTicking = true;
+                }
+            }, { passive: true });
+            updateProblemCards();
 
             // 3. Lead Capture Form Simulation
             const leadForm = document.getElementById('leadCaptureForm');
