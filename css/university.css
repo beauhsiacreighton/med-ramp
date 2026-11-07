@@ -169,3 +169,14 @@ table.pricing tr.featured td:first-child { box-shadow: inset 5px 0 0 var(--mark)
     .email-panel { padding: 22px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+
+/* ---------- Additions for final landing.html ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.problem-list { max-width: 700px; margin: 0 0 20px; padding-left: 22px; }
+.problem-list li { margin-bottom: 8px; }
+.section.guarantee { background: var(--sky); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 52px 0; }
+.guarantee .wrap { max-width: 760px; }
+.guarantee h2 { margin-bottom: 12px; }
+.tag { display: inline-block; margin-top: 8px; background: var(--mark); color: var(--navy); font: 700 .8rem var(--sans); padding: 2px 8px; border-radius: 3px; }
+.price-sub { display: block; font: 400 .85rem/1.4 var(--sans); color: var(--muted); margin-top: 4px; white-space: normal; }
+.price-sub strong { color: var(--navy); }
