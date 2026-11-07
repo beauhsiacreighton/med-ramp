@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med-RAMP — Productive Medical Research for Pre-Meds and Medical Students</title>
+    <meta name="description" content="The exact template Med-RAMP members used to earn 100+ accepted publications. Get the free NCDB abstract template, or write your first abstract in a week with MD mentorship. 300+ students, 500+ authorships.">
+    <link rel="stylesheet" href="../css/styles-1.css">
+    <style>
+        /* Landing-page styles — built on the shared Med-RAMP styles (Zilla Slab / Inter, --accent #015da9) */
+        .landing-nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .landing-nav .container { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 14px; padding-bottom: 14px; }
+        .landing-nav-links { display: flex; gap: 22px; align-items: center; font-size: .88rem; font-weight: 500; color: var(--muted); }
+        .landing-nav-links a:hover { color: var(--text); }
+        .landing-hero { padding: 90px 0 70px; }
+        .landing-hero h1 { font-size: clamp(2.6rem, 5vw, 4.4rem); line-height: 1.05; letter-spacing: -0.03em; margin: 18px 0; }
+        .landing-hero h1 .rotating-word { color: var(--accent); font-style: italic; white-space: nowrap; transition: opacity .35s ease; }
+        .landing-hero h1 .rotating-word.is-fading { opacity: 0; }
+        .landing-hero .lede { max-width: 640px; color: var(--muted); font-size: 1.12rem; }
+        .proof-strip { display: flex; flex-wrap: wrap; gap: 14px 36px; margin: 34px 0; }
+        .proof-strip strong { display: block; font-family: 'Zilla Slab', serif; font-size: 1.9rem; line-height: 1.1; }
+        .proof-strip span { color: var(--muted); font-size: .88rem; }
+        .email-card { max-width: 620px; margin-top: 28px; padding: 24px; border: 1px solid var(--border); border-radius: 18px; background: #fff; }
+        .email-card h2 { font-size: 1.25rem; margin-bottom: 6px; }
+        .email-card p { color: var(--muted); font-size: .95rem; }
+        .email-form { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .email-form input[type="email"] { flex: 1 1 260px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 8px; font: inherit; font-size: 1rem; }
+        .email-form input[type="email"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .email-note { margin-top: 12px; font-size: .85rem; color: var(--muted); }
+        .form-message { margin-top: 12px; font-size: .95rem; display: none; }
+        .form-message.is-visible { display: block; }
+        .steps-grid, .template-grid, .pricing-grid, .testimonial-grid { display: grid; gap: 18px; }
+        .steps-grid { grid-template-columns: repeat(3, 1fr); }
+        .template-grid { grid-template-columns: repeat(2, 1fr); }
+        .pricing-grid { grid-template-columns: repeat(4, 1fr); align-items: stretch; }
+        .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+        .card { padding: 26px; border: 1px solid var(--border); border-radius: 18px; background: #fff; }
+        .card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+        .card p, .card li { color: var(--muted); font-size: .95rem; }
+        .card ul { margin: 12px 0 0; padding-left: 20px; }
+        .card li { margin-bottom: 8px; }
+        .price { font-family: 'Zilla Slab', serif; font-size: 2.2rem; line-height: 1; margin: 10px 0 4px; }
+        .price small { font-size: 1rem; color: var(--muted); font-family: 'Inter', sans-serif; }
+        .price-strike { color: var(--muted); text-decoration: line-through; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: var(--accent-light); color: var(--accent); font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+        .badge-warm { background: var(--gold); color: var(--gold-text); }
+        .pricing-card.is-featured { border: 2px solid var(--accent); }
+        .guarantee { padding: 28px; border-radius: 18px; background: var(--bg-warm); border: 1px solid var(--border-warm); }
+        .guarantee p { color: var(--muted); }
+        .carousel { position: relative; }
+        .abstract-slide, .testimonial-slide { display: none; }
+        .abstract-slide.is-active, .testimonial-slide.is-active { display: block; }
+        .abstract-slide h3 { font-size: 1.4rem; line-height: 1.35; margin-bottom: 10px; }
+        .carousel-controls { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
+        .carousel-dots { display: flex; gap: 8px; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; padding: 0; }
+        .carousel-dot.is-active { background: var(--accent); }
+        .carousel-arrow { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: #fff; font-size: 1.2rem; cursor: pointer; }
+        .quote-stars { color: var(--star); letter-spacing: 2px; margin-bottom: 10px; }
+        .quote-author { margin-top: 16px; font-weight: 600; }
+        .quote-role { color: var(--muted); font-size: .88rem; font-weight: 400; }
+        .pub-list { list-style: none; margin: 0; padding: 0; }
+        .pub-list li { padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .pub-list li:last-child { border-bottom: none; }
+        .pub-list .pub-meta { color: var(--muted); font-size: .88rem; }
+        details.faq { padding: 18px 0; border-bottom: 1px solid var(--border); }
+        details.faq summary { cursor: pointer; font-family: 'Zilla Slab', serif; font-size: 1.15rem; font-weight: 600; }
+        details.faq p { margin-top: 10px; color: var(--muted); }
+        .landing-footer { padding: 50px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+        @media (max-width: 900px) {
+            .steps-grid, .template-grid, .testimonial-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
+            .landing-nav-links { display: none; }
+            .container { padding: 0 22px; }
+        }
+        @media (max-width: 560px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="landing-nav">
+        <div class="container">
+            <a class="wordmark" href="../">Med-<span class="accent">RAMP</span></a>
+            <nav class="landing-nav-links" aria-label="Landing page">
+                <a href="#template">Free template</a>
+                <a href="#results">Results</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a class="btn btn-primary" href="#template" style="padding:9px 20px;">Get template</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="landing-hero">
+            <div class="container">
+                <div class="eyebrow">#1 in productive medical research</div>
+                <h1>Productive medical research, for <span class="rotating-word" id="rotatingWord">pre-meds</span>.</h1>
+                <p class="lede">The exact template our members used to earn 100+ publications accepted. Get yours today — and if you want mentorship, write your first abstract in a week.</p>
+
+                <div class="proof-strip" aria-label="Med-RAMP results">
+                    <div><strong>300+</strong><span>students</span></div>
+                    <div><strong>500+</strong><span>authorships earned</span></div>
+                    <div><strong>100+</strong><span>publications accepted</span></div>
+                </div>
+
+                <div class="email-card" id="template">
+                    <h2>Get the free template</h2>
+                    <p>The NCDB abstract template — the one behind ~100 accepted abstracts. Enter your email and we&rsquo;ll send it to you.</p>
+                    <!-- TODO: connect this form to your email platform (e.g. ConvertKit / Beehiiv) so the NCDB template is sent automatically on signup. -->
+                    <form class="email-form" id="templateForm">
+                        <label for="templateEmail" class="sr-only" style="position:absolute;left:-9999px;">Email address</label>
+                        <input type="email" id="templateEmail" name="email" placeholder="Enter email here" required autocomplete="email">
+                        <button class="btn btn-primary" type="submit">Get template</button>
+                    </form>
+                    <p class="form-message" id="templateMessage" role="status"></p>
+                    <p class="email-note">Free. No spam. Mentorship uses a separate template — the AACR GENIE template — not the free NCDB one.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">How it works</div>
+                <h2 class="section-title">Write an abstract in a week.</h2>
+                <div class="steps-grid">
+                    <article class="card"><h3>1. Get the template</h3><p>Start with the exact structure our members used — Background, Objective, Methods, Results, Conclusions — no blank page, no guessing what goes where.</p></article>
+                    <article class="card"><h3>2. Pick a pre-approved topic</h3><p>Mentorship students work on a pre-approved topic, with pre-gathered data. You don&rsquo;t spend months finding a project first.</p></article>
+                    <article class="card"><h3>3. Finish with MD guidance</h3><p>Email guidance from an MD on your project, step by step, until you have a finished draft ready for mentor review.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two templates -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">Two templates, two jobs</div>
+                <h2 class="section-title">The free template and the mentorship template are different.</h2>
+                <div class="template-grid">
+                    <article class="card">
+                        <span class="badge">Free</span>
+                        <h3 style="margin-top:10px;">NCDB abstract template</h3>
+                        <p>The template for National Cancer Database abstracts — used to get ~100 accepted abstracts. This is the one you get free by email.</p>
+                    </article>
+                    <article class="card">
+                        <span class="badge badge-warm">Mentorship</span>
+                        <h3 style="margin-top:10px;">AACR GENIE template</h3>
+                        <p>The template mentorship students use to work with AACR Project GENIE genomic data — for abstracts and papers built on that dataset.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rotating accepted abstracts -->
+        <section class="section" id="results" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">Accepted work</div>
+                <h2 class="section-title">Abstracts that actually got accepted.</h2>
+                <p class="section-description">A rotating sample of Med-RAMP work — not mock examples.</p>
+                <div class="card carousel" id="abstractCarousel">
+                    <span class="badge">Accepted</span>
+                    <div style="margin-top:14px;">
+                        <article class="abstract-slide is-active">
+                            <h3>Genomic landscape of schwannomas: An analysis of somatic mutations and demographic disparities</h3>
+                            <p class="pub-meta">J. Jacob, B. Hsia, N. Boyal, A. Tauseef — Rare Tumors, 2026</p>
+                        </article>
+                        <article class="abstract-slide">
+                            <h3>Mutational Landscape of FGFR4 Across Malignancies: A Cross-Cancer Analysis of the AACR Project GENIE Database</h3>
+                            <p class="pub-meta">H. Ali, T. Gengnagel, S. Birkholz, G. Vadmal, E. Torbenson, B. Hsia, et al. — Current Issues in Molecular Biology, 2026</p>
+                        </article>
+                        <article class="abstract-slide">
+                            <h3>Genomic Characteristics of Leiomyosarcoma: An AACR Project GENIE Study</h3>
+                            <p class="pub-meta">H. Ali, C. Chander, E. Torbenson, B. Hsia, P. T. Silberstein — Anticancer Research, 2026</p>
+                        </article>
+                        <article class="abstract-slide">
+                            <h3>Clear cell–type squamous cell carcinoma: An NCDB analysis</h3>
+                            <p class="pub-meta">G. S. Saglimbeni, N. Nakshbandi, S. Puvvadi, A. Surendra, B. Hsia, C. Heise — Journal of Clinical Oncology, 2026</p>
+                        </article>
+                        <article class="abstract-slide">
+                            <h3>Genomic profiling of diffuse intrinsic pontine glioma in AACR Project GENIE</h3>
+                            <p class="pub-meta">A. Surendra, S. Prasad, A. Chang, S. Puvvadi, B. Hsia, A. Tauseef — Journal of Clinical Oncology, 2026</p>
+                        </article>
+                        <article class="abstract-slide">
+                            <h3>Comprehensive genomic profiling of adenoid cystic carcinoma using the AACR Genie Database</h3>
+                            <p class="pub-meta">M. Patrick, D. Maliy, A. Chang, S. Puvvadi, A. Surendra, A. Tauseef, B. Hsia — Journal of Clinical Oncology, 2026</p>
+                        </article>
+                    </div>
+                    <div class="carousel-controls">
+                        <div class="carousel-dots" id="abstractDots"></div>
+                        <button class="carousel-arrow" type="button" id="abstractPrev" aria-label="Previous abstract">&lsaquo;</button>
+                        <button class="carousel-arrow" type="button" id="abstractNext" aria-label="Next abstract">&rsaquo;</button>
+                    </div>
+                </div>
+                <p style="margin-top:16px;"><a href="../publications1.html">See the full Med-RAMP publication archive &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">What students say</div>
+                <h2 class="section-title">It changed how they applied.</h2>
+                <div class="testimonial-grid">
+                    <article class="card">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>&ldquo;Over the past two years, Med-RAMP has been instrumental in my acceptances to multiple medical schools. Through the program, I collaborated with fellow pre-med and medical students to write abstracts and manuscripts, strengthening my research and scientific writing skills beyond the program itself. The mentorship I received from Beau during my application cycle was invaluable. These experiences also gave me strong, meaningful examples to draw on during my medical school interviews, allowing me to speak confidently about my growth in research, and collaboration. I highly recommend Med-RAMP to pre-health students!&rdquo;</p>
+                        <div class="quote-author">Aryn L.</div>
+                        <div class="quote-role">Accepted to University of Colorado medical school</div>
+                    </article>
+                    <article class="card">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>&ldquo;Getting meaningful research experience as an undergraduate can be challenging, which is why Med-RAMP was such a valuable opportunity for me. Through the program, I was able to complete projects that led to publications while developing skills in scientific writing and collaborating with a research team. The mentorship from Beau was especially impactful, and his guidance played a big role in helping me navigate the medical school application process and ultimately earn several medical school acceptances.&rdquo;</p>
+                        <div class="quote-author">Daniel T.</div>
+                        <div class="quote-role">Accepted to multiple medical schools</div>
+                    </article>
+                    <article class="card">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>&ldquo;I joined Med-RAMP as an undergraduate during a time when I felt overwhelmed trying to find meaningful clinical research opportunities. I am grateful to have discovered this program, and was able to build my research experience by learning from mentors, working on real research projects and getting published. Med-RAMP is truly designed with premeds and medical student in mind, and I highly recommend it to anyone looking to grow in clinical research!&rdquo;</p>
+                        <div class="quote-author">Amber C.</div>
+                        <div class="quote-role">Medical student at University of South Florida</div>
+                    </article>
+                    <article class="card">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>&ldquo;I can undoubtedly say that Med-RAMP was an indispensable part of my medical school application. I couldn&rsquo;t have done it without Beau&rsquo;s mentorship!&rdquo;</p>
+                        <div class="quote-author">Aaron S.</div>
+                        <div class="quote-role">Accepted to multiple medical schools</div>
+                    </article>
+                    <article class="card">
+                        <div class="quote-stars">★★★★★</div>
+                        <p>&ldquo;At Med-RAMP, my research effort mattered. Elsewhere, I&rsquo;d feel lost and confused without guidance. That here, the mentors are extremely personable and knowledgeable about working on research that actually gets published, and it&rsquo;s a significant part of how I ultimately ended up at Mayo Clinic.&rdquo;</p>
+                        <div class="quote-author">Mark M.</div>
+                        <div class="quote-role">Accepted to Mayo Clinic</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section" id="pricing" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">Pricing</div>
+                <h2 class="section-title">Start free. Go further when you&rsquo;re ready.</h2>
+                <div class="pricing-grid">
+                    <article class="card">
+                        <span class="badge">Free</span>
+                        <h3 style="margin-top:10px;">Template</h3>
+                        <div class="price">$0</div>
+                        <ul>
+                            <li>NCDB abstract template, sent by email</li>
+                            <li>The template behind ~100 accepted abstracts</li>
+                        </ul>
+                        <p style="margin-top:16px;"><a class="btn btn-secondary" href="#template">Get template</a></p>
+                    </article>
+                    <article class="card pricing-card is-featured">
+                        <span class="badge badge-warm">Only 10 spots remaining</span>
+                        <h3 style="margin-top:10px;">Abstract in a Week</h3>
+                        <div class="price">$249 <small>founding</small></div>
+                        <p><span class="price-strike">$349</span> regular price</p>
+                        <ul>
+                            <li>Template — work on a pre-approved topic</li>
+                            <li>Pre-approved topic included</li>
+                            <li>Unlimited email guidance from an MD regarding the project</li>
+                            <li>Money-back guarantee (see below)</li>
+                            <li>Cost and research work can be split between up to three students</li>
+                        </ul>
+                        <p style="margin-top:16px;"><a class="btn btn-primary" href="#template">Join the founding round</a></p>
+                        <p class="email-note">New research topics are limited — that&rsquo;s why spots are capped at 10.</p>
+                    </article>
+                    <article class="card">
+                        <span class="badge">Manuscript</span>
+                        <h3 style="margin-top:10px;">Full Manuscript</h3>
+                        <div class="price">$849</div>
+                        <ul>
+                            <li>Template for working on a full manuscript</li>
+                        </ul>
+                        <p style="margin-top:16px;"><a class="btn btn-secondary" href="#template">Learn more</a></p>
+                    </article>
+                    <article class="card">
+                        <span class="badge">Premium</span>
+                        <h3 style="margin-top:10px;">Unmatched Research Guidance</h3>
+                        <div class="price">$2,999</div>
+                        <ul>
+                            <li>1 year unlimited email guidance from an MD</li>
+                            <li>Unlimited research meetings / strategy sessions</li>
+                            <li>Work on abstracts and papers</li>
+                            <li>Strategies on publishing with research professors / medical schools of your choice</li>
+                            <li>Bonus: 5 hours ($800 value)</li>
+                            <li>Possibility of a strong letter of recommendation from an MD mentor</li>
+                        </ul>
+                        <p style="margin-top:16px;"><a class="btn btn-secondary" href="#template">Apply for guidance</a></p>
+                    </article>
+                </div>
+
+                <div class="guarantee" style="margin-top:22px;">
+                    <h3>Money-back guarantee</h3>
+                    <p>Finished draft if you do the steps and submit data on time. Money back if you follow them and still can&rsquo;t finish. No guarantee of publication or authorship.</p>
+                </div>
+                <p class="email-note" style="margin-top:14px;">See examples: AACR GENIE abstracts and posters in the rotating section above, and the full archive on the <a href="../publications1.html">publications page</a>.</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">FAQ</div>
+                <h2 class="section-title">Questions, answered plainly.</h2>
+                <details class="faq" open>
+                    <summary>Do I need a research project or data already?</summary>
+                    <p>No. Mentorship students work on a pre-approved topic with pre-gathered data — NCDB or AACR GENIE, depending on the template. You don&rsquo;t have to find a project first.</p>
+                </details>
+                <details class="faq">
+                    <summary>What template do I get free, vs. in mentorship?</summary>
+                    <p>Free by email: the NCDB abstract template, behind ~100 accepted abstracts. Mentorship: the AACR GENIE template, for working with AACR Project GENIE genomic data.</p>
+                </details>
+                <details class="faq">
+                    <summary>Can I split the cost and the work?</summary>
+                    <p>Yes — for the $249 founding Abstract in a Week tier, the cost and research work can be split between up to three students.</p>
+                </details>
+                <details class="faq">
+                    <summary>Is publication or authorship guaranteed?</summary>
+                    <p>No. What&rsquo;s guaranteed is a finished draft if you do the steps and submit data on time — and your money back if you follow the steps and still can&rsquo;t finish.</p>
+                </details>
+                <details class="faq">
+                    <summary>How does the 1-week timeline work?</summary>
+                    <p>You start with a pre-approved topic and the template, then work through the steps with MD email guidance. The week assumes you follow the steps and submit what&rsquo;s asked for on time.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- Featured publications -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="section-tag">Published with Med-RAMP</div>
+                <h2 class="section-title">A few of the papers and abstracts.</h2>
+                <ul class="pub-list">
+                    <li><strong>Genomic landscape of schwannomas: An analysis of somatic mutations and demographic disparities.</strong><br><span class="pub-meta">J. Jacob, B. Hsia, N. Boyal, A. Tauseef — Rare Tumors, 2026</span></li>
+                    <li><strong>Genomic Characteristics of Leiomyosarcoma: An AACR Project GENIE Study.</strong><br><span class="pub-meta">H. Ali, C. Chander, E. Torbenson, B. Hsia, P. T. Silberstein — Anticancer Research, 2026</span></li>
+                    <li><strong>Genomic Characterization of Oncocytic Carcinoma of the Thyroid Using a Large Multi‐Institutional Database.</strong><br><span class="pub-meta">B. Hsia, R. Dongre, V. D. Veluvolu, J. Kuzniar, G. Bitar, S. A. Alshaka, et al. — Otolaryngology–Head and Neck Surgery, 2026</span></li>
+                    <li><strong>Genomic Insights into Cutaneous Squamous Cell Carcinoma.</strong><br><span class="pub-meta">G. S. Saglimbeni, T. J. Morris, B. Hsia, A. Tauseef — Cancers, 2026</span></li>
+                    <li><strong>Genomic characterization of chordoma: Insights from the AACR project GENIE database.</strong><br><span class="pub-meta">B. Hsia, G. Bitar, S. A. Alshaka, J. D. Kim, B. A. Valencia-Sanchez, F. Faraji, et al. — Cancers, 2025</span></li>
+                </ul>
+                <p style="margin-top:16px;"><a href="../publications1.html">See all Med-RAMP publications &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="card" style="text-align:center; padding:40px 26px;">
+                    <h2 class="section-title" style="margin-left:auto; margin-right:auto;">Start with the free template.</h2>
+                    <p class="section-description" style="margin-left:auto; margin-right:auto;">The exact template our members used to earn 100+ publications accepted.</p>
+                    <a class="btn btn-primary" href="#template">Get template</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <div class="container">
+            <p><strong>Med-RAMP</strong> — Research Mentorship for Future Physicians. <a href="../">Back to med-ramp.com</a></p>
+            <p style="margin-top:8px;">Past results only — hundreds of students published, 500+ authorships earned. No guarantee of publication, authorship, or medical school acceptance for any individual student.</p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* Rotating hero word: pre-meds / medical students */
+        var words = ['pre-meds', 'medical students'];
+        var wordEl = document.getElementById('rotatingWord');
+        var wordIndex = 0;
+        if (wordEl && !prefersReducedMotion) {
+            window.setInterval(function () {
+                wordEl.classList.add('is-fading');
+                window.setTimeout(function () {
+                    wordIndex = (wordIndex + 1) % words.length;
+                    wordEl.textContent = words[wordIndex];
+                    wordEl.classList.remove('is-fading');
+                }, 350);
+            }, 2800);
+        }
+
+        /* Rotating accepted abstracts */
+        var slides = Array.from(document.querySelectorAll('.abstract-slide'));
+        var dotsWrap = document.getElementById('abstractDots');
+        var carousel = document.getElementById('abstractCarousel');
+        var current = 0, timer = null;
+        function show(i) {
+            if (!slides.length) return;
+            current = (i + slides.length) % slides.length;
+            slides.forEach(function (s, idx) { s.classList.toggle('is-active', idx === current); });
+            Array.from(dotsWrap.children).forEach(function (d, idx) { d.classList.toggle('is-active', idx === current); });
+        }
+        function start() { if (!prefersReducedMotion && !timer) timer = window.setInterval(function () { show(current + 1); }, 5000); }
+        function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+        if (slides.length && dotsWrap) {
+            slides.forEach(function (_, idx) {
+                var b = document.createElement('button');
+                b.type = 'button'; b.className = 'carousel-dot' + (idx === 0 ? ' is-active' : '');
+                b.setAttribute('aria-label', 'Show abstract ' + (idx + 1));
+                b.addEventListener('click', function () { show(idx); stop(); start(); });
+                dotsWrap.appendChild(b);
+            });
+            document.getElementById('abstractPrev').addEventListener('click', function () { show(current - 1); stop(); start(); });
+            document.getElementById('abstractNext').addEventListener('click', function () { show(current + 1); stop(); start(); });
+            carousel.addEventListener('mouseenter', stop);
+            carousel.addEventListener('mouseleave', start);
+            start();
+        }
+
+        /* Email capture — example only: not connected to a sender yet.
+           TODO: wire this to your email platform so the NCDB template is sent automatically. */
+        var form = document.getElementById('templateForm');
+        var msg = document.getElementById('templateMessage');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var email = document.getElementById('templateEmail').value.trim();
+                if (!email) return;
+                msg.textContent = 'Thanks — this example page isn\u2019t connected to an email sender yet. Connect your email platform to deliver the NCDB template to ' + email + ' automatically.';
+                msg.classList.add('is-visible');
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
