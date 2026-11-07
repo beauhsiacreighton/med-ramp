@@ -1,0 +1,197 @@
+/* Med-RAMP landing page — university style.
+   Light blue and white, minimal, plain. System fonts only.
+   No gradients, no shadows, no rounded corners, no animations. */
+
+:root {
+    --navy: #16324f;
+    --blue: #1f5c8b;
+    --light-blue: #e8f1f8;
+    --pale-blue: #f4f8fb;
+    --ink: #1c2b3a;
+    --muted: #55677a;
+    --line: #c9d8e4;
+    --rule: #9fc0d8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 10px;
+}
+
+p { margin: 0 0 12px; }
+
+a { color: var(--blue); }
+a:hover { color: var(--navy); }
+
+.wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+/* Header */
+.site-header { background: #fff; border-bottom: 1px solid var(--line); }
+.site-header .wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.wordmark {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-decoration: none;
+}
+.site-nav { display: flex; gap: 22px; font-size: .9rem; }
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--navy); text-decoration: underline; }
+.header-cta { font-size: .9rem; font-weight: 700; color: var(--blue); text-decoration: none; white-space: nowrap; }
+.header-cta:hover { text-decoration: underline; }
+
+/* Hero */
+.hero { padding: 56px 0 40px; }
+.kicker {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 14px;
+}
+.hero h1 { font-size: 2.4rem; margin-bottom: 14px; }
+.lede { max-width: 620px; font-size: 1.05rem; color: var(--muted); }
+
+/* At a glance — plain list, not a big-number graphic */
+.at-a-glance { list-style: none; margin: 30px 0 0; padding: 0; max-width: 620px; border-top: 1px solid var(--line); }
+.at-a-glance li {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+}
+.at-a-glance .fact { font-weight: 700; color: var(--navy); }
+
+/* Email panel — the one pale-blue block on the page */
+.email-panel {
+    background: var(--light-blue);
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin-top: 32px;
+    max-width: 620px;
+}
+.email-panel h2 { font-size: 1.3rem; }
+.email-panel p { color: var(--muted); font-size: .95rem; }
+.email-form { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.email-form input[type="email"] {
+    flex: 1 1 260px;
+    padding: 11px 12px;
+    border: 1px solid #9fb4c4;
+    font: inherit;
+    font-size: 1rem;
+    background: #fff;
+}
+.email-form input[type="email"]:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.email-note { margin-top: 12px; font-size: .85rem; color: var(--muted); }
+.form-message { margin-top: 12px; font-size: .95rem; display: none; }
+.form-message.is-visible { display: block; }
+
+/* Buttons — flat navy, square corners */
+.btn {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 18px;
+    border: 1px solid var(--navy);
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn-secondary { background: #fff; color: var(--navy); }
+.btn-secondary:hover { background: var(--pale-blue); color: var(--navy); }
+
+/* Sections */
+.section { padding: 40px 0; border-top: 1px solid var(--line); }
+.section-label {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 8px;
+}
+.section h2 { font-size: 1.6rem; }
+.section-intro { color: var(--muted); max-width: 620px; }
+
+/* Steps — plain numbered list */
+.steps { list-style: none; margin: 24px 0 0; padding: 0; }
+.steps li { padding: 16px 0; border-top: 1px solid var(--line); }
+.steps li:last-child { border-bottom: 1px solid var(--line); }
+.steps h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.steps p { color: var(--muted); margin: 0; max-width: 640px; }
+
+/* Two templates — plain two-column text, no cards */
+.templates { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+.templates article { border-top: 1px solid var(--line); padding-top: 16px; }
+.templates h3 { font-size: 1.15rem; }
+.templates p { color: var(--muted); }
+.template-kind { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+
+/* Publication / abstract lists — like a department publications page */
+.pub-list { list-style: none; margin: 24px 0 0; padding: 0; }
+.pub-list li { padding: 14px 0; border-top: 1px solid var(--line); }
+.pub-list li:last-child { border-bottom: 1px solid var(--line); }
+.pub-list .pub-title { font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; color: var(--navy); }
+.pub-list .pub-meta { color: var(--muted); font-size: .88rem; }
+
+/* Testimonials — plain blockquotes */
+.testimonial { margin: 28px 0; padding-left: 18px; border-left: 3px solid var(--rule); }
+.testimonial p { margin-bottom: 10px; }
+.testimonial .quote-author { font-weight: 700; color: var(--navy); }
+.testimonial .quote-role { color: var(--muted); font-size: .88rem; }
+
+/* Pricing — one plain table */
+.pricing-wrap { overflow-x: auto; margin-top: 24px; }
+table.pricing { width: 100%; border-collapse: collapse; font-size: .95rem; }
+table.pricing th, table.pricing td { text-align: left; vertical-align: top; padding: 12px 10px; border-top: 1px solid var(--line); }
+table.pricing tr:last-child th, table.pricing tr:last-child td { border-bottom: 1px solid var(--line); }
+table.pricing th { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+table.pricing .tier-name { font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; color: var(--navy); font-weight: 600; }
+table.pricing .price { font-family: Georgia, 'Times New Roman', serif; font-size: 1.3rem; color: var(--navy); white-space: nowrap; }
+table.pricing ul { margin: 0; padding-left: 18px; color: var(--muted); }
+table.pricing li { margin-bottom: 4px; }
+
+/* FAQ — plain list */
+.faq { padding: 16px 0; border-top: 1px solid var(--line); }
+.faq:last-of-type { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); }
+.faq p { margin-top: 8px; color: var(--muted); }
+
+/* Footer */
+.site-footer { padding: 32px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+.site-footer strong { color: var(--navy); }
+
+@media (max-width: 700px) {
+    .site-nav { display: none; }
+    .hero { padding: 40px 0 32px; }
+    .hero h1 { font-size: 1.9rem; }
+    .templates { grid-template-columns: 1fr; }
+    .wrap { padding: 0 20px; }
+}
