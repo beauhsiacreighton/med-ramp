@@ -1,197 +1,171 @@
-/* Med-RAMP landing page — university style.
-   Light blue and white, minimal, plain. System fonts only.
-   No gradients, no shadows, no rounded corners, no animations. */
+/* Med-RAMP landing page — drop-in replacement for css/university.css
+   Direction: a well-run medical-school study guide. Cool white paper, deep navy ink,
+   one highlighter-yellow accent (used sparingly, like a student marking key lines).
+   System fonts only. Works with your existing HTML; optional extras marked below. */
 
 :root {
-    --navy: #16324f;
-    --blue: #1f5c8b;
-    --light-blue: #e8f1f8;
-    --pale-blue: #f4f8fb;
-    --ink: #1c2b3a;
-    --muted: #55677a;
-    --line: #c9d8e4;
-    --rule: #9fc0d8;
+    --navy: #10294a;
+    --blue: #1d4f91;
+    --sky: #eaf2fb;
+    --paper: #f7f9fc;
+    --ink: #14202e;
+    --muted: #536479;
+    --line: #d5dfeb;
+    --mark: #ffd84d;          /* highlighter */
+    --serif: Charter, 'Iowa Old Style', 'Bitstream Charter', Georgia, serif;
+    --sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --r: 6px;
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
     margin: 0;
     background: #fff;
     color: var(--ink);
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--serif);
     color: var(--navy);
-    font-weight: 600;
-    line-height: 1.25;
-    margin: 0 0 10px;
-}
-
-p { margin: 0 0 12px; }
-
-a { color: var(--blue); }
-a:hover { color: var(--navy); }
-
-.wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
-
-/* Header */
-.site-header { background: #fff; border-bottom: 1px solid var(--line); }
-.site-header .wrap {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 20px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-}
-.wordmark {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 1.35rem;
     font-weight: 700;
-    color: var(--navy);
-    text-decoration: none;
-}
-.site-nav { display: flex; gap: 22px; font-size: .9rem; }
-.site-nav a { color: var(--muted); text-decoration: none; }
-.site-nav a:hover { color: var(--navy); text-decoration: underline; }
-.header-cta { font-size: .9rem; font-weight: 700; color: var(--blue); text-decoration: none; white-space: nowrap; }
-.header-cta:hover { text-decoration: underline; }
-
-/* Hero */
-.hero { padding: 56px 0 40px; }
-.kicker {
-    font-size: .8rem;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--blue);
+    line-height: 1.15;
+    letter-spacing: -.015em;
     margin: 0 0 14px;
 }
-.hero h1 { font-size: 2.4rem; margin-bottom: 14px; }
-.lede { max-width: 620px; font-size: 1.05rem; color: var(--muted); }
+p { margin: 0 0 14px; }
+a { color: var(--blue); text-underline-offset: 3px; }
+a:hover { color: var(--navy); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 
-/* At a glance — plain list, not a big-number graphic */
-.at-a-glance { list-style: none; margin: 30px 0 0; padding: 0; max-width: 620px; border-top: 1px solid var(--line); }
-.at-a-glance li {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--line);
-}
-.at-a-glance .fact { font-weight: 700; color: var(--navy); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
 
-/* Email panel — the one pale-blue block on the page */
-.email-panel {
-    background: var(--light-blue);
-    border: 1px solid var(--line);
-    padding: 24px;
-    margin-top: 32px;
-    max-width: 620px;
-}
-.email-panel h2 { font-size: 1.3rem; }
-.email-panel p { color: var(--muted); font-size: .95rem; }
-.email-form { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-.email-form input[type="email"] {
-    flex: 1 1 260px;
-    padding: 11px 12px;
-    border: 1px solid #9fb4c4;
-    font: inherit;
-    font-size: 1rem;
-    background: #fff;
-}
-.email-form input[type="email"]:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.email-note { margin-top: 12px; font-size: .85rem; color: var(--muted); }
-.form-message { margin-top: 12px; font-size: .95rem; display: none; }
+/* ---------- Header: sticky, solid navy ---------- */
+.site-header { background: var(--navy); position: sticky; top: 0; z-index: 10; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 12px; padding-bottom: 12px; }
+.wordmark { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: -.01em; }
+.site-nav { display: flex; gap: 26px; font-size: .95rem; margin-left: auto; }
+.site-nav a { color: #c9d8ee; text-decoration: none; }
+.site-nav a:hover { color: #fff; }
+.header-cta { background: var(--mark); color: var(--navy); font-weight: 700; font-size: .92rem; text-decoration: none; padding: 8px 16px; border-radius: var(--r); white-space: nowrap; }
+.header-cta:hover { background: #fff; color: var(--navy); }
+
+/* ---------- Hero ---------- */
+.hero { background: var(--paper); padding: 72px 0 64px; border-bottom: 1px solid var(--line); }
+.hero .wrap { max-width: 860px; }
+.kicker { font-size: .95rem; font-weight: 600; color: var(--blue); margin: 0 0 16px; letter-spacing: 0; text-transform: none; }
+.hero h1 { font-size: clamp(2.2rem, 5.2vw, 3.4rem); margin-bottom: 20px; }
+.lede { max-width: 640px; font-size: 1.2rem; color: #33465c; }
+
+/* Optional: founder quote under the lede, <blockquote class="founder"><p>…</p><cite>Beau Hsia, MD — …</cite></blockquote> */
+.founder { margin: 28px 0 0; padding: 4px 0 4px 20px; border-left: 4px solid var(--mark); max-width: 640px; font-family: var(--serif); font-size: 1.08rem; color: var(--navy); }
+.founder cite { display: block; margin-top: 8px; font: normal .9rem var(--sans); color: var(--muted); }
+
+/* Results: one horizontal band, big serif numerals */
+.at-a-glance { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; border: 1px solid var(--line); border-radius: var(--r); }
+.at-a-glance li { display: flex; flex-direction: column-reverse; padding: 18px 22px; color: var(--muted); font-size: .92rem; line-height: 1.3; }
+.at-a-glance li + li { border-left: 1px solid var(--line); }
+.at-a-glance .fact { font-family: var(--serif); font-size: 2.3rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+
+/* Email panel: the main action, so it gets the strongest treatment */
+.email-panel { background: var(--navy); color: #dbe6f5; border-radius: var(--r); padding: 30px; margin-top: 36px; }
+.email-panel h2 { color: #fff; font-size: 1.6rem; }
+.email-panel p { color: #c3d3ea; font-size: 1rem; }
+.email-form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.email-form label { flex: 0 0 100%; font-size: .9rem; font-weight: 600; color: #fff; margin-bottom: -4px; }
+.email-form input[type="email"] { flex: 1 1 260px; padding: 13px 14px; border: 2px solid transparent; border-radius: var(--r); font: inherit; background: #fff; color: var(--ink); }
+.email-form input[type="email"]:focus-visible { border-color: var(--mark); outline: none; }
+.email-panel .btn { background: var(--mark); border-color: var(--mark); color: var(--navy); }
+.email-panel .btn:hover { background: #fff; border-color: #fff; }
+.email-note { margin-top: 14px; font-size: .88rem; color: #a9bdd8; }
+.form-message { margin-top: 12px; font-size: .95rem; display: none; color: #fff; }
 .form-message.is-visible { display: block; }
 
-/* Buttons — flat navy, square corners */
-.btn {
-    display: inline-block;
-    background: var(--navy);
-    color: #fff;
-    padding: 10px 18px;
-    border: 1px solid var(--navy);
-    font: inherit;
-    font-size: .95rem;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-}
+/* ---------- Buttons ---------- */
+.btn { display: inline-block; background: var(--navy); color: #fff; padding: 12px 22px; border: 2px solid var(--navy); border-radius: var(--r); font: inherit; font-size: 1rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s, color .15s; }
 .btn:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 .btn-secondary { background: #fff; color: var(--navy); }
-.btn-secondary:hover { background: var(--pale-blue); color: var(--navy); }
+.btn-secondary:hover { background: var(--sky); color: var(--navy); border-color: var(--navy); }
 
-/* Sections */
-.section { padding: 40px 0; border-top: 1px solid var(--line); }
-.section-label {
-    font-size: .8rem;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin: 0 0 8px;
-}
-.section h2 { font-size: 1.6rem; }
-.section-intro { color: var(--muted); max-width: 620px; }
+/* ---------- Sections ---------- */
+.section { padding: 72px 0; }
+.section:nth-of-type(even) { background: var(--paper); }
+.section-label { font-size: .95rem; font-weight: 600; color: var(--blue); margin: 0 0 8px; letter-spacing: 0; text-transform: none; }
+.section h2 { font-size: clamp(1.7rem, 3.4vw, 2.2rem); }
+.section-intro { color: var(--muted); max-width: 640px; font-size: 1.05rem; }
 
-/* Steps — plain numbered list */
-.steps { list-style: none; margin: 24px 0 0; padding: 0; }
-.steps li { padding: 16px 0; border-top: 1px solid var(--line); }
-.steps li:last-child { border-bottom: 1px solid var(--line); }
-.steps h3 { font-size: 1.15rem; margin-bottom: 4px; }
+/* Steps: a real sequence, so numbers are earned */
+.steps { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px 22px 76px; }
+.steps li::before { content: counter(s); position: absolute; left: 22px; top: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--sky); color: var(--navy); font: 700 1.1rem/36px var(--serif); text-align: center; }
+.steps h3 { font-size: 1.2rem; margin-bottom: 4px; }
 .steps p { color: var(--muted); margin: 0; max-width: 640px; }
 
-/* Two templates — plain two-column text, no cards */
-.templates { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
-.templates article { border-top: 1px solid var(--line); padding-top: 16px; }
-.templates h3 { font-size: 1.15rem; }
+/* Two templates: free vs. paid, distinguished by a top edge */
+.templates { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+.templates article { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--line); border-radius: var(--r); padding: 22px 24px; }
+.templates article:first-child { border-top-color: var(--mark); }
+.templates article:last-child { border-top-color: var(--blue); }
+.templates h3 { font-size: 1.2rem; }
 .templates p { color: var(--muted); }
-.template-kind { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+.template-kind { font-size: .9rem; font-weight: 700; color: var(--navy); text-transform: none; letter-spacing: 0; margin: 0 0 4px; }
 
-/* Publication / abstract lists — like a department publications page */
-.pub-list { list-style: none; margin: 24px 0 0; padding: 0; }
-.pub-list li { padding: 14px 0; border-top: 1px solid var(--line); }
+/* Publications: journal name is the credential, so it leads */
+.pub-list { list-style: none; margin: 28px 0 0; padding: 0; }
+.pub-list li { padding: 18px 0; border-top: 1px solid var(--line); }
 .pub-list li:last-child { border-bottom: 1px solid var(--line); }
-.pub-list .pub-title { font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; color: var(--navy); }
-.pub-list .pub-meta { color: var(--muted); font-size: .88rem; }
+.pub-list .pub-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.pub-list .pub-meta { color: var(--muted); font-size: .92rem; margin-top: 4px; }
 
-/* Testimonials — plain blockquotes */
-.testimonial { margin: 28px 0; padding-left: 18px; border-left: 3px solid var(--rule); }
-.testimonial p { margin-bottom: 10px; }
+/* Testimonials: two columns, larger type; long ones stay readable */
+#results + .section .wrap { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; }
+#results + .section .wrap > p, #results + .section .wrap > h2 { grid-column: 1 / -1; }
+.testimonial { margin: 20px 0 0; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: var(--r); }
+.testimonial p { font-family: var(--serif); font-size: 1.02rem; line-height: 1.6; color: var(--ink); }
 .testimonial .quote-author { font-weight: 700; color: var(--navy); }
-.testimonial .quote-role { color: var(--muted); font-size: .88rem; }
+.testimonial .quote-role { color: var(--blue); font-size: .92rem; font-weight: 600; }
 
-/* Pricing — one plain table */
-.pricing-wrap { overflow-x: auto; margin-top: 24px; }
-table.pricing { width: 100%; border-collapse: collapse; font-size: .95rem; }
-table.pricing th, table.pricing td { text-align: left; vertical-align: top; padding: 12px 10px; border-top: 1px solid var(--line); }
-table.pricing tr:last-child th, table.pricing tr:last-child td { border-bottom: 1px solid var(--line); }
-table.pricing th { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-table.pricing .tier-name { font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; color: var(--navy); font-weight: 600; }
-table.pricing .price { font-family: Georgia, 'Times New Roman', serif; font-size: 1.3rem; color: var(--navy); white-space: nowrap; }
-table.pricing ul { margin: 0; padding-left: 18px; color: var(--muted); }
-table.pricing li { margin-bottom: 4px; }
+/* ---------- Pricing: the founding row is the one to look at ---------- */
+.pricing-wrap { overflow-x: auto; margin-top: 28px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+table.pricing { width: 100%; border-collapse: collapse; font-size: .96rem; min-width: 720px; }
+table.pricing th, table.pricing td { text-align: left; vertical-align: top; padding: 18px 16px; border-top: 1px solid var(--line); }
+table.pricing thead th { border-top: 0; background: var(--sky); font-size: .9rem; color: var(--navy); font-weight: 700; }
+table.pricing .tier-name { font-family: var(--serif); font-size: 1.15rem; color: var(--navy); font-weight: 700; }
+table.pricing .price { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
+table.pricing ul { margin: 0; padding-left: 18px; color: #33465c; }
+table.pricing li { margin-bottom: 6px; }
+/* Add class="featured" to the Abstract in a Week <tr> */
+table.pricing tr.featured td { background: #fffbe8; border-top: 2px solid var(--mark); border-bottom: 2px solid var(--mark); }
+table.pricing tr.featured td:first-child { box-shadow: inset 5px 0 0 var(--mark); }
 
-/* FAQ — plain list */
-.faq { padding: 16px 0; border-top: 1px solid var(--line); }
-.faq:last-of-type { border-bottom: 1px solid var(--line); }
-.faq summary { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); }
-.faq p { margin-top: 8px; color: var(--muted); }
+/* ---------- FAQ: expand/collapse with a clear marker ---------- */
+.faq { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 0; margin-top: 10px; }
+.faq summary { list-style: none; cursor: pointer; padding: 18px 54px 18px 22px; position: relative; font-family: var(--serif); font-size: 1.12rem; font-weight: 700; color: var(--navy); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; position: absolute; right: 22px; top: 50%; transform: translateY(-50%); font: 400 1.6rem/1 var(--sans); color: var(--blue); }
+.faq[open] summary::after { content: '\2212'; }
+.faq p { margin: 0; padding: 0 22px 20px; color: #33465c; max-width: 700px; }
 
-/* Footer */
-.site-footer { padding: 32px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-.site-footer strong { color: var(--navy); }
+/* ---------- Footer ---------- */
+.site-footer { background: var(--navy); color: #a9bdd8; padding: 40px 0 48px; font-size: .92rem; }
+.site-footer strong { color: #fff; }
+.site-footer a { color: #fff; }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
+    body { font-size: 16px; }
     .site-nav { display: none; }
-    .hero { padding: 40px 0 32px; }
-    .hero h1 { font-size: 1.9rem; }
-    .templates { grid-template-columns: 1fr; }
+    .hero { padding: 48px 0 44px; }
+    .section { padding: 52px 0; }
     .wrap { padding: 0 20px; }
+    .at-a-glance { grid-template-columns: 1fr; }
+    .at-a-glance li + li { border-left: 0; border-top: 1px solid var(--line); }
+    .templates, #results + .section .wrap { grid-template-columns: 1fr; }
+    .steps li { padding-left: 68px; }
+    .email-panel { padding: 22px; }
 }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
