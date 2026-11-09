@@ -2391,9 +2391,13 @@
             });
         });
 
-        // 5. Checkout Handlers
+        // 5. Checkout Handlers — Whop checkout links (set 2026-11-09)
+        const WHOP_CHECKOUT = {
+            'Abstract Masterclass': 'https://whop.com/checkout/plan_WxKMgRDn0bQI3/',
+            'Manuscript Masterclass': 'https://whop.com/checkout/plan_qpCciXhZ63rGo/'
+        };
         function handleCheckout(tier, price) {
-            window.location.href = `https://checkout.med-ramp.com/?tier=${encodeURIComponent(tier)}&price=${encodeURIComponent(price)}`;
+            window.location.href = WHOP_CHECKOUT[tier] || 'https://whop.com/med-ramp-services/';
         }
 
         function handleConsultation() {
