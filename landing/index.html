@@ -1663,6 +1663,7 @@
               const email = emailInput.value.trim();
 
               if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                feedback.className = 'form-feedback is-error';
                 feedback.textContent = 'Please enter a valid email address.';
                 return;
               }
@@ -1681,6 +1682,7 @@
                 console.error(err); // still deliver the template even if logging fails
               }
 
+              feedback.className = 'form-feedback is-success';
               feedback.innerHTML = 'Thank you! <a href="' + TEMPLATE_URL +
                 '" download target="_blank" rel="noopener"><strong>Click here to download your template</strong></a>.';
               window.open(TEMPLATE_URL, '_blank');
