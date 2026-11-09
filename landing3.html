@@ -1406,6 +1406,43 @@
             .site-nav { display: none; }
             .lead-capture-card { padding: var(--space-6); }
         }
+        /* ===== MOBILE FIXES ===== */
+        @media (max-width: 768px) {
+            /* Header: keep "Med-RAMP" on one line */
+            .site-header .wrap { padding: 0 var(--space-4); gap: var(--space-3); }
+            .brand-link { flex-shrink: 0; gap: var(--space-2); }
+            .brand-name { font-size: 1.05rem; white-space: nowrap; }
+            .brand-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+            .site-header .btn { padding: 8px 12px; font-size: 0.78rem; }
+        
+            /* Only 3 problem cards on mobile */
+            .problem-card:nth-child(4) { display: none; }
+        
+            /* Testimonials: wider cards, each card only as tall as its own text */
+            .testimonial-carousel-wrap { margin-left: -20px; margin-right: -20px; }
+            .testimonial-viewport { -webkit-mask-image: none; mask-image: none; }
+            .testimonial-slider { align-items: center; }
+            .testimonial-slide { flex-basis: 90%; margin-right: 10px; padding: 24px 20px; }
+            .testimonial-quote { font-size: 1.02rem; margin-bottom: var(--space-4); }
+            .carousel-controls { padding: 0 20px; }
+        }
+        .countdown { margin-bottom: var(--space-6); padding: var(--space-4); background: #fff7e0; border: 1px solid var(--color-mark-edge); border-radius: var(--radius-md); text-align: center; }
+        .countdown[hidden] { display: none; }
+        .countdown-heading { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; color: var(--color-navy-900); margin-bottom: var(--space-3); }
+        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+        .cd-num { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 1.75rem; line-height: 1.1; color: var(--color-navy-900); font-variant-numeric: tabular-nums; }
+        .cd-lbl { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-ink-muted); }
+        .countdown.is-closed .countdown-grid { display: none; }
+        .countdown.is-closed .countdown-heading { margin: 0; }
+
+        .contact-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius-lg); padding: var(--space-8); box-shadow: var(--shadow-subtle); margin-top: var(--space-8); }
+        .contact-row { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+        .contact-row .contact-field { flex: 1 1 240px; }
+        .contact-field { margin-bottom: var(--space-4); }
+        .contact-field label { display: block; font-weight: 700; font-size: 0.9rem; color: var(--color-navy-900); margin-bottom: var(--space-2); }
+        .contact-card .form-input { border: 1px solid var(--color-line-dark); }
+        .form-textarea { height: auto; min-height: 130px; padding: var(--space-3) var(--space-4); resize: vertical; font-family: var(--font-body); }
+        @media (max-width: 768px) { .contact-card { padding: var(--space-6) var(--space-4); } .contact-card .btn { width: 100%; } }
     </style>
 </head>
 <body>
@@ -1525,7 +1562,7 @@
 
                 <!-- Founder Note -->
                 <div class="founder-quote" style="margin-top: var(--space-12);">
-                    <p>“I clearly remember spending 100+ hours doing manual chart review, only to have the project abruptly canceled. I devoted the next thousand hours to mastering the publication process. Med-RAMP distills my exact publishing workflow and the lessons I learned along the way.”</p>
+                    <p>“I clearly remember spending 100+ hours doing manual chart review, only to have the project abruptly canceled. <strong>I devoted the next thousand hours to mastering the publication process.</strong> Med-RAMP distills my exact publishing workflow and the lessons I learned along the way.”</p>
                     <cite>Beau Hsia, MD — Otolaryngology (ENT) Resident Physician, Founder of Med-RAMP</cite>
                 </div>
             </div>
@@ -1807,7 +1844,16 @@
                             <p class="price-split">Pro Tip: Split with up to 2 co-authors = Just ~$83 per author!</p>
                         </div>
 
-                        <p class="tier-availability">⚡ Limited Availability: Only 10 novel topic slots available for Thanksgiving Abstract Sprint!</p>
+                        <p class="tier-availability">⚡ Limited Availability: Only 10 novel topic slots available for Thanksgiving Week Abstract Sprint!</p>
+                        <div class="countdown" id="signupCountdown" hidden>
+                            <p class="countdown-heading"></p>
+                            <div class="countdown-grid">
+                                <div><span class="cd-num" data-unit="d">00</span><span class="cd-lbl">Days</span></div>
+                                <div><span class="cd-num" data-unit="h">00</span><span class="cd-lbl">Hrs</span></div>
+                                <div><span class="cd-num" data-unit="m">00</span><span class="cd-lbl">Min</span></div>
+                                <div><span class="cd-num" data-unit="s">00</span><span class="cd-lbl">Sec</span></div>
+                            </div>
+                        </div>
                         <p class="tier-label">Deliverables:</p>
                         <ul class="tier-features">
                             <li>1 Verified, Publication-Ready Clinical Research Topic (Provided by Dr. Beau)</li>
@@ -1816,7 +1862,8 @@
                             <li>Unlimited Project Q&amp;A: Direct email access to Dr. Beau (Guaranteed &lt;24h turnaround)</li>
                             <li>100% Execution Guarantee: If your abstract isn't conference-ready after following the steps, you get a full refund.</li>
                         </ul>
-                        <button type="button" class="btn btn-accent btn-full" onclick="handleCheckout('Abstract Masterclass', '$249')">Claim 1 of 10 Abstract Spots</button>
+                        <button type="button" class="btn btn-accent btn-full js-signup-btn" onclick="handleCheckout('Abstract Masterclass', '$249')">Claim 1 of 10 Abstract Spots</button>
+                    
                     </article>
 
                     <!-- Full Manuscript Masterclass -->
@@ -1958,7 +2005,31 @@
                 </div>
             </div>
         </section>
-
+        <!-- CONTACT -->
+        <section class="section section-alt" id="contact">
+            <div class="wrap-narrow">
+                <h2>Any other questions? Happy to help!</h2>
+                <form id="contactForm" class="contact-card" novalidate>
+                    <div class="contact-row">
+                        <div class="contact-field">
+                            <label for="contactName">Name</label>
+                            <input type="text" id="contactName" name="name" class="form-input" required autocomplete="name">
+                        </div>
+                        <div class="contact-field">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="email" class="form-input" required autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="contact-field">
+                        <label for="contactMessage">Your question</label>
+                        <textarea id="contactMessage" name="message" class="form-input form-textarea" rows="5" required></textarea>
+                    </div>
+                    <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+                    <button type="submit" class="btn btn-primary" id="contactBtn">Send Question</button>
+                    <div class="form-feedback" id="contactFeedback" role="alert"></div>
+                </form>
+            </div>
+        </section>
         <!-- FINAL CALL TO ACTION -->
         <section class="final-cta">
             <div class="wrap">
@@ -1967,7 +2038,7 @@
                     <p>Join hundreds of future physicians who learned research and contributed to science through Med-RAMP.</p>
                     <div class="final-cta-buttons">
                         <a href="#template-download" class="btn btn-secondary">Get Free Abstract Template</a>
-                        <button type="button" class="btn btn-accent" onclick="handleCheckout('Abstract Masterclass', '$249')">Enroll in the Abstract Masterclass</button>
+                        <button type="button" class="btn btn-accent js-signup-btn" onclick="handleCheckout('Abstract Masterclass', '$249')">Enroll in the Abstract Masterclass</button>
                     </div>
                 </div>
             </div>
@@ -2003,14 +2074,52 @@
 
     <!-- INTERACTION SCRIPTS: CAROUSEL, FORM, FAQ -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ===== SIGNUP WINDOW SETTINGS: edit this block for any new promo =====
+        const SIGNUP_WINDOW = {
+            enabled: true,                          // false = hides the timer completely
+            closesAt: '2026-11-16T00:00:00-08:00',  // = midnight at the END of Sun 11/15, PST. Use -07:00 when in daylight time (Mar–Nov)
+            heading: 'Signups close Sunday 11/15 at midnight PST:',
+            closedMessage: 'Signups for this sprint are now closed.',
+            disableButtonsWhenClosed: true          // greys out buttons with class "js-signup-btn"
+        };
+        // =====================================================================
+        
+        function initSignupCountdown() {
+            const box = document.getElementById('signupCountdown');
+            if (!box) return;
+            if (!SIGNUP_WINDOW.enabled) { box.hidden = true; return; }
+            const end = new Date(SIGNUP_WINDOW.closesAt).getTime();
+            const heading = box.querySelector('.countdown-heading');
+            const pad = n => String(n).padStart(2, '0');
+            heading.textContent = SIGNUP_WINDOW.heading;
+            box.hidden = false;
+        
+            function closeSignups() {
+                box.classList.add('is-closed');
+                heading.textContent = SIGNUP_WINDOW.closedMessage;
+                if (SIGNUP_WINDOW.disableButtonsWhenClosed) {
+                    document.querySelectorAll('.js-signup-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; b.style.cursor = 'not-allowed'; });
+                }
+            }
+            function tick() {
+                const left = end - Date.now();
+                if (left <= 0) { closeSignups(); return; }
+                const s = Math.floor(left / 1000);
+                const parts = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+                Object.keys(parts).forEach(k => { box.querySelector('[data-unit="' + k + '"]').textContent = pad(parts[k]); });
+                setTimeout(tick, 1000);
+            }
+            tick();
+        }
         document.addEventListener('DOMContentLoaded', function () {
+            initSignupCountdown();
             // 1. Dynamic Year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
             // 2. Testimonial Carousel Engine — circular, with clones at both ends.
             // The active slide is always centred; the previous and next cards peek in
             // (dimmed) on either side, and every move is a smooth slide.
-            const GAP = 24; // must match .testimonial-slide margin-right
+            const getGap = () => parseFloat(getComputedStyle(realSlides[0]).marginRight) || 24;
             const viewport = document.querySelector('.testimonial-viewport');
             const slider = document.getElementById('testimonialSlider');
             const realSlides = Array.from(document.querySelectorAll('.testimonial-slide'));
@@ -2047,7 +2156,7 @@
                 const active = allSlides[currentIndex];
                 if (!viewport || !active) return;
                 const slideWidth = active.offsetWidth; // unaffected by the scale effect
-                const step = slideWidth + GAP;
+                const step = slideWidth + getGap();
                 const offset = (viewport.clientWidth - slideWidth) / 2 - currentIndex * step;
                 slider.style.transform = `translateX(${offset}px)`;
 
@@ -2228,6 +2337,38 @@
                 });
             }
 
+            // Contact form -> emails beauhsiacreighton@gmail.com via FormSubmit
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                const cFeedback = document.getElementById('contactFeedback');
+                const cBtn = document.getElementById('contactBtn');
+                contactForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const data = Object.fromEntries(new FormData(contactForm).entries());
+                    if (!data.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) || !data.message.trim()) {
+                        cFeedback.className = 'form-feedback is-error';
+                        cFeedback.textContent = 'Please fill in your name, a valid email, and your question.';
+                        return;
+                    }
+                    cBtn.disabled = true; cBtn.textContent = 'Sending...';
+                    try {
+                        const res = await fetch('https://formsubmit.co/ajax/beauhsiacreighton@gmail.com', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify({ ...data, _subject: 'Med-RAMP website question from ' + data.name, _template: 'table' })
+                        });
+                        if (!res.ok) throw new Error('Request failed');
+                        cFeedback.className = 'form-feedback is-success';
+                        cFeedback.textContent = 'Thanks! Your question was sent. Dr. Beau will reply to your email soon.';
+                        contactForm.reset();
+                    } catch (err) {
+                        cFeedback.className = 'form-feedback is-error';
+                        cFeedback.textContent = 'Something went wrong. Please try again, or email mentorship@med-ramp.com directly.';
+                    }
+                    cBtn.disabled = false; cBtn.textContent = 'Send Question';
+                });
+            }
+            
             // 4. FAQ Accordion Engine
             const faqButtons = document.querySelectorAll('.faq-button');
             faqButtons.forEach(button => {
