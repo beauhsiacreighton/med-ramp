@@ -1706,7 +1706,7 @@
                 await sendToSheet({ email: email, source: 'hero-template' });
             
                 feedback.className = 'form-feedback is-success';
-                feedback.textContent = 'Thank you! Your email has been received.';
+                feedback.innerHTML = 'Thank you! <a href="https://www.med-ramp.com/files/ncdb-abstract-template.pdf" download target="_blank" rel="noopener"><strong>Click here to download your template</strong></a>.';
                 btn.disabled = false;
                 btnText.textContent = 'Send Me the Template!';
                 emailInput.value = '';
