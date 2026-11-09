@@ -1651,7 +1651,7 @@
             // 3. Lead Capture Form -> Google Sheet + Mailrelay (via Apps Script)
             // SCRIPT_URL is the Apps Script web app (ends in /exec).
             // TEMPLATE_URL is the hosted template PDF.
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIUCCeTmf6e7BLZlc8535Efh3qYKOcGbf9RquYM9kwavyfiugrZ73V7A47Ogug5BU1ng/exec';
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJfF9YzsJM_6drC1gEXrDVVLCwzSIUzV8h4hGBeQEF0q2CnHm36ycnp3UJRY1gAI4HeQ/exec';
             const TEMPLATE_URL = 'https://www.med-ramp.com/files/ncdb-abstract-template.pdf';
 
             document.getElementById('leadCaptureForm').addEventListener('submit', async (e) => {
@@ -1717,7 +1717,7 @@
                         contactForm.reset();
                     } catch (err) {
                         cFeedback.className = 'form-feedback is-error';
-                        cFeedback.textContent = 'Something went wrong. Please try again, or email mentorship@med-ramp.com directly.';
+                        cFeedback.textContent = 'Something went wrong. Please try again, or email beau@med-ramp.com directly.';
                     }
                     cBtn.disabled = false; cBtn.textContent = 'Send Question';
                 });
