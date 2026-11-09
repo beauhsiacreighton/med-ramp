@@ -3,276 +3,1743 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Med-RAMP, #1 Most Productive Research Mentorship for Future Physicians</title>
-    <meta name="description" content="Publish peer-reviewed clinical research with step-by-step guidance from Dr. Beau Hsia. 300+ students mentored, 500+ authorships earned. Get the free abstract template.">
-    <link rel="stylesheet" href="../css/university.css">
+    <title>Med-RAMP: Productive Clinical Research Mentorship for Future Physicians</title>
+    <meta name="description" content="Publish peer-reviewed clinical research with 1-on-1 milestone mentorship from Dr. Beau Hsia. Over 300 students mentored and 500+ authorships earned.">
+    <meta name="author" content="Med-RAMP / Dr. Beau Hsia">
+    
+    <!-- Proxima Nova / Modern Sans Web Font Fallback (Montserrat provides near-identical geometry) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <style>
+        /* ==========================================================================
+           DESIGN SYSTEM & CSS CUSTOM PROPERTIES (NO SERIFS)
+           Headers: Proxima Nova / Montserrat
+           Body: Helvetica Neue / Helvetica / Arial
+           ========================================================================== */
+        :root {
+            --color-navy-950: #050d17;
+            --color-navy-900: #0b1b2b;
+            --color-navy-800: #12283e;
+            --color-navy-700: #1a3857;
+            --color-blue-600: #1d4ed8;
+            --color-blue-500: #2563eb;
+            --color-blue-50:  #f0f7ff;
+
+            --color-paper:    #f8fafc;
+            --color-paper-alt:#f1f5f9;
+            --color-surface:  #ffffff;
+            
+            --color-ink-base: #1e293b;
+            --color-ink-muted:#64748b;
+            --color-ink-faint:#94a3b8;
+            --color-line:     #e2e8f0;
+            --color-line-dark:#cbd5e1;
+            
+            --color-mark:     #fcd34d;
+            --color-mark-edge:#f59e0b;
+            --color-success:  #0f766e;
+
+            /* Generous Spacing Scale for Maximum Breathing Room */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+            --space-32: 128px;
+
+            /* Strict Sans-Serif Typographic Stack */
+            --font-heading: "Proxima Nova", Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-body:    "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+            --container-max: 1140px;
+            --container-narrow: 800px;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-subtle: 0 4px 16px rgba(11, 27, 43, 0.04), 0 1px 3px rgba(11, 27, 43, 0.02);
+            --shadow-card:   0 12px 32px rgba(11, 27, 43, 0.07), 0 2px 6px rgba(11, 27, 43, 0.04);
+            --transition-smooth: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            background-color: var(--color-surface);
+            color: var(--color-ink-base);
+            font-family: var(--font-body);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Pure Sans-Serif Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--color-navy-900);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.75rem);
+            line-height: 1.15;
+            margin-bottom: var(--space-6);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 3.5vw, 2.6rem);
+            margin-bottom: var(--space-4);
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            margin-bottom: var(--space-3);
+        }
+
+        p {
+            margin-bottom: var(--space-6);
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            color: var(--color-blue-600);
+            text-decoration: none;
+            transition: color var(--transition-smooth);
+        }
+
+        a:hover {
+            color: var(--color-navy-900);
+        }
+
+        .wrap {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--space-8);
+        }
+
+        .wrap-narrow {
+            max-width: var(--container-narrow);
+            margin: 0 auto;
+            padding: 0 var(--space-8);
+        }
+
+        /* Generous Section Paddings (More White Space) */
+        .section {
+            padding-top: var(--space-24);
+            padding-bottom: var(--space-24);
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .section-alt {
+            background-color: var(--color-paper);
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-blue-600);
+            margin-bottom: var(--space-3);
+        }
+
+        .section-intro {
+            font-size: 1.1875rem;
+            color: var(--color-ink-muted);
+            max-width: 720px;
+            line-height: 1.65;
+            margin-bottom: var(--space-12);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 14px var(--space-6);
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--color-navy-900);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-navy-800);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-accent {
+            background-color: var(--color-mark);
+            border-color: var(--color-mark-edge);
+            color: var(--color-navy-950);
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+        }
+
+        .btn-accent:hover {
+            background-color: #fde68a;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            border-color: var(--color-line-dark);
+            color: var(--color-navy-900);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-paper-alt);
+            border-color: var(--color-navy-900);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Site Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .site-header .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            color: var(--color-navy-900);
+            font-size: 1rem;
+        }
+
+        .brand-name {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-navy-900);
+            letter-spacing: -0.01em;
+        }
+
+        /* Header call-to-action is slightly smaller than page buttons */
+        .site-header .btn {
+            padding: 10px 18px;
+            font-size: 0.875rem;
+        }
+
+        .site-nav .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-8);
+        }
+
+        .nav-link {
+            color: var(--color-ink-muted);
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color var(--transition-smooth);
+        }
+
+        .nav-link:hover {
+            color: var(--color-navy-900);
+        }
+
+        /* ==========================================================================
+           EPIC HERO: Dynamic Ambient Mesh + Clinical Pattern Overlay
+           ========================================================================== */
+        .hero {
+            position: relative;
+            background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 55%, #e6f0f9 100%);
+            color: var(--color-ink-base);
+            padding-top: 0;
+            padding-bottom: var(--space-24);
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        /* Light animated background: slow-drifting soft blue light + faint grid */
+        .hero-bg-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(14, 165, 233, 0.16) 0%, transparent 42%),
+                radial-gradient(circle at 60% 10%, rgba(147, 197, 253, 0.20) 0%, transparent 40%),
+                linear-gradient(rgba(29, 78, 216, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(29, 78, 216, 0.05) 1px, transparent 1px);
+            background-size: 120% 120%, 120% 120%, 120% 120%, 48px 48px, 48px 48px;
+            animation: heroDrift 24s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroDrift {
+            from { background-position: 0% 0%, 100% 100%, 50% 0%, 0 0, 0 0; }
+            to { background-position: 8% 6%, 92% 94%, 56% 8%, 0 0, 0 0; }
+        }
+
+        /* Gentle animated waves along the bottom of the hero */
+        .hero-waves {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 110px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: heroWaveBob 9s ease-in-out infinite;
+        }
+
+        .hero-wave-front {
+            animation-duration: 13s;
+            animation-direction: reverse;
+        }
+
+        @keyframes heroWaveBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .hero-content .hero-lede {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* First screen: headline, subhead and the numbers only, vertically centred */
+        .hero-fold {
+            min-height: calc(100vh - 72px);
+            min-height: calc(100svh - 72px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-16) 0;
+        }
+
+        .hero-fold .stats-grid {
+            margin-bottom: 0;
+        }
+
+        /* Lead card sits alone further down, surrounded by white space */
+        .hero-lead-zone {
+            padding: 22vh 0 14vh;
+        }
+
+        .hero-kicker {
+            font-family: var(--font-heading);
+            font-size: 0.875rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--color-blue-600);
+            margin-bottom: var(--space-4);
+        }
+
+        .hero h1 {
+            color: var(--color-navy-900);
+        }
+
+        .hero-lede {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            color: var(--color-ink-muted);
+            margin-bottom: var(--space-8);
+        }
+
+        /* Founder Quote */
+        .founder-quote {
+            background: var(--color-blue-50);
+            border: 1px solid var(--color-line);
+            border-left: 4px solid var(--color-mark-edge);
+            border-radius: var(--radius-md);
+            padding: var(--space-6) var(--space-8);
+            margin-bottom: var(--space-10);
+        }
+
+        .founder-quote p {
+            font-size: 1.1rem;
+            color: var(--color-ink-base);
+            margin-bottom: var(--space-3);
+        }
+
+        .founder-quote cite {
+            display: block;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--color-ink-muted);
+        }
+
+        /* Quantitative Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: #ffffff;
+            border: 1px solid var(--color-line);
+            box-shadow: var(--shadow-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-12);
+            overflow: hidden;
+            /* Numbers appear and count up when scrolled into view (see script) */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 600ms ease, transform 600ms ease;
+        }
+
+        .stats-grid.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .stat-item {
+            padding: var(--space-6) var(--space-8);
+            display: flex;
+            flex-direction: column-reverse;
+            gap: var(--space-2);
+        }
+
+        .stat-item + .stat-item {
+            border-left: 1px solid var(--color-line);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-ink-muted);
+        }
+
+        .stat-figure {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--color-navy-900);
+            line-height: 1;
+        }
+
+        /* Lead Capture Card */
+        .lead-capture-card {
+            text-align: left;
+            background-color: #dbeafe;
+            color: var(--color-ink-base);
+            border-radius: var(--radius-lg);
+            padding: var(--space-12);
+            border: 2px solid #93c5fd;
+            box-shadow: 0 24px 48px rgba(29, 78, 216, 0.18), 0 2px 8px rgba(11, 27, 43, 0.06);
+        }
+
+        .lead-capture-card h2 {
+            color: var(--color-navy-900);
+            font-size: 2rem;
+            margin-bottom: var(--space-3);
+        }
+
+        .lead-capture-card p {
+            color: var(--color-ink-muted);
+            font-size: 1rem;
+            margin-bottom: var(--space-6);
+        }
+
+        .form-row {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1 1 300px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 50px;
+            padding: 0 var(--space-4);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            background-color: #ffffff;
+            color: var(--color-ink-base);
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
+        }
+
+        .form-footnote {
+            font-size: 0.8125rem;
+            color: var(--color-ink-muted);
+            margin-top: var(--space-3);
+        }
+
+        .form-feedback {
+            display: none;
+            margin-top: var(--space-4);
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+        }
+
+        .form-feedback.is-success {
+            display: block;
+            background-color: #ecfdf5;
+            border: 1px solid var(--color-success);
+            color: #065f46;
+        }
+
+        .form-feedback.is-error {
+            display: block;
+            background-color: #fef2f2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        /* ==========================================================================
+           PROBLEM SECTION (More Space & Clean Hierarchy)
+           ========================================================================== */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-8);
+            margin-top: var(--space-8);
+        }
+
+        .problem-card {
+            background-color: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-subtle);
+            /* Scroll-linked clockwise rotation; set from JS via --card-rot */
+            transform: rotate(var(--card-rot, 0deg));
+            will-change: transform;
+        }
+
+        /* Counter-rotation keeps the text level while the card turns */
+        .problem-card-inner {
+            transform: rotate(calc(var(--card-rot, 0deg) * -1));
+        }
+
+        .problem-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background-color: #fee2e2;
+            color: #991b1b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-bottom: var(--space-4);
+        }
+
+        .problem-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .problem-card p {
+            font-size: 1rem;
+            color: var(--color-ink-muted);
+            margin: 0;
+        }
+
+        /* ==========================================================================
+           METHODOLOGY ROADMAP (Spacious Cards)
+           Submission-ready section: shimmering, wavelike background
+           ========================================================================== */
+        #method {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #method .wrap {
+            position: relative;
+            z-index: 1;
+        }
+
+        .method-waves {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .method-waves svg {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .method-wave-back {
+            animation: methodWaveBob 9s ease-in-out infinite;
+        }
+
+        .method-wave-front {
+            animation: methodWaveBob 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes methodWaveBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Slow light sweep across the section for a subtle shimmer */
+        .method-shimmer {
+            position: absolute;
+            inset: -20% -10%;
+            pointer-events: none;
+            background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.55) 50%, transparent 58%);
+            animation: methodShimmer 7s ease-in-out infinite;
+        }
+
+        @keyframes methodShimmer {
+            0% { transform: translateX(-30%); }
+            50% { transform: translateX(30%); }
+            100% { transform: translateX(-30%); }
+        }
+        .roadmap-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+            margin-top: var(--space-8);
+        }
+
+        .roadmap-card {
+            background-color: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .roadmap-step-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background-color: var(--color-blue-50);
+            color: var(--color-blue-600);
+            border: 1px solid #bfdbfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: var(--space-6);
+        }
+
+        /* ==========================================================================
+           GUARANTEE SECTION (With Stamp of Approval)
+           ========================================================================== */
+        .guarantee-wrapper {
+            background-color: #ffffff;
+            border: 1px solid var(--color-line);
+            border-left: 8px solid var(--color-navy-900);
+            border-radius: var(--radius-lg);
+            padding: var(--space-10) var(--space-12);
+            box-shadow: var(--shadow-card);
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .guarantee-stamp-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Guarantee badge image */
+        .guarantee-stamp-img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ==========================================================================
+           DUAL ROTATING BELTS (MARQUEES)
+           Belt 1: Journal Logos (Rotates Left)
+           Belt 2: Published Articles (Rotates Right)
+           ========================================================================== */
+        .marquee-section {
+            padding-top: var(--space-16);
+            padding-bottom: var(--space-20);
+            background-color: var(--color-paper-alt);
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+            padding: var(--space-3) 0;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            gap: var(--space-6);
+        }
+
+        .track-left {
+            animation: scrollLeft 36s linear infinite;
+        }
+
+        .track-right {
+            animation: scrollRight 42s linear infinite;
+        }
+
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Journal Logo Card — real journal/publisher logo pictures */
+        .journal-badge {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-md);
+            padding: var(--space-3) var(--space-6);
+            box-shadow: var(--shadow-subtle);
+            white-space: nowrap;
+        }
+
+        .journal-logo {
+            height: 44px;
+            width: auto;
+            max-width: 220px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .journal-logo-tall {
+            height: 60px;
+        }
+
+        /* Article Marquee Card */
+        .article-card {
+            background: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-md);
+            padding: var(--space-4) var(--space-6);
+            width: 420px;
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .article-journal-tag {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-blue-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .article-heading a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .article-heading a:hover {
+            color: var(--color-blue-600);
+            text-decoration: underline;
+        }
+
+        .article-heading {
+            font-family: var(--font-heading);
+            font-size: 0.925rem;
+            font-weight: 700;
+            color: var(--color-navy-900);
+            line-height: 1.35;
+            margin-bottom: 6px;
+            white-space: normal;
+        }
+
+        .article-authors {
+            font-size: 0.8rem;
+            color: var(--color-ink-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ==========================================================================
+           TESTIMONIALS CAROUSEL WITH PREV / NEXT CONTROLS
+           Centre card is always in focus; the previous and next cards peek in
+           (dimmed) on either side and slide smoothly when the buttons are used.
+           ========================================================================== */
+        .testimonial-carousel-wrap {
+            position: relative;
+            max-width: 1100px;
+            margin: var(--space-8) auto 0 auto;
+        }
+
+        .testimonial-viewport {
+            overflow: hidden;
+            padding: var(--space-6) 0 var(--space-8);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+        }
+
+        .testimonial-slider {
+            display: flex;
+            align-items: stretch;
+            transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+
+        .testimonial-slide {
+            flex: 0 0 62%;
+            margin-right: 24px;
+            background: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--space-12) var(--space-12);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0.4;
+            transform: scale(0.94);
+            transition: opacity 550ms ease, transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .testimonial-slide.is-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .testimonial-quote {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--color-ink-base);
+            font-weight: 500;
+            margin-bottom: var(--space-8);
+            position: relative;
+        }
+
+        .testimonial-quote strong {
+            color: var(--color-navy-900);
+            font-weight: 800;
+        }
+
+        .testimonial-quote::before {
+            content: "“";
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            color: #e2e8f0;
+            position: absolute;
+            top: -30px;
+            left: -22px;
+            z-index: 0;
+            line-height: 1;
+        }
+
+        .testimonial-meta {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--color-line);
+            padding-top: var(--space-4);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            margin-top: auto;
+        }
+
+        .testimonial-person h4 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-navy-900);
+            margin: 0;
+        }
+
+        .testimonial-badge {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-success);
+            background: #f0fdfa;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #ccfbf1;
+        }
+
+        /* Carousel Navigation Controls */
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: var(--space-2);
+        }
+
+        .carousel-buttons {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .carousel-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--color-line-dark);
+            background: #ffffff;
+            color: var(--color-navy-900);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-smooth);
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--color-navy-900);
+            color: #ffffff;
+            border-color: var(--color-navy-900);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-line-dark);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            padding: 0;
+        }
+
+        .carousel-dot.is-active {
+            background: var(--color-navy-900);
+            width: 24px;
+            border-radius: 6px;
+        }
+
+        /* ==========================================================================
+           PRICING: three side-by-side tier cards (featured one raised and
+           highlighted) + a slim free-tier strip underneath as the low-risk option
+           ========================================================================== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            align-items: stretch;
+            margin-top: var(--space-8);
+        }
+
+        .price-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8) var(--space-6);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .price-card.is-featured {
+            border: 2px solid var(--color-mark-edge);
+            background-color: #fffef2;
+            box-shadow: 0 24px 48px rgba(245, 158, 11, 0.18), 0 4px 12px rgba(11, 27, 43, 0.06);
+            transform: translateY(-14px);
+            padding-top: var(--space-10);
+        }
+
+        .price-card.is-featured::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            border-radius: 14px 14px 0 0;
+            background: var(--color-mark-edge);
+        }
+
+        .price-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .tier-tagline {
+            color: var(--color-ink-muted);
+            font-size: 1rem;
+            line-height: 1.55;
+            min-height: 4.6em;
+        }
+
+        .price-block {
+            margin: var(--space-6) 0 var(--space-4);
+            padding: var(--space-4) 0;
+            border-top: 1px solid var(--color-line);
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .price-label {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-ink-muted);
+            margin-bottom: 2px;
+        }
+
+        .price-member {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--color-navy-900);
+            margin-bottom: 2px;
+        }
+
+        .price-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin: 0;
+        }
+
+        .price-amount {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--color-navy-900);
+            letter-spacing: -0.03em;
+        }
+
+        .price-regular {
+            font-size: 0.95rem;
+            color: var(--color-ink-faint);
+            text-decoration: line-through;
+        }
+
+        .price-split {
+            margin-top: var(--space-3);
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-success);
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: var(--radius-sm);
+        }
+
+        .tier-availability {
+            align-self: flex-start;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: #92400e;
+            background: #fef3c7;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: var(--space-4);
+        }
+
+        .tier-label {
+            font-weight: 700;
+            color: var(--color-navy-900);
+            margin-bottom: var(--space-3);
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-bottom: var(--space-8);
+        }
+
+        .tier-features li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: var(--space-3);
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+
+        .tier-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.75rem;
+            font-weight: 800;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .price-card .btn {
+            margin-top: auto;
+        }
+
+        .tier-subtext,
+        .tier-target {
+            color: var(--color-ink-muted);
+            font-size: 0.85rem;
+            margin-top: var(--space-4);
+        }
+
+        /* Free tier strip */
+        .pricing-free {
+            display: grid;
+            grid-template-columns: 1.1fr 1.3fr auto;
+            align-items: center;
+            gap: var(--space-8);
+            margin-top: var(--space-12);
+            padding: var(--space-8);
+            background: #ffffff;
+            border: 1px dashed var(--color-line-dark);
+            border-radius: var(--radius-lg);
+        }
+
+        .pricing-free h3 {
+            margin-bottom: var(--space-2);
+        }
+
+        .pricing-free .tier-tagline {
+            min-height: 0;
+        }
+
+        .pricing-free .tier-tuition {
+            font-weight: 700;
+            color: var(--color-navy-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .pricing-free .tier-features {
+            margin-bottom: 0;
+        }
+
+        .pricing-free .tier-features li {
+            margin-bottom: var(--space-2);
+        }
+
+        /* FAQ Accordion */
+        .faq-accordion-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            margin-top: var(--space-8);
+        }
+
+        .faq-item {
+            background-color: #ffffff;
+            border: 1px solid var(--color-line);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .faq-button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: var(--space-6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-navy-900);
+            cursor: pointer;
+            gap: var(--space-4);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--color-blue-600);
+            transition: transform var(--transition-smooth);
+        }
+
+        .faq-button[aria-expanded="true"] .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-panel {
+            padding: 0 var(--space-6) var(--space-6);
+            color: var(--color-ink-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-panel.is-open {
+            display: block;
+        }
+
+        /* Final CTA Card */
+        .final-cta {
+            background-color: #dbeafe;
+            padding: var(--space-24) 0;
+        }
+
+        .final-cta-card {
+            background-color: #ffffff;
+            border: 1px solid #93c5fd;
+            border-radius: var(--radius-lg);
+            padding: var(--space-16) var(--space-8);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+
+        .final-cta-card h2 {
+            font-size: clamp(2rem, 3.8vw, 2.75rem);
+            margin-bottom: var(--space-4);
+        }
+
+        .final-cta-card p {
+            font-size: 1.2rem;
+            color: var(--color-ink-muted);
+            max-width: 620px;
+            margin: 0 auto var(--space-8) auto;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--color-navy-950);
+            color: #94a3b8;
+            padding: var(--space-16) 0 var(--space-10) 0;
+            border-top: 1px solid var(--color-navy-800);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .footer-brand h4 {
+            color: #ffffff;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: var(--space-3);
+        }
+
+        .footer-legal-copy {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            padding-top: var(--space-6);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8125rem;
+            color: #64748b;
+        }
+
+        /* New ambient animations respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg-overlay,
+            .hero-wave,
+            .method-wave-back,
+            .method-wave-front,
+            .method-shimmer,
+            .track-left,
+            .track-right {
+                animation: none !important;
+            }
+            .testimonial-slider,
+            .testimonial-slide {
+                transition: none !important;
+            }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1000px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+            .price-card.is-featured { transform: none; order: -1; }
+            .tier-tagline { min-height: 0; }
+            .pricing-free { grid-template-columns: 1fr; text-align: left; }
+            .pricing-free .btn { justify-self: start; }
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-item + .stat-item { border-left: none; border-top: 1px solid var(--color-line); }
+            .problem-grid, .roadmap-list, .footer-grid { grid-template-columns: 1fr; }
+            .guarantee-wrapper { grid-template-columns: 1fr; text-align: center; }
+            .guarantee-stamp-box { margin-top: var(--space-6); }
+            .testimonial-slide { flex-basis: 82%; padding: var(--space-8) var(--space-6); }
+        }
+
+        @media (max-width: 768px) {
+            .site-nav { display: none; }
+            .lead-capture-card { padding: var(--space-6); }
+        }
+        /* ===== MOBILE FIXES ===== */
+        @media (max-width: 768px) {
+            /* Header: keep "Med-RAMP" on one line */
+            .site-header .wrap { padding: 0 var(--space-4); gap: var(--space-3); }
+            .brand-link { flex-shrink: 0; gap: var(--space-2); }
+            .brand-name { font-size: 1.05rem; white-space: nowrap; }
+            .brand-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+            .site-header .btn { padding: 8px 12px; font-size: 0.78rem; }
+        
+            /* Only 3 problem cards on mobile */
+            .problem-card:nth-child(4) { display: none; }
+        
+            /* Testimonials: wider cards, each card only as tall as its own text */
+            .testimonial-carousel-wrap { margin-left: -20px; margin-right: -20px; }
+            .testimonial-viewport { -webkit-mask-image: none; mask-image: none; }
+            .testimonial-slider { align-items: center; }
+            .testimonial-slide { flex-basis: 90%; margin-right: 10px; padding: 24px 20px; }
+            .testimonial-quote { font-size: 1.02rem; margin-bottom: var(--space-4); }
+            .carousel-controls { padding: 0 20px; }
+        }
+        .countdown { margin-bottom: var(--space-6); padding: var(--space-4); background: #fff7e0; border: 1px solid var(--color-mark-edge); border-radius: var(--radius-md); text-align: center; }
+        .countdown[hidden] { display: none; }
+        .countdown-heading { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; color: var(--color-navy-900); margin-bottom: var(--space-3); }
+        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+        .cd-num { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 1.75rem; line-height: 1.1; color: var(--color-navy-900); font-variant-numeric: tabular-nums; }
+        .cd-lbl { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-ink-muted); }
+        .countdown.is-closed .countdown-grid { display: none; }
+        .countdown.is-closed .countdown-heading { margin: 0; }
+
+        .contact-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius-lg); padding: var(--space-8); box-shadow: var(--shadow-subtle); margin-top: var(--space-8); }
+        .contact-row { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+        .contact-row .contact-field { flex: 1 1 240px; }
+        .contact-field { margin-bottom: var(--space-4); }
+        .contact-field label { display: block; font-weight: 700; font-size: 0.9rem; color: var(--color-navy-900); margin-bottom: var(--space-2); }
+        .contact-card .form-input { border: 1px solid var(--color-line-dark); }
+        .form-textarea { height: auto; min-height: 130px; padding: var(--space-3) var(--space-4); resize: vertical; font-family: var(--font-body); }
+        @media (max-width: 768px) { .contact-card { padding: var(--space-6) var(--space-4); } .contact-card .btn { width: 100%; } }
+    </style>
 </head>
 <body>
-<header class="site-header">
-    <div class="wrap">
-        <a class="wordmark" href="../">Med-RAMP</a>
-        <nav class="site-nav" aria-label="Landing page">
-            <a href="#template">Free template</a>
-            <a href="#results">Published studies</a>
-            <a href="#pricing">Programs &amp; pricing</a>
-            <a href="#faq">FAQ</a>
-        </nav>
-        <a class="header-cta" href="#template">Get the free template</a>
-    </div>
-</header>
 
-<main>
-<!-- HERO -->
-<section class="hero">
-    <div class="wrap">
-        <p class="kicker">Research mentorship for future physicians</p>
-        <h1>Acceptance and match now heavily depend on your publications. Stop waiting 2+ years for authorship.</h1>
-        <p class="lede">Publish peer-reviewed clinical research on your own schedule, with expert guidance.</p>
+    <!-- SITE HEADER -->
+    <header class="site-header" role="banner">
+        <div class="wrap">
+            <a href="#top" class="brand-link" aria-label="Med-RAMP Homepage">
+                <div class="brand-icon" aria-hidden="true">M</div>
+                <span class="brand-name">Med-RAMP</span>
+            </a>
 
-        <blockquote class="founder">
-            <p>“Once I spent 100s of hours chart reviewing for a research project, only to find out that it was… canceled. I was devastated. I then devoted 1000+ hours figuring out the publishing game, and I’ve distilled all the lessons I’ve learned in Med-RAMP.”</p>
-            <cite>Beau Hsia, MD, ENT resident physician and founder of Med-RAMP</cite>
-        </blockquote>
+            <nav class="site-nav" role="navigation" aria-label="Primary navigation">
+                <ul class="nav-links">
+                </ul>
+            </nav>
 
-        <p style="margin-top:24px;max-width:640px;">Med-RAMP replaces the research guessing game with a proven clinical research method. Hundreds of students have followed our step-by-step instructions to learn and publish research in high-impact medical journals.</p>
-
-        <ul class="at-a-glance" aria-label="Med-RAMP results">
-            <li><span>Pre-med and medical students mentored</span><span class="fact">300+</span></li>
-            <li><span>Peer-reviewed authorships earned</span><span class="fact">500+</span></li>
-            <li><span>Accepted publications and conference abstracts</span><span class="fact">100+</span></li>
-        </ul>
-
-        <div class="email-panel" id="template">
-            <h2>Get the free abstract template</h2>
-            <p>The National Cancer Database (NCDB) abstract template that hundreds of students have used to get published for the first time. Enter your email and we’ll send it to you.</p>
-            <!-- TODO: connect this form to your email platform (ConvertKit / Beehiiv, etc.) so the template is sent on signup. -->
-            <form class="email-form" id="templateForm">
-                <label for="templateEmail">Email address</label>
-                <input type="email" id="templateEmail" name="email" placeholder="you@email.com" required autocomplete="email">
-                <button class="btn" type="submit">Send me the template</button>
-            </form>
-            <p class="form-message" id="templateMessage" role="status"></p>
-            <p class="email-note">Free. No spam. Looking for mentorship from Dr. Beau? See the <a href="#pricing" style="color:#fff;">Abstract Masterclass</a>.</p>
+            <div>
+                <a href="#template-download" class="btn btn-accent">Get Abstract Template</a>
+            </div>
         </div>
-    </div>
-</section>
+    </header>
 
-<!-- THE PROBLEM -->
-<section class="section">
-    <div class="wrap">
-        <p class="section-label">The problem</p>
-        <h2>The traditional research path is broken.</h2>
-        <p class="section-intro">If you’ve tried landing a clinical research project, you already know the routine:</p>
-        <ul class="problem-list">
-            <li>Sending 40 cold emails to faculty physicians, only to receive silence.</li>
-            <li>Joining a wet lab, only to spend 18 months doing basic data entry, with no authorship to show.</li>
-            <li>Waiting nearly a year for institutional IRB approval before writing a single word.</li>
-            <li>Watching application deadlines approach with an empty research section on your AMCAS or ERAS CV.</li>
-        </ul>
-        <p style="max-width:700px;">Medical school admissions committees and residency program directors do not care how many hours you stood in a hallway waiting for an attending. They look for one thing: <strong>demonstrated scientific productivity and research skill.</strong></p>
-        <h3 style="margin-top:28px;">Med-RAMP teaches you to publish. Productively.</h3>
-        <p style="max-width:700px;">You bring the focus and hard work. We provide clear, timely instructions on next steps and mentorship. Together we strive toward your research success.</p>
-    </div>
-</section>
+    <main id="top">
+        <!-- EPIC HERO SECTION (With Ambient Mesh & Photography Hooks) -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-bg-overlay"></div>
+            <div class="hero-waves" aria-hidden="true">
+                <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,60 C240,105 480,15 720,55 C960,95 1200,25 1440,60 L1440,110 L0,110 Z" fill="#dbeafe"/></svg>
+                <svg class="hero-wave hero-wave-front" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,75 C240,35 480,105 720,65 C960,25 1200,95 1440,65 L1440,110 L0,110 Z" fill="#bfdbfe"/></svg>
+            </div>
 
-<!-- GUARANTEE (moved up) -->
-<section class="section guarantee" id="guarantee">
-    <div class="wrap">
-        <h2>Our guarantee to you and to science</h2>
-        <p>We respect your time and financial commitment. If you complete the writing milestones, submit your data interpretation on time, and follow the structural protocol, yet are still unable to produce a submission-ready abstract draft, we will refund 100% of your registration fee.</p>
-        <p class="email-note" style="color:var(--muted);">Scientific peer review is strictly independent, so no ethical program can guarantee journal acceptance or authorship by third parties. What we guarantee is the work we control: your finished draft.</p>
-    </div>
-</section>
+            <div class="wrap">
+                <div class="hero-content">
+                    <!-- FIRST SCREEN: headline + numbers only -->
+                    <div class="hero-fold">
+                        <p class="hero-kicker">The #1 Most Productive Clinical Research Mentorship</p>
+                        <h1 id="hero-title">Get un-lost in the publication process.</h1>
+                        <p class="hero-lede">Publish peer-reviewed clinical research on your schedule with expert physician mentorship.</p>
 
-<!-- HOW IT WORKS -->
-<section class="section">
-    <div class="wrap">
-        <p class="section-label">How it works</p>
-        <h2>Write your abstract in 7 days.</h2>
-        <ol class="steps">
-            <li>
-                <h3>Get the template</h3>
-                <p>Start with the exact structure our members used: Background, Objective, Methods, Results, Conclusions. No blank page, no guessing what goes where.</p>
-            </li>
-            <li>
-                <h3>Start with a verified topic and data</h3>
-                <p>In the Abstract Masterclass you get a novel research topic and a pre-gathered registry dataset. You don’t spend months finding a project first.</p>
-            </li>
-            <li>
-                <h3>Finish with Dr. Beau’s guidance</h3>
-                <p>Follow the milestones. Dr. Beau reviews your draft by email and edits its structure until it is ready to submit.</p>
-            </li>
-        </ol>
-    </div>
-</section>
+                        <!-- Quantitative Verification Grid -->
+                        <div class="stats-grid" aria-label="Med-RAMP verification data">
+                            <div class="stat-item">
+                                <span class="stat-label">Students Mentored</span>
+                                <span class="stat-figure">300+</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Authorships Earned</span>
+                                <span class="stat-figure">500+</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Accepted Articles &amp; Abstracts</span>
+                                <span class="stat-figure">150+</span>
+                            </div>
+                        </div>
+                    </div>
 
-<!-- PUBLISHED STUDIES -->
-<section class="section" id="results">
-    <div class="wrap">
-        <p class="section-label">Published studies</p>
-        <h2>Peer-reviewed proof, not theoretical examples.</h2>
-        <p class="section-intro">This is the exact process behind real studies accepted in major peer-reviewed journals and international oncology congresses.</p>
-        <ul class="pub-list">
-            <li><div class="pub-title">Clear cell–type squamous cell carcinoma: An NCDB analysis.</div><div class="pub-meta">Journal of Clinical Oncology · G. S. Saglimbeni, N. Nakshbandi, S. Puvvadi, A. Surendra, B. Hsia, C. Heise</div></li>
-            <li><div class="pub-title">Genomic landscape of schwannomas: An analysis of somatic mutations and demographic disparities.</div><div class="pub-meta">Rare Tumors · J. Jacob, B. Hsia, N. Boyal, A. Tauseef</div></li>
-            <li><div class="pub-title">Mutational Landscape of FGFR4 Across Malignancies: A Cross-Cancer Analysis of the AACR Project GENIE Database.</div><div class="pub-meta">Current Issues in Molecular Biology · H. Ali, T. Gengnagel, S. Birkholz, G. Vadmal, E. Torbenson, B. Hsia, et al.</div></li>
-            <li><div class="pub-title">Genomic Characteristics of Leiomyosarcoma: An AACR Project GENIE Study.</div><div class="pub-meta">Anticancer Research · H. Ali, C. Chander, E. Torbenson, B. Hsia, P. T. Silberstein</div></li>
-            <li><div class="pub-title">Genomic Insights into Cutaneous Squamous Cell Carcinoma.</div><div class="pub-meta">Cancers · G. S. Saglimbeni, T. J. Morris, B. Hsia, A. Tauseef</div></li>
-        </ul>
-        <p style="margin-top:18px;"><a href="../publications1.html">Explore our full publication archive →</a></p>
-    </div>
-</section>
+                    <!-- Lead Capture Card (only comes into view once you scroll to it) -->
+                    <div class="hero-lead-zone">
+                        <div class="lead-capture-card" id="template-download">
+                            <h2>Download the Exact Instructions that Published 100s of Abstracts</h2>
+                            <p>Get the step-by-step protocol our students utilized to publish peer-reviewed conference abstracts using the National Cancer Database (NCDB).</p>
+                            
+                            <form id="leadCaptureForm" novalidate>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="leadEmail" class="sr-only" style="display:none;">Email address</label>
+                                        <input type="email" id="leadEmail" class="form-input" placeholder="Enter your email" required autocomplete="email">
+                                    </div>
+                                    <button type="submit" class="btn btn-accent" id="submitBtn">
+                                        <span id="btnText">Send Me the Template!</span>
+                                    </button>
+                                </div>
+                                <div class="form-feedback" id="formFeedback" role="alert"></div>
+                                <p class="form-footnote">No spam guaranteed. High-yield research updates only. Unsubscribe anytime.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- TESTIMONIALS -->
-<section class="section">
-    <div class="wrap">
-        <p class="section-label">Student results</p>
-        <h2>Med-RAMP wall of love</h2>
-        <blockquote class="testimonial">
-            <p>“Over the past two years, Med-RAMP has been instrumental in my acceptances to multiple medical schools. I collaborated with fellow pre-med and medical students to write abstracts and manuscripts, strengthening my scientific writing skills. The mentorship I received from Beau during my application cycle gave me strong, meaningful examples to draw on during medical school interviews. I could speak confidently about my growth in research and collaboration.”</p>
-            <div class="quote-author">Aryn L.</div><div class="quote-role">Accepted to University of Colorado School of Medicine</div>
-        </blockquote>
-        <blockquote class="testimonial">
-            <p>“Getting meaningful research experience as an undergraduate can be challenging, which is why Med-RAMP was such a valuable opportunity. I completed projects that led to real publications while developing scientific writing skills. Beau’s guidance played a massive role in helping me navigate the application process and ultimately earn several medical school acceptances.”</p>
-            <div class="quote-author">Daniel T.</div><div class="quote-role">Accepted to multiple medical schools</div>
-        </blockquote>
-        <blockquote class="testimonial">
-            <p>“At Med-RAMP, my research effort actually mattered. Elsewhere, I felt lost and confused without guidance. Here, the mentors are extremely knowledgeable about working on research that actually gets published. It played a significant role in how I ultimately ended up at Mayo Clinic.”</p>
-            <div class="quote-author">Mark M.</div><div class="quote-role">Accepted to Mayo Clinic</div>
-        </blockquote>
-        <blockquote class="testimonial">
-            <p>“I joined Med-RAMP as an undergraduate when I felt overwhelmed trying to find clinical research opportunities. I built real experience learning from mentors, working on actual studies, and getting published. Highly recommended to anyone looking to grow in clinical research.”</p>
-            <div class="quote-author">Amber C.</div><div class="quote-role">Medical student at University of South Florida</div>
-        </blockquote>
-        <blockquote class="testimonial">
-            <p>“I can undoubtedly say that Med-RAMP was an indispensable part of my medical school application. I couldn’t have done it without Beau’s mentorship!”</p>
-            <div class="quote-author">Aaron S.</div><div class="quote-role">Accepted to multiple medical schools</div>
-        </blockquote>
-    </div>
-</section>
-
-<!-- PRICING -->
-<section class="section" id="pricing">
-    <div class="wrap">
-        <p class="section-label">Programs &amp; enrollment</p>
-        <h2>Choose the tier that fits your research goals.</h2>
-        <p class="section-intro">Every paid program is mentored personally by Dr. Beau, and the Abstract Masterclass is backed by our <a href="#guarantee">money-back guarantee</a>.</p>
-        <div class="pricing-wrap">
-            <table class="pricing">
-                <thead><tr><th scope="col">Program</th><th scope="col">Investment</th><th scope="col">What you get</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td class="tier-name">Free Abstract Template</td>
-                        <td class="price">$0</td>
-                        <td><ul>
-                            <li>The introductory NCDB abstract template</li>
-                            <li>Structural layout for clinical abstracts</li>
-                            <li>Delivered by email</li>
-                        </ul></td>
-                        <td><a class="btn btn-secondary" href="#template">Get the template</a></td>
-                    </tr>
-                    <tr class="featured">
-                        <td class="tier-name">Abstract Masterclass<br><span class="tag">Founding cohort</span></td>
-                        <td class="price">$249<br><span class="price-sub">founding member price<br>(regular $349)</span><span class="price-sub"><strong>Split with up to 2 classmates:</strong> about $83 each</span></td>
-                        <td><ul>
-                            <li>Verified novel research topic</li>
-                            <li>Pre-gathered, verified registry dataset</li>
-                            <li>Milestone-driven writing curriculum</li>
-                            <li>Direct email review and structural edits from Dr. Beau on your draft</li>
-                            <li>Unlimited email communication with Dr. Beau</li>
-                            <li>Execution-based money-back guarantee</li>
-                            <li>Limited to 10 spots, for maximum one-on-one attention from Dr. Beau</li>
-                        </ul></td>
-                        <td><a class="btn" href="#REPLACE-WITH-CHECKOUT-LINK">Enroll in the Abstract Masterclass</a></td>
-                    </tr>
-                    <tr>
-                        <td class="tier-name">Manuscript Masterclass</td>
-                        <td class="price">$849</td>
-                        <td><ul>
-                            <li>Complete end-to-end framework for full-length peer-reviewed manuscripts</li>
-                            <li>Comprehensive study design, discussion frameworks, and reference structures</li>
-                            <li>In-depth feedback on your complete manuscript draft from Dr. Beau</li>
-                        </ul></td>
-                        <td><a class="btn btn-secondary" href="#REPLACE-WITH-CHECKOUT-LINK">Enroll in the Manuscript Masterclass</a></td>
-                    </tr>
-                    <tr>
-                        <td class="tier-name">1-Year Research Fellowship</td>
-                        <td class="price">$2,999</td>
-                        <td><ul>
-                            <li>Full year of research advisory with Dr. Beau</li>
-                            <li>Unlimited email guidance, strategy sessions, and draft reviews</li>
-                            <li>Support across multiple abstracts and full papers</li>
-                            <li>Strategies for publishing with your target medical schools and institutions</li>
-                            <li>Bonus: 5 hours of application strategy sessions and editing with Dr. Beau ($800 value)</li>
-                            <li>Eligibility for an MD letter of recommendation based on performance</li>
-                        </ul></td>
-                        <td><a class="btn btn-secondary" href="#REPLACE-WITH-BOOKING-LINK">Schedule a strategy consultation</a></td>
-                    </tr>
-                </tbody>
-            </table>
+    <footer class="site-footer" role="contentinfo">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Med-RAMP Research Mentorship</h4>
+                    <p class="footer-legal-copy">
+                        Med-RAMP adheres strictly to the authorship and research conduct criteria established by the International Committee of Medical Journal Editors (ICMJE). We do not broker, sell, or guarantee authorships, publications, or medical institution admissions. Academic outcomes reflect rigorous student compliance with research protocols.
+                    </p>
+                </div>
+                <div>
+                    <ul class="footer-links">
+                        <li><a href="#top">Back to Top</a></li>
+                        <li><a href="#method">Mentorship Method</a></li>
+                        <li><a href="#publications">Journal Archive</a></li>
+                        <li><a href="#pricing">Tuition &amp; Fees</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#d1bcb4bfa5bea3a2b9b8a191bcb4b5fca3b0bca1ffb2bebc">Institutional Inquiries</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear">2026</span> Med-RAMP. All rights reserved. Dr. Beau Hsia, MD.</p>
+                <p>Designed for future clinical leaders.</p>
+            </div>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- FAQ -->
-<section class="section" id="faq">
-    <div class="wrap">
-        <p class="section-label">FAQ</p>
-        <h2>Frequently asked questions</h2>
-        <details class="faq" open>
-            <summary>Do I need prior research experience or coding knowledge?</summary>
-            <p>No. Our protocols are built for undergraduates, pre-meds, and medical students with limited research experience. Through our learning resources and mentorship, you’ll gain the skills you need to start publishing independently.</p>
-        </details>
-        <details class="faq">
-            <summary>Do I need to bring my own lab data or IRB approval?</summary>
-            <p>No. Mentorship projects use de-identified, verified national databases such as NCDB and AACR Project GENIE, so you don’t spend months waiting on an institutional review before you start writing.</p>
-        </details>
-        <details class="faq">
-            <summary>Can I split the cost with classmates?</summary>
-            <p>Yes. For the Abstract Masterclass and Manuscript Masterclass, up to three students can team up on a single project, work through the milestones together, and split the enrollment fee.</p>
-        </details>
-        <details class="faq">
-            <summary>How does the mentorship work if there are no daily live calls?</summary>
-            <p>It works like an attending physician’s workflow: high-yield, milestone-based, and asynchronous. You follow the structured modules to build your draft, and Dr. Beau gives detailed, targeted written review and edits at the key milestones. You learn by doing, with expert oversight keeping you on track.</p>
-        </details>
-        <details class="faq">
-            <summary>How quickly can I list this on my AMCAS / ERAS application?</summary>
-            <p>Once your abstract draft is finalized and submitted to a peer-reviewed medical conference or journal, you can document the work on your CV and application under relevant categories such as “Works Submitted” or “Conference Abstracts,” and use it as talking points in interviews.</p>
-        </details>
-    </div>
-</section>
+    <!-- INTERACTION SCRIPTS: CAROUSEL, FORM, FAQ -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ===== SIGNUP WINDOW SETTINGS: edit this block for any new promo =====
+        const SIGNUP_WINDOW = {
+            enabled: true,                          // false = hides the timer completely
+            closesAt: '2026-11-16T00:00:00-08:00',  // = midnight at the END of Sun 11/15, PST. Use -07:00 when in daylight time (Mar–Nov)
+            heading: 'Signups close Sunday 11/15 at midnight PST:',
+            closedMessage: 'Signups for this sprint are now closed.',
+            disableButtonsWhenClosed: true          // greys out buttons with class "js-signup-btn"
+        };
+        // =====================================================================
+        
+        function initSignupCountdown() {
+            const box = document.getElementById('signupCountdown');
+            if (!box) return;
+            if (!SIGNUP_WINDOW.enabled) { box.hidden = true; return; }
+            const end = new Date(SIGNUP_WINDOW.closesAt).getTime();
+            const heading = box.querySelector('.countdown-heading');
+            const pad = n => String(n).padStart(2, '0');
+            heading.textContent = SIGNUP_WINDOW.heading;
+            box.hidden = false;
+        
+            function closeSignups() {
+                box.classList.add('is-closed');
+                heading.textContent = SIGNUP_WINDOW.closedMessage;
+                if (SIGNUP_WINDOW.disableButtonsWhenClosed) {
+                    document.querySelectorAll('.js-signup-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; b.style.cursor = 'not-allowed'; });
+                }
+            }
+            function tick() {
+                const left = end - Date.now();
+                if (left <= 0) { closeSignups(); return; }
+                const s = Math.floor(left / 1000);
+                const parts = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+                Object.keys(parts).forEach(k => { box.querySelector('[data-unit="' + k + '"]').textContent = pad(parts[k]); });
+                setTimeout(tick, 1000);
+            }
+            tick();
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            initSignupCountdown();
+            // 1. Dynamic Year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-<!-- FINAL CTA -->
-<section class="section">
-    <div class="wrap">
-        <h2>Stop letting research inefficiency hold you back.</h2>
-        <p class="section-intro">Join the hundreds of students publishing medical research without the administrative gatekeeping.</p>
-        <p><a class="btn btn-secondary" href="#template">Download the free template</a> &nbsp; <a class="btn" href="#pricing">Enroll in the Abstract Masterclass</a></p>
-    </div>
-</section>
-</main>
+            // 2c. Animated count-up stats: numbers appear and count up to their
+            // goal when the stats grid scrolls into view.
+            const statsGrid = document.querySelector('.stats-grid');
+            const statFigures = document.querySelectorAll('.stat-figure');
+            const reduceMotionStats = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function animateStats() {
+                statFigures.forEach(function (el) {
+                    const target = parseInt(el.textContent, 10);
+                    if (isNaN(target)) return;
+                    if (reduceMotionStats) { el.textContent = target + '+'; return; }
+                    const duration = 1400;
+                    const start = performance.now();
+                    function tick(now) {
+                        const p = Math.min(1, (now - start) / duration);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * eased) + '+';
+                        if (p < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+            }
+            if (statsGrid) {
+                if (reduceMotionStats) {
+                    statsGrid.classList.add('is-visible');
+                    animateStats();
+                } else if ('IntersectionObserver' in window) {
+                    const statsObserver = new IntersectionObserver(function (entries, observer) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                statsGrid.classList.add('is-visible');
+                                animateStats();
+                                observer.disconnect();
+                            }
+                        });
+                    }, { threshold: 0.4 });
+                    statsObserver.observe(statsGrid);
+                } else {
+                    statsGrid.classList.add('is-visible');
+                    animateStats();
+                }
+            }
 
-<footer class="site-footer">
-    <div class="wrap">
-        <p><strong>Med-RAMP</strong> — Research Mentorship for Future Physicians. <a href="../">Back to med-ramp.com</a></p>
-        <p style="margin-top:8px;">Past student performance reflects dedicated execution of the Med-RAMP curriculum. Med-RAMP adheres to ICMJE guidelines. We do not sell publications or author spots, and we do not guarantee publication, authorship, or admission to any academic medical program.</p>
-    </div>
-</footer>
+            // 2d. Template links scroll the lead card to the centre of the page
+            // so it is the focal point when reached.
+            document.querySelectorAll('a[href="#template-download"]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    const card = document.getElementById('template-download');
+                    if (!card) return;
+                    e.preventDefault();
+                    card.scrollIntoView({ behavior: reduceMotionStats ? 'auto' : 'smooth', block: 'center' });
+                });
+            });
 
-<script>
-(function () {
-    /* Example only: not connected to a sender yet. TODO: wire to your email platform. */
-    var form = document.getElementById('templateForm');
-    var msg = document.getElementById('templateMessage');
-    if (!form) return;
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var email = document.getElementById('templateEmail').value.trim();
-        if (!email) return;
-        msg.textContent = 'This form isn’t connected to an email sender yet. Connect your email platform to send the template to ' + email + '.';
-        msg.classList.add('is-visible');
-    });
-})();
-</script>
+            // 3. Lead Capture Form Simulation
+            const leadForm = document.getElementById('leadCaptureForm');
+            const feedback = document.getElementById('formFeedback');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+
+            if (leadForm) {
+                leadForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const email = document.getElementById('leadEmail').value.trim();
+
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        feedback.className = 'form-feedback is-error';
+                        feedback.textContent = 'Please enter a valid academic or personal email address.';
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Transmitting...';
+
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        btnText.textContent = 'Template Sent';
+                        feedback.className = 'form-feedback is-success';
+                        feedback.innerHTML = `<strong>Protocol Dispatched:</strong> The NCDB abstract layout has been sent to <em>${email}</em>.`;
+                        document.getElementById('leadEmail').value = '';
+                    }, 650);
+                });
+            }
+
+            // Contact form -> emails beauhsiacreighton@gmail.com via FormSubmit
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                const cFeedback = document.getElementById('contactFeedback');
+                const cBtn = document.getElementById('contactBtn');
+                contactForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const data = Object.fromEntries(new FormData(contactForm).entries());
+                    if (!data.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()) || !data.message.trim()) {
+                        cFeedback.className = 'form-feedback is-error';
+                        cFeedback.textContent = 'Please fill in your name, a valid email, and your question.';
+                        return;
+                    }
+                    cBtn.disabled = true; cBtn.textContent = 'Sending...';
+                    try {
+                        const res = await fetch('https://formsubmit.co/ajax/beauhsiacreighton@gmail.com', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify({ ...data, _subject: 'Med-RAMP website question from ' + data.name, _template: 'table' })
+                        });
+                        if (!res.ok) throw new Error('Request failed');
+                        cFeedback.className = 'form-feedback is-success';
+                        cFeedback.textContent = 'Thanks! Your question was sent. Dr. Beau will reply to your email soon.';
+                        contactForm.reset();
+                    } catch (err) {
+                        cFeedback.className = 'form-feedback is-error';
+                        cFeedback.textContent = 'Something went wrong. Please try again, or email mentorship@med-ramp.com directly.';
+                    }
+                    cBtn.disabled = false; cBtn.textContent = 'Send Question';
+                });
+            }
+            
+            // 4. FAQ Accordion Engine
+            const faqButtons = document.querySelectorAll('.faq-button');
+            faqButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    const targetId = this.getAttribute('aria-controls');
+                    const targetPanel = document.getElementById(targetId);
+
+                    faqButtons.forEach(b => {
+                        b.setAttribute('aria-expanded', 'false');
+                        const pId = b.getAttribute('aria-controls');
+                        document.getElementById(pId).classList.remove('is-open');
+                    });
+
+                    if (!isExpanded) {
+                        this.setAttribute('aria-expanded', 'true');
+                        targetPanel.classList.add('is-open');
+                    }
+                });
+            });
+        });
+
+        // 5. Checkout Handlers
+        function handleCheckout(tier, price) {
+            window.location.href = `https://checkout.med-ramp.com/?tier=${encodeURIComponent(tier)}&price=${encodeURIComponent(price)}`;
+        }
+
+        function handleConsultation() {
+            window.location.href = "mailto:mentorship@med-ramp.com?subject=" + encodeURIComponent("Inquiry: Med-RAMP 1-Year Fellowship");
+        }
+    </script>
 </body>
 </html>
