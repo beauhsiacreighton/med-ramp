@@ -2307,35 +2307,48 @@
                 });
             });
 
-            // 3. Lead Capture Form Simulation
-            const leadForm = document.getElementById('leadCaptureForm');
-            const feedback = document.getElementById('formFeedback');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
+            // 3. Lead Capture Form -> Google Sheet + Mailrelay (via Apps Script)
+            // SCRIPT_URL is the Apps Script web app (ends in /exec).
+            // TEMPLATE_URL is the hosted template PDF.
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIUCCeTmf6e7BLZlc8535Efh3qYKOcGbf9RquYM9kwavyfiugrZ73V7A47Ogug5BU1ng/exec';
+            const TEMPLATE_URL = 'https://www.med-ramp.com/files/ncdb-abstract-template.pdf';
 
-            if (leadForm) {
-                leadForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const email = document.getElementById('leadEmail').value.trim();
+            document.getElementById('leadCaptureForm').addEventListener('submit', async (e) => {
+              e.preventDefault();
+              const emailInput = document.getElementById('leadEmail');
+              const feedback = document.getElementById('formFeedback');
+              const btn = document.getElementById('submitBtn');
+              const btnText = document.getElementById('btnText');
+              const email = emailInput.value.trim();
 
-                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                        feedback.className = 'form-feedback is-error';
-                        feedback.textContent = 'Please enter a valid academic or personal email address.';
-                        return;
-                    }
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                feedback.className = 'form-feedback is-error';
+                feedback.textContent = 'Please enter a valid email address.';
+                return;
+              }
 
-                    submitBtn.disabled = true;
-                    btnText.textContent = 'Transmitting...';
+              btn.disabled = true;
+              btnText.textContent = 'Sending...';
 
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        btnText.textContent = 'Template Sent';
-                        feedback.className = 'form-feedback is-success';
-                        feedback.innerHTML = `<strong>Protocol Dispatched:</strong> The NCDB abstract layout has been sent to <em>${email}</em>.`;
-                        document.getElementById('leadEmail').value = '';
-                    }, 650);
+              try {
+                // no-cors: the request goes through, we just can't read the response
+                await fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  body: new URLSearchParams({ email, source: 'hero-template' })
                 });
-            }
+              } catch (err) {
+                console.error(err); // still deliver the template even if logging fails
+              }
+
+              feedback.className = 'form-feedback is-success';
+              feedback.innerHTML = 'Thank you! <a href="' + TEMPLATE_URL +
+                '" download target="_blank" rel="noopener"><strong>Click here to download your template</strong></a>.';
+              window.open(TEMPLATE_URL, '_blank');
+              btn.disabled = false;
+              btnText.textContent = 'Send Me the Template!';
+              emailInput.value = '';
+            });
 
             // Contact form -> emails beauhsiacreighton@gmail.com via FormSubmit
             const contactForm = document.getElementById('contactForm');
