@@ -1648,49 +1648,70 @@
                 });
             });
 
-            // 3. Lead Capture Form -> Google Sheet + Mailrelay (via Apps Script)
-            // SCRIPT_URL is the Apps Script web app (ends in /exec).
-            // TEMPLATE_URL is the hosted template PDF.
+            
+            // 3. Lead Capture Form -> Google Sheet (via Apps Script)
             const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJfF9YzsJM_6drC1gEXrDVVLCwzSIUzV8h4hGBeQEF0q2CnHm36ycnp3UJRY1gAI4HeQ/exec';
-            const TEMPLATE_URL = 'https://www.med-ramp.com/files/ncdb-abstract-template.pdf';
-
-            document.getElementById('leadCaptureForm').addEventListener('submit', async (e) => {
-              e.preventDefault();
-              const emailInput = document.getElementById('leadEmail');
-              const feedback = document.getElementById('formFeedback');
-              const btn = document.getElementById('submitBtn');
-              const btnText = document.getElementById('btnText');
-              const email = emailInput.value.trim();
-
-              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                feedback.className = 'form-feedback is-error';
-                feedback.textContent = 'Please enter a valid email address.';
-                return;
-              }
-
-              btn.disabled = true;
-              btnText.textContent = 'Sending...';
-
-              try {
-                // no-cors: the request goes through, we just can't read the response
-                await fetch(SCRIPT_URL, {
-                  method: 'POST',
-                  mode: 'no-cors',
-                  body: new URLSearchParams({ email, source: 'hero-template' })
+            
+            // Posts via a hidden form + iframe (works like your curl test, no CORS issues)
+            function sendToSheet(fields) {
+                return new Promise(function (resolve) {
+                    const frameName = 'sheetFrame_' + Date.now();
+                    const iframe = document.createElement('iframe');
+                    iframe.name = frameName;
+                    iframe.style.display = 'none';
+            
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = SCRIPT_URL;
+                    form.target = frameName;
+                    form.style.display = 'none';
+            
+                    Object.keys(fields).forEach(function (key) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = fields[key];
+                        form.appendChild(input);
+                    });
+            
+                    document.body.appendChild(iframe);
+                    document.body.appendChild(form);
+                    form.submit();
+            
+                    setTimeout(resolve, 1200);                 // let the request get out
+                    setTimeout(function () {                   // clean up afterwards
+                        form.remove();
+                        iframe.remove();
+                    }, 10000);
                 });
-              } catch (err) {
-                console.error(err); // still deliver the template even if logging fails
-              }
-
-              feedback.className = 'form-feedback is-success';
-              feedback.innerHTML = 'Thank you! <a href="' + TEMPLATE_URL +
-                '" download target="_blank" rel="noopener"><strong>Click here to download your template</strong></a>.';
-              window.open(TEMPLATE_URL, '_blank');
-              btn.disabled = false;
-              btnText.textContent = 'Send Me the Template!';
-              emailInput.value = '';
+            }
+            
+            document.getElementById('leadCaptureForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const emailInput = document.getElementById('leadEmail');
+                const feedback = document.getElementById('formFeedback');
+                const btn = document.getElementById('submitBtn');
+                const btnText = document.getElementById('btnText');
+                const email = emailInput.value.trim();
+            
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    feedback.className = 'form-feedback is-error';
+                    feedback.textContent = 'Please enter a valid email address.';
+                    return;
+                }
+            
+                btn.disabled = true;
+                btnText.textContent = 'Sending...';
+            
+                await sendToSheet({ email: email, source: 'hero-template' });
+            
+                feedback.className = 'form-feedback is-success';
+                feedback.textContent = 'Thank you! Your email has been received.';
+                btn.disabled = false;
+                btnText.textContent = 'Send Me the Template!';
+                emailInput.value = '';
             });
-
+            
             // Contact form -> emails beauhsiacreighton@gmail.com via FormSubmit
             const contactForm = document.getElementById('contactForm');
             if (contactForm) {
