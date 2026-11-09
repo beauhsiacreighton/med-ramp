@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://med-ramp.com/</loc>
-<lastmod>2026-11-07T08:11:02-08:00</lastmod>
-</url>
-<url>
 <loc>https://med-ramp.com/about.html</loc>
 <lastmod>2026-02-26T14:26:23-07:00</lastmod>
 </url>
@@ -71,6 +67,10 @@
 <url>
 <loc>https://med-ramp.com/index_old.html</loc>
 <lastmod>2026-03-19T10:36:20-07:00</lastmod>
+</url>
+<url>
+<loc>https://med-ramp.com/index_old2.html</loc>
+<lastmod>2026-11-09T09:35:19-08:00</lastmod>
 </url>
 <url>
 <loc>https://med-ramp.com/landing1.html</loc>
