@@ -1506,19 +1506,9 @@
                             <h2>Download the Exact Instructions that Published 100s of Abstracts</h2>
                             <p>Get the step-by-step protocol our students utilized to publish peer-reviewed conference abstracts using the National Cancer Database (NCDB).</p>
                             
-                            <form id="leadCaptureForm" novalidate>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="leadEmail" class="sr-only" style="display:none;">Email address</label>
-                                        <input type="email" id="leadEmail" class="form-input" placeholder="Enter your email" required autocomplete="email">
-                                    </div>
-                                    <button type="submit" class="btn btn-accent" id="submitBtn">
-                                        <span id="btnText">Send Me the Template!</span>
-                                    </button>
-                                </div>
-                                <div class="form-feedback" id="formFeedback" role="alert"></div>
-                                <p class="form-footnote">No spam guaranteed. High-yield research updates only. Unsubscribe anytime.</p>
-                            </form>
+                            <iframe data-skip-lazy="" src="https://med-ramp.ipzmarketing.com/f/6TB2b-KtywU" frameborder="0" scrolling="no" width="100%" class="ipz-iframe"></iframe>
+                            <script data-cfasync="false" type="text/javascript" src="https://assets.ipzmarketing.com/assets/signup_form/iframe_v1.js"></script>
+                            <p class="form-footnote">No spam guaranteed. High-yield research updates only. Unsubscribe anytime.</p>
                         </div>
                     </div>
                 </div>
@@ -1647,36 +1637,6 @@
                     card.scrollIntoView({ behavior: reduceMotionStats ? 'auto' : 'smooth', block: 'center' });
                 });
             });
-
-            // 3. Lead Capture Form Simulation
-            const leadForm = document.getElementById('leadCaptureForm');
-            const feedback = document.getElementById('formFeedback');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-
-            if (leadForm) {
-                leadForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const email = document.getElementById('leadEmail').value.trim();
-
-                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                        feedback.className = 'form-feedback is-error';
-                        feedback.textContent = 'Please enter a valid academic or personal email address.';
-                        return;
-                    }
-
-                    submitBtn.disabled = true;
-                    btnText.textContent = 'Transmitting...';
-
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        btnText.textContent = 'Template Sent';
-                        feedback.className = 'form-feedback is-success';
-                        feedback.innerHTML = `<strong>Protocol Dispatched:</strong> The NCDB abstract layout has been sent to <em>${email}</em>.`;
-                        document.getElementById('leadEmail').value = '';
-                    }, 650);
-                });
-            }
 
             // Contact form -> emails beauhsiacreighton@gmail.com via FormSubmit
             const contactForm = document.getElementById('contactForm');
